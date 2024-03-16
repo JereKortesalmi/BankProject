@@ -19,5 +19,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QString happyfaceMuuttuja;
 };
 #endif // MAINWINDOW_H
