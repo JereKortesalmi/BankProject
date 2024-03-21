@@ -8,7 +8,7 @@ Pankkiautomaattiprojekti
 
 
 ## Jäsenet
-Marko Oravisjärvi
-Jere Kortesalmi
-Timo Pesola
-Arto Peurasaari
+Marko Oravisjärvi<br>
+Jere Kortesalmi<br>
+Timo Pesola<br>
+Arto Peurasaari<br>
