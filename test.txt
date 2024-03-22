@@ -1,6 +1,0 @@
-Testidokumentti
-
-git push origin [henkilö]
-git checkout origin main
-git pull origin main
-
