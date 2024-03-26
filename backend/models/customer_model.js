@@ -2,7 +2,7 @@ const db=require('../database');
 
 const customer={
     getAllCustomers(callback){
-        return db.query("SELECT * FROM customer WHERE id=?", [id],callback);
+        return db.query("SELECT * FROM customer", [id],callback);
     },
     getOneCustomer(id,callback){
         return db.query("SELECT * FROM customer WHERE id=?", [id],callback);

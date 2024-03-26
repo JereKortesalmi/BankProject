@@ -2,7 +2,7 @@ const db=require('../database');
 
 const card={
     getAllCards(callback){
-        return db.query("SELECT * FROM card WHERE id=?", [id],callback);
+        return db.query("SELECT * FROM card", [id],callback);
     },
     getOneCard(id,callback){
         return db.query("SELECT * FROM card WHERE id=?", [id],callback);
