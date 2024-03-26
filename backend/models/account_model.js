@@ -5,11 +5,11 @@ const account={
         return db.query("SELECT * FROM account", callback);
     },
     getOneAccount(id,callback) {
-        return db.query("SELECT * FROM account WHERE id=?",[id],callback);
+        return db.query("SELECT * FROM account WHERE account_id=?",[id],callback);
     },
     addAccount(newAccount,callback) {
-        return db.query("INSERT INTO account(customer_id, account_type, account_balance, account_credit_max, account_credit_current), VALUES(?,?,?,?,?)",[
-            newAccount.account_customer_id, 
+        return db.query("INSERT INTO account(account_customer_id, account_type, account_balance, account_credit_max, account_credit_current)  VALUES(?,?,?,?,?)",[
+            newAccount.account_customer_id,
             newAccount.account_type, 
             newAccount.account_balance, 
             newAccount.account_credit_max,
