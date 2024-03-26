@@ -29,11 +29,14 @@ void DLLSerialport::getVendor()
         if(portInfo.vendorIdentifier() == 5562) {
             //qDebug()<<"PortInfo: " << portInfo.manufacturer();
             //qDebug()<<"PortName: " << portInfo.portName();
-            setName(portInfo.portName());
+
             //qDebug()<<"SerialNumber: " << portInfo.serialNumber();
             //qDebug()<<"Description: " << portInfo.description();
             //qDebug()<<"VendorIdentifier: "<<portInfo.vendorIdentifier();
+
+            //sets values for the vendor and portname. Setters send signals.
             setVendor(portInfo.vendorIdentifier());
+            setName(portInfo.portName());
         }
     }
 }
