@@ -8,6 +8,7 @@ DLLSerialport::DLLSerialport() {
 DLLSerialport::~DLLSerialport()
 {
     qDebug() << "SerialDLL destructor";
+    closeSerialPort();
 }
 
 quint16 DLLSerialport::getVendorID()
@@ -45,6 +46,13 @@ void DLLSerialport::setName(QString n)
 {
     name=n;
     emit signalNameSet();
+    if(name != "") {
+        openSerialPort();
+    }
+    else {
+        qDebug()<< "Name was empty";
+    }
+
 }
 
 void DLLSerialport::setVendor(quint16 v)
@@ -54,16 +62,18 @@ void DLLSerialport::setVendor(quint16 v)
 }
 
 void DLLSerialport::openSerialPort()
-{
-    qDebug() << "OpenSerialPort";
+{ 
+    qDebug() << "Opening Serialport";
     serialPort->setPortName(name);
     serialPort->setBaudRate(baudRate);
     serialPort->setDataBits(dataBits);
     serialPort->setParity(parity);
     serialPort->setStopBits(stopBits);
     serialPort->setFlowControl(flowControl);
+
     if(serialPort->open(QIODevice::ReadOnly)) {
-        qDebug()<<"SerialPort read mode";
+        qDebug()<<"SerialPort in read mode, connected.";
+        connect(serialPort,SIGNAL(readyRead()),this,SLOT(readData()));
     }
     else {
         qDebug()<<"Error";
@@ -86,4 +96,7 @@ void DLLSerialport::closeSerialPort()
 void DLLSerialport::readData()
 {
     qDebug() << "readData()";
+    const QByteArray data = serialPort->readAll();
+    qDebug() << "data: " << data;
+
 }
