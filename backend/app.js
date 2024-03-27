@@ -5,7 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-//var accountsRouter = require('./routes/account');
+var accountsRouter = require('./routes/account');
 var atmRouter = require ('./routes/atm');
 var transactionRouter = require ('./routes/transaction');
 var cardRouter = require ('./routes/card');
@@ -23,6 +23,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/atm', atmRouter);
 app.use('/transaction', transactionRouter);
+app.use('/accounts', accountsRouter);
 app.use('/card', cardRouter);
 app.use('/customer', customerRouter);
 

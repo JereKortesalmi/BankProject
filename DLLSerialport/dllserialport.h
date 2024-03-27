@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QObject>
 #include <QDebug>
+#include <QTimer>
 
 class DLLSERIALPORT_EXPORT DLLSerialport : public QWidget
 {
@@ -26,6 +27,7 @@ private:
     QSerialPort::StopBits stopBits = QSerialPort::OneStop;
     QSerialPort::FlowControl flowControl = QSerialPort::NoFlowControl;
     QSerialPort * serialPort = nullptr;
+    QTimer * pTimer = nullptr;
 
 public slots:
     quint16 getVendorID();
@@ -38,6 +40,7 @@ private slots:
     void openSerialPort();
     void closeSerialPort();
     void readData();
+    void runTimer();
 
 signals:
     void sendCardNumber();
