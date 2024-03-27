@@ -56,3 +56,5 @@ router.delete('/:id',function(request, response){
         }
     });
 });
+
+module.exports=router;

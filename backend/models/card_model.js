@@ -2,13 +2,13 @@ const db=require('../database');
 
 const card={
     getAllCards(callback){
-        return db.query("SELECT * FROM card", [id],callback);
+        return db.query("SELECT * FROM card",callback);
     },
     getOneCard(id,callback){
-        return db.query("SELECT * FROM card WHERE id=?", [id],callback);
+        return db.query("SELECT * FROM card WHERE card_id=?",[id],callback);
     },
     addCard(newCard,callback){
-        return db.query("INSTER INTO card(card_customer_id, card_number, card_type, card_pin), values(?,?,?,?)",[
+        return db.query("INSERT INTO card(card_customer_id, card_number, card_type, card_pin) VALUES(?,?,?,?)",[
             newCard.card_customer_id,
             newCard.card_number,
             newCard.card_type,
@@ -16,7 +16,7 @@ const card={
             callback);
     },
     updateCard(id, updateCard,callback){
-        return db.query("UPDATE card SET card_customer_id=?, card_number=?, card_type=?, card_pin=?",[
+        return db.query("UPDATE card SET card_customer_id=?, card_number=?, card_type=?, card_pin=? WHERE card_id=?",[
             updateCard.card_customer_id,
             updateCard.card_number,
             updateCard.card_type,
@@ -29,4 +29,4 @@ const card={
     }
 }
 
-modeule.exports=card;
+module.exports=card;
