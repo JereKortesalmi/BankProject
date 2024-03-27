@@ -19,6 +19,7 @@ public:
 private:
     QString name;
     quint16 vendor;
+    QString cardNumber;
     QList<QSerialPortInfo> serialPorts;
 
     qint32 baudRate = QSerialPort::Baud9600;
@@ -35,6 +36,7 @@ public slots:
     void getVendor();
     void setName(QString);
     void setVendor(quint16);
+    void setCardNumber(QString);
 
 private slots:
     void openSerialPort();
@@ -43,7 +45,7 @@ private slots:
     void runTimer();
 
 signals:
-    void sendCardNumber();
+    void sendCardNumber(QString);
     void signalNameSet();
     void signalVendorSet();
 

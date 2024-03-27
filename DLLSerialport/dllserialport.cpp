@@ -64,6 +64,12 @@ void DLLSerialport::setVendor(quint16 v)
     emit signalVendorSet();
 }
 
+void DLLSerialport::setCardNumber(QString val)
+{
+    cardNumber=val;
+    emit sendCardNumber(cardNumber);
+}
+
 void DLLSerialport::openSerialPort()
 {
 
@@ -101,7 +107,19 @@ void DLLSerialport::readData()
 {
     qDebug() << "readData()";
     const QByteArray data = serialPort->readAll();
-    qDebug() << "data: " << data;
+    //qDebug() << "data: " << data;
+
+    QString dataString(data);
+
+
+    qDebug()<<""<<dataString;
+    QList dlist=dataString.split("\r\n");
+    //qDebug() << dlist[0];
+    qDebug() << dlist[1];
+    //qDebug()<< dlist[2];
+    QList cardnumberSplit=dlist[1].split("-");
+    qDebug()<<cardnumberSplit[1];
+    setCardNumber(cardnumberSplit[1]);
 
 }
 
