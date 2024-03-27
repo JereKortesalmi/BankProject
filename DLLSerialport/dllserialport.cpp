@@ -3,6 +3,9 @@
 DLLSerialport::DLLSerialport() {
     qDebug() << "SerialDLL constructor";
     serialPort = new QSerialPort(this);
+    pTimer = new QTimer(this);
+    connect(pTimer,SIGNAL(timeout()),this,SLOT(runTimer()));
+    pTimer->start(1000);
 }
 
 DLLSerialport::~DLLSerialport()
@@ -62,7 +65,8 @@ void DLLSerialport::setVendor(quint16 v)
 }
 
 void DLLSerialport::openSerialPort()
-{ 
+{
+
     qDebug() << "Opening Serialport";
     serialPort->setPortName(name);
     serialPort->setBaudRate(baudRate);
@@ -99,4 +103,15 @@ void DLLSerialport::readData()
     const QByteArray data = serialPort->readAll();
     qDebug() << "data: " << data;
 
+}
+
+void DLLSerialport::runTimer()
+{
+    if(name=="") {
+        qDebug()<<"Not yet connected.";
+        getVendor();
+    }
+    else {
+        qDebug()<<"connected";
+    }
 }
