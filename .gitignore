@@ -3,4 +3,6 @@ bank-automat/build/
 bank-automat/*.user
 DLLSerialport/*.user
 DLLSerialport/build
+DLLPinCode/*.user
+DLLPinCode/build
 backend/.env
