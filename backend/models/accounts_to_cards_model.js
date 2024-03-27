@@ -8,7 +8,7 @@ const accounts_to_cards={
         return db.query("SELECT * FROM accounts_to_cards WHERE id=?",[id],callback);
     },
     addAccounts_To_Cards(newAccounts_To_Cards,callback) {
-        return db.query("INSERT INTO accounts_to_cards(reference_account_id, reference_card_id), VALUES(?,?)",[
+        return db.query("INSERT INTO accounts_to_cards(reference_account_id, reference_card_id) VALUES(?,?)",[
             newAccounts_To_Cards.reference_account_id, 
             newAccounts_To_Cards.reference_card_id],
             callback);
