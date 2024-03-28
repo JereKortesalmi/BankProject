@@ -39,6 +39,7 @@ public slots:
     QString getName();
     void getVendor();
     void setName(QString);
+private slots:
     void setVendor(quint16);
     void setCardNumber(QString);
     void checkConnection();
