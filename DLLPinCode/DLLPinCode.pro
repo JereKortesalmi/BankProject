@@ -1,4 +1,4 @@
-QT += gui
+QT += gui core widgets
 
 TEMPLATE = lib
 DEFINES += DLLPINCODE_LIBRARY
@@ -26,3 +26,5 @@ unix {
 
 FORMS += \
     pincode.ui
+
+RESOURCES +=
