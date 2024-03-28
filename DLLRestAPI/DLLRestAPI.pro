@@ -1,4 +1,4 @@
-QT += gui
+QT += gui core widgets network
 
 TEMPLATE = lib
 DEFINES += DLLRESTAPI_LIBRARY
