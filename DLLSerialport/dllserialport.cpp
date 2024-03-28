@@ -6,6 +6,8 @@ DLLSerialport::DLLSerialport() {
     pTimer = new QTimer(this);
     connect(pTimer,SIGNAL(timeout()),this,SLOT(runTimer()));
     pTimer->start(1000);
+
+    connect(serialPort,SIGNAL(readyRead()),this,SLOT(readData()));
 }
 
 DLLSerialport::~DLLSerialport()
@@ -70,6 +72,17 @@ void DLLSerialport::setCardNumber(QString val)
     emit sendCardNumber(cardNumber);
 }
 
+void DLLSerialport::checkConnection()
+{
+    connected=false;
+    serialPorts = QSerialPortInfo::availablePorts();
+    foreach(const QSerialPortInfo &portInfo, serialPorts ) {
+        if(portInfo.vendorIdentifier() == 5562) {
+            connected=true;
+        }
+    }
+}
+
 void DLLSerialport::openSerialPort()
 {
 
@@ -83,10 +96,10 @@ void DLLSerialport::openSerialPort()
 
     if(serialPort->open(QIODevice::ReadOnly)) {
         qDebug()<<"SerialPort in read mode, connected.";
-        connect(serialPort,SIGNAL(readyRead()),this,SLOT(readData()));
+
     }
     else {
-        qDebug()<<"Error";
+        qDebug()<<"Already connected.";
     }
 }
 
@@ -130,6 +143,18 @@ void DLLSerialport::runTimer()
         getVendor();
     }
     else {
-        qDebug()<<"connected";
+        checkConnection();
+        if(connected) {
+            qDebug()<<"connected";
+            if(!serialPort->isOpen()) {
+                   openSerialPort();
+            }
+        }
+        else {
+            qDebug()<<"disconnected";
+            if(serialPort->isOpen()) {
+                closeSerialPort();
+            }
+        }
     }
 }

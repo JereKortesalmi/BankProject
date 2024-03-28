@@ -21,6 +21,8 @@ private:
     quint16 vendor;
     QString cardNumber;
     QList<QSerialPortInfo> serialPorts;
+    bool disconnected = true;
+    bool connected = false;
 
     qint32 baudRate = QSerialPort::Baud9600;
     QSerialPort::DataBits dataBits = QSerialPort::Data8;
@@ -28,7 +30,9 @@ private:
     QSerialPort::StopBits stopBits = QSerialPort::OneStop;
     QSerialPort::FlowControl flowControl = QSerialPort::NoFlowControl;
     QSerialPort * serialPort = nullptr;
+
     QTimer * pTimer = nullptr;
+    //QTimer * rTimer = nullptr;
 
 public slots:
     quint16 getVendorID();
@@ -37,12 +41,14 @@ public slots:
     void setName(QString);
     void setVendor(quint16);
     void setCardNumber(QString);
+    void checkConnection();
 
 private slots:
     void openSerialPort();
     void closeSerialPort();
     void readData();
     void runTimer();
+
 
 signals:
     void sendCardNumber(QString);
