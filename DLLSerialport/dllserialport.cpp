@@ -6,6 +6,8 @@ DLLSerialport::DLLSerialport() {
     pTimer = new QTimer(this);
     connect(pTimer,SIGNAL(timeout()),this,SLOT(runTimer()));
     pTimer->start(1000);
+
+    connect(serialPort,SIGNAL(readyRead()),this,SLOT(readData()));
 }
 
 DLLSerialport::~DLLSerialport()
@@ -64,6 +66,23 @@ void DLLSerialport::setVendor(quint16 v)
     emit signalVendorSet();
 }
 
+void DLLSerialport::setCardNumber(QString val)
+{
+    cardNumber=val;
+    emit sendCardNumber(cardNumber);
+}
+
+void DLLSerialport::checkConnection()
+{
+    connected=false;
+    serialPorts = QSerialPortInfo::availablePorts();
+    foreach(const QSerialPortInfo &portInfo, serialPorts ) {
+        if(portInfo.vendorIdentifier() == 5562) {
+            connected=true;
+        }
+    }
+}
+
 void DLLSerialport::openSerialPort()
 {
 
@@ -77,10 +96,10 @@ void DLLSerialport::openSerialPort()
 
     if(serialPort->open(QIODevice::ReadOnly)) {
         qDebug()<<"SerialPort in read mode, connected.";
-        connect(serialPort,SIGNAL(readyRead()),this,SLOT(readData()));
+
     }
     else {
-        qDebug()<<"Error";
+        qDebug()<<"Already connected.";
     }
 }
 
@@ -101,7 +120,19 @@ void DLLSerialport::readData()
 {
     qDebug() << "readData()";
     const QByteArray data = serialPort->readAll();
-    qDebug() << "data: " << data;
+    //qDebug() << "data: " << data;
+
+    QString dataString(data);
+
+
+    qDebug()<<""<<dataString;
+    QList dlist=dataString.split("\r\n");
+    //qDebug() << dlist[0];
+    qDebug() << dlist[1];
+    //qDebug()<< dlist[2];
+    QList cardnumberSplit=dlist[1].split("-");
+    qDebug()<<cardnumberSplit[1];
+    setCardNumber(cardnumberSplit[1]);
 
 }
 
@@ -112,6 +143,18 @@ void DLLSerialport::runTimer()
         getVendor();
     }
     else {
-        qDebug()<<"connected";
+        checkConnection();
+        if(connected) {
+            qDebug()<<"connected";
+            if(!serialPort->isOpen()) {
+                   openSerialPort();
+            }
+        }
+        else {
+            qDebug()<<"disconnected";
+            if(serialPort->isOpen()) {
+                closeSerialPort();
+            }
+        }
     }
 }
