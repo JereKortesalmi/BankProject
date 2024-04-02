@@ -1,3 +1,11 @@
 #include "dllrestapi.h"
 
-DLLRestAPI::DLLRestAPI() {}
+DLLRestAPI::DLLRestAPI()
+{
+    qDebug()<<"DLL luotu";
+}
+
+void huuhaa()
+{
+    qDebug()<<"Huuhaa";
+}

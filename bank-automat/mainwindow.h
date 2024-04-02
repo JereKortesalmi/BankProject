@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <dllserialport.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,6 +20,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QString happyfaceMuuttuja;
+
+    QString cardNumber;
+    DLLSerialport * sPort = nullptr;
+    void connectSerial();
+    void disconnectSerial();
+
+private slots:
+    void receiveCardNumber(QString);
 };
 #endif // MAINWINDOW_H
