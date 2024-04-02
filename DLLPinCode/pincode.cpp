@@ -41,6 +41,11 @@ void PinCode::clickHandler()
 void PinCode::enterHandler()
 {
     emit sendPinCodeToMainWindow(number);
+    QJsonObject jsonObj;
+    //jsonObj.insert("username",uname);
+    //jsonObj.insert("password",password);
+
+    //QString site_url="http://"
 }
 
 void PinCode::resetHandler()
@@ -48,4 +53,9 @@ void PinCode::resetHandler()
     ui->pinLine->setText(0);
     emit sendPinCodeToMainWindow(0);
     number = 0;
+}
+
+void PinCode::loginSlot(QNetworkReply *reply)
+{
+
 }
