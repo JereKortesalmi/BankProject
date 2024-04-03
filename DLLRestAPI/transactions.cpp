@@ -61,6 +61,8 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
         transactions += json_obj["transaction_amount"].toString()+"\n";
     }
     ui->txt_transactions->setText(transactions);
+
+    ResponseToMain(json_array);
     qDebug()<<"Vastattu";
 }
 

@@ -42,7 +42,9 @@ private:
 
     void sendTransactionRequest();
 
+
 private slots:
     void receiveCardNumber(QString);
+    void receiveData(QJsonArray);
 };
 #endif // MAINWINDOW_H

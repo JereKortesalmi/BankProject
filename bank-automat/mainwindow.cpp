@@ -37,9 +37,15 @@ void MainWindow::disconnectSerial()
 
 void MainWindow::sendTransactionRequest()
 {
-    test = new Transactions(&tableTransactions);
+    test = new Transactions(this);
+    test->show();
+    connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
 
+}
 
+void MainWindow::receiveData(QJsonArray reply)
+{
+    qDebug() << "Vastaus Mainille: "<<reply;
 }
 
 void MainWindow::receiveCardNumber(QString val)

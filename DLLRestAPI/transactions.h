@@ -34,6 +34,9 @@ private:
     QNetworkAccessManager* manager;
     QNetworkReply* reply;
     QByteArray response_data;
+
+signals:
+    void ResponseToMain(QJsonArray reply);
 };
 
 #endif // TRANSACTIONS_H
