@@ -8,7 +8,7 @@
 #include <QtNetwork>
 #include <QJsonDocument>
 
-#include <../bank-automat/data.h>
+//#include <../bank-automat/data.h>
 
 
 namespace Ui {
@@ -21,7 +21,7 @@ class DLLRESTAPI_EXPORT Transactions : public QDialog
 
 public:
     explicit Transactions(QWidget *parent = nullptr);
-    explicit Transactions(QList<transactions> *table);
+    //explicit Transactions(QList<transactions> *table);
     ~Transactions();
 
 private slots:

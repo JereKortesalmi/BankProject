@@ -17,13 +17,13 @@ Transactions::Transactions(QWidget *parent)
     //connect(manager, SIGNAL(finished(QNetworkReply*)),
     //        this, SLOT(onManagerFinished(QNetworkReply*)));
 }
-
+/*
 Transactions::Transactions(QList<transactions> *table)
 {
     qDebug()<<"table should be received.";
     //qDebug() << table[0].getTransactions_atm_id();
 }
-
+*/
 Transactions::~Transactions()
 {
     qDebug()<<"Tuhottu";

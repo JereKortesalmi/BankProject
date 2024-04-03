@@ -5,10 +5,14 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <dllserialport.h>
 #include <dllrestapi.h>
 #include <QList>
 #include "data.h"
+#include <QString>
+#include <QStandarditemModel>
+#include <QStandardItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,6 +27,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    QStandardItemModel *table_model;
 
 private:
     Ui::MainWindow *ui;
@@ -40,11 +46,20 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;
 
-    void sendTransactionRequest();
 
+
+
+
+signals:
+    void transactionsComplete();
+    void transactionsTableReady();
 
 private slots:
     void receiveCardNumber(QString);
     void receiveData(QJsonArray);
+    void displayData();
+    void sendTransactionRequest();
+public slots:
+    void readTransactionValues();
 };
 #endif // MAINWINDOW_H
