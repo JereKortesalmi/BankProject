@@ -6,6 +6,8 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <dllserialport.h>
+#include <QList>
+#include "data.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +30,9 @@ private:
     DLLSerialport * sPort = nullptr;
     void connectSerial();
     void disconnectSerial();
+    QList<transactions> tableTransactions;
+    QList<database> tableData;
+    QList<transfer> tableTransfer;
 
 private slots:
     void receiveCardNumber(QString);
