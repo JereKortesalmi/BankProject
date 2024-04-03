@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 #include <dllserialport.h>
 
 QT_BEGIN_NAMESPACE
@@ -28,5 +31,6 @@ private:
 
 private slots:
     void receiveCardNumber(QString);
+
 };
 #endif // MAINWINDOW_H

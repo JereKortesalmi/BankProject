@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+//Korttien numerot
+//  -0600062211
+//  -0500CB1EF8
+//  -0500CB1FF3
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -31,3 +36,6 @@ void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
 }
+
+
+
