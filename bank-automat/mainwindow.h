@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
 #include <dllserialport.h>
 #include <QList>
 #include "data.h"
@@ -33,7 +36,6 @@ private:
 
 private slots:
     void receiveCardNumber(QString);
-
 
 };
 #endif // MAINWINDOW_H
