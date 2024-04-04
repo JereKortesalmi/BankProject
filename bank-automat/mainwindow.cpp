@@ -23,6 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
+
+    //yhdistetään pinCode
+    pin = new PinCode(this);
+
+
 }
 
 MainWindow::~MainWindow()
