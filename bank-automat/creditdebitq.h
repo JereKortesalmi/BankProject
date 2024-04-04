@@ -2,9 +2,6 @@
 #define CREDITDEBITQ_H
 
 #include <QDialog>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
-#include <QJsonDocument>
 
 
 namespace Ui {
@@ -19,21 +16,11 @@ public:
     explicit creditdebitq(QWidget *parent = nullptr);
     ~creditdebitq();
 
-    void setUsername(const QString &newUsername);
-
-    void setWebToken(const QByteArray &newWebToken);
-
 private slots:
     void on_creditbtn_clicked();
-    void infoSlot(QNetworkReply *reply);
 
 private:
     Ui::creditdebitq *ui;
-    QString username;
-    QByteArray webToken;
-    QNetworkAccessManager *infoManager;
-    QNetworkReply *reply;
-    QByteArray response_data;
 };
 
 #endif // CREDITDEBITQ_H
