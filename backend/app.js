@@ -26,6 +26,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 
 //suojaa että eka pitää kirjautua että pääsee muihin
+app.use('/card', cardRouter);
 //app.use(authenticateToken);
 
 app.use('/users', usersRouter);
@@ -33,7 +34,6 @@ app.use('/atm', atmRouter);
 app.use('/transaction', transactionRouter);
 app.use('/accounts_to_cards',accounts_to_cardsRouter);
 app.use('/accounts', accountsRouter);
-app.use('/card', cardRouter);
 app.use('/customer', customerRouter);
 
 

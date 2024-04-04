@@ -11,18 +11,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    creditdebitq.cpp \
     data.cpp \
-    headwindow.cpp \
     main.cpp \
+    mainmenu.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    creditdebitq.h \
+    mainmenu.h \
     data.h \
-    headwindow.h \
     mainwindow.h
 
 FORMS += \
-    headwindow.ui \
+    creditdebitq.ui \
+    mainmenu.ui \
     mainwindow.ui
 
 # Default rules for deployment.
