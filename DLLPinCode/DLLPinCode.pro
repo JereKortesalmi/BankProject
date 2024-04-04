@@ -1,4 +1,4 @@
-QT += gui core widget
+QT += gui core widgets
 
 TEMPLATE = lib
 DEFINES += DLLPINCODE_LIBRARY

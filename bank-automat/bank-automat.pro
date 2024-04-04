@@ -12,14 +12,17 @@ CONFIG += c++17
 
 SOURCES += \
     data.cpp \
+    headwindow.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     data.h \
+    headwindow.h \
     mainwindow.h
 
 FORMS += \
+    headwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
