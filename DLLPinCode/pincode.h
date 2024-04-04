@@ -3,6 +3,7 @@
 #include "DLLPinCode_global.h"
 #include <QDialog>
 
+
 namespace Ui {
 class PinCode;
 }
@@ -25,6 +26,7 @@ private slots:
 private:
     Ui::PinCode *ui;
     QString number;
+
 };
 
 #endif // PINCODE_H
