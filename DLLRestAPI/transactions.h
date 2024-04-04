@@ -8,6 +8,8 @@
 #include <QtNetwork>
 #include <QJsonDocument>
 
+//#include <../bank-automat/data.h>
+
 
 namespace Ui {
 class Transactions;
@@ -19,6 +21,7 @@ class DLLRESTAPI_EXPORT Transactions : public QDialog
 
 public:
     explicit Transactions(QWidget *parent = nullptr);
+    //explicit Transactions(QList<transactions> *table);
     ~Transactions();
 
 private slots:
@@ -31,6 +34,9 @@ private:
     QNetworkAccessManager* manager;
     QNetworkReply* reply;
     QByteArray response_data;
+
+signals:
+    void ResponseToMain(QJsonArray reply);
 };
 
 #endif // TRANSACTIONS_H

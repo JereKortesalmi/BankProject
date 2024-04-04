@@ -27,7 +27,7 @@ app.use('/login', loginRouter);
 
 //suojaa että eka pitää kirjautua että pääsee muihin
 app.use('/card', cardRouter);
-app.use(authenticateToken);
+//app.use(authenticateToken);
 
 app.use('/users', usersRouter);
 app.use('/atm', atmRouter);

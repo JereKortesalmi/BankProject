@@ -1,12 +1,28 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <DLLSerialport_global.h>
+
+//Korttien numerot
+//  -0600062211
+//  -0500CB1EF8
+//  -0500CB1FF3
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     connectSerial();
+
+    //readTransactionValues();
+
+    connect(ui->btn_transactions,SIGNAL(clicked(bool)),
+            this,SLOT(sendTransactionRequest()));
+
+    connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
+    connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
+
 }
 
 MainWindow::~MainWindow()
@@ -27,7 +43,75 @@ void MainWindow::disconnectSerial()
     sPort = nullptr;
 }
 
+void MainWindow::sendTransactionRequest()
+{
+    test = new Transactions(this);
+    connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
+    test->show();
+
+
+}
+
+void MainWindow::readTransactionValues()
+{
+    qDebug()<<"Setting up Model: ";
+    table_model = new QStandardItemModel(tableTransactions.size(),5);
+    table_model->setHeaderData(0, Qt::Horizontal, QObject::tr("atm_id"));
+    table_model->setHeaderData(1, Qt::Horizontal, QObject::tr("account_id"));
+    table_model->setHeaderData(2, Qt::Horizontal, QObject::tr("time"));
+    table_model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
+    table_model->setHeaderData(4, Qt::Horizontal, QObject::tr("amount"));
+
+    for (int row = 0; row < tableTransactions.size();row++ ) {
+        QStandardItem *atm_id = new QStandardItem((tableTransactions[row].getTransactions_atm_id()));
+        table_model->setItem(row,0,atm_id);
+        QStandardItem *account_id = new QStandardItem((tableTransactions[row].getTransaction_account_id()));
+        table_model->setItem(row,1,account_id);
+        QStandardItem *time = new QStandardItem((tableTransactions[row].getTransaction_time()));
+        table_model->setItem(row,2,time);
+        QStandardItem *type= new QStandardItem((tableTransactions[row].getTransaction_type()));
+        table_model->setItem(row,3,type);
+        QStandardItem *amount= new QStandardItem((tableTransactions[row].getTransaction_amount()));
+        table_model->setItem(row,4,amount);
+    }
+    emit transactionsComplete();
+
+}
+
+void MainWindow::receiveData(QJsonArray reply)
+{
+    qDebug() << "Vastaus Mainille: "<<reply;
+    transactions obj;
+
+    foreach (const QJsonValue &value, reply) {
+        QJsonObject json_obj = value.toObject();
+
+        obj.setTransactions_atm_id(json_obj["transaction_atm_id"].toString());
+        //obj.setTransactions_atm_id("1");
+        obj.setTransaction_account_id(json_obj["transaction_account_id"].toString());
+        //obj.setTransactions_atm_id("1");
+        obj.setTransaction_time(json_obj["transaction_time"].toString());
+        obj.setTransaction_type(json_obj["transaction_type"].toString());
+        obj.setTransaction_amount(json_obj["transaction_amount"].toString());
+
+        tableTransactions.append(obj);
+    }
+
+    qDebug()<<"Eka Alkio" << tableTransactions[0].getTransaction_amount();
+    emit transactionsTableReady();
+
+}
+
+void MainWindow::displayData()
+{
+    qDebug()<<"displayData:";
+    ui->tableViewTransactions->setModel(table_model);
+}
+
 void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
 }
+
+
+

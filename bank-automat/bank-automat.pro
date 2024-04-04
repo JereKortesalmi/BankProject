@@ -12,6 +12,7 @@ CONFIG += c++17
 
 SOURCES += \
     creditdebitq.cpp \
+    data.cpp \
     main.cpp \
     mainmenu.cpp \
     mainwindow.cpp
@@ -19,6 +20,7 @@ SOURCES += \
 HEADERS += \
     creditdebitq.h \
     mainmenu.h \
+    data.h \
     mainwindow.h
 
 FORMS += \
@@ -36,3 +38,9 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/
 
 INCLUDEPATH += $$PWD/../DLLSerialport
 DEPENDPATH += $$PWD/../DLLSerialport
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLRestAPI/build/release/ -lDLLRestAPI
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLRestAPI/build/debug/ -lDLLRestAPI
+
+INCLUDEPATH += $$PWD/../DLLRestAPI
+DEPENDPATH += $$PWD/../DLLRestAPI
