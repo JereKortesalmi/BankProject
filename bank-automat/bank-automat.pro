@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui widgets
 QT += serialport
 QT +=network
 
@@ -17,19 +17,13 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-<<<<<<< HEAD
     creditdebitq.h \
-    mainwindow.h
-
-FORMS += \
-    creditdebitq.ui \
-=======
     mainmenu.h \
     mainwindow.h
 
 FORMS += \
+    creditdebitq.ui \
     mainmenu.ui \
->>>>>>> 6f7818162f84843f5f279c36d6dfc38ce4295329
     mainwindow.ui
 
 # Default rules for deployment.
