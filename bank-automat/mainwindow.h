@@ -14,6 +14,11 @@
 #include <QStandarditemModel>
 #include <QStandardItem>
 
+//lisätyt h tiedostot.
+#include "mainmenu.h"
+#include <dllpincode.h>
+#include <pincode.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -46,8 +51,8 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;
 
-
-
+    //PINCODE
+    PinCode *pin;
 
 
 signals:
