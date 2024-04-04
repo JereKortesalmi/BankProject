@@ -62,7 +62,7 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
     }
     ui->txt_transactions->setText(transactions);
 
-    ResponseToMain(json_array);
+    emit ResponseToMain(json_array);
     qDebug()<<"Vastattu";
 }
 
