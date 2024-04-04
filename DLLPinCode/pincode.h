@@ -2,12 +2,6 @@
 #define PINCODE_H
 #include "DLLPinCode_global.h"
 #include <QDialog>
-/*#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QtNetwork>
-#include <QJsonDocument>*/
-
 
 namespace Ui {
 class PinCode;
@@ -26,16 +20,11 @@ private slots:
     void clickHandler();
     void enterHandler();
     void resetHandler();
-    //void loginSlot(QNetworkReply *reply);
+
 
 private:
     Ui::PinCode *ui;
     QString number;
-
-   /* QNetworkAccessManager *loginManager;
-    QNetworkReply *reply;
-    QByteArray response_data;*/
-
 };
 
 #endif // PINCODE_H

@@ -110,7 +110,7 @@ void MainWindow::displayData()
 
 void MainWindow::receiveCardNumber(QString val)
 {
-    cardNumber=val;
+    cardNumber=val; 
 }
 
 
