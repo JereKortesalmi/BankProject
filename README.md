@@ -4,11 +4,11 @@ Pankkiautomaattiprojekti
 
 ## Tietokannan malli
 
-<img src="./bankdatabase_kuva2_ryhma9.png"></img>
+<img src="./bankdatabase_admin.png"></img>
 
 
 ## Jäsenet
-Marko Oravisjärvi<br>
-Jere Kortesalmi<br>
-Timo Pesola<br>
-Arto Peurasaari<br>
+[Marko Oravisjärvi](https://github.com/moravis)<br/>
+[Jere Kortesalmi](https://github.com/JereKortesalmi<br/>
+[Timo Pesola](https://github.com/timopesola)<br/>
+[Arto Peurasaari](https://github.com/artopeu)<br/>
