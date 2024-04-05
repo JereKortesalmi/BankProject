@@ -2,7 +2,6 @@
 #define PINCODE_H
 #include "DLLPinCode_global.h"
 #include <QDialog>
-//#include "mainwindow.h"
 
 namespace Ui {
 class PinCode;
@@ -27,13 +26,10 @@ private slots:
     void resetHandler();
 
 
-
 private:
     Ui::PinCode *ui;
     QString number;
     QString cardNumber;
-
-    //mainwindow *card;
 };
 
 #endif // PINCODE_H

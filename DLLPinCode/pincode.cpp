@@ -59,4 +59,3 @@ void PinCode::cardNumberHandler(QString val)
 
 
 }
-

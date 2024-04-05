@@ -60,6 +60,7 @@ private:
 signals:
     void transactionsComplete();
     void transactionsTableReady();
+    void sendCardSingal(QString);
     void sendSignal(QString);
 
 private slots:
