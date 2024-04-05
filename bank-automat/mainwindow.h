@@ -14,6 +14,11 @@
 #include <QStandarditemModel>
 #include <QStandardItem>
 
+//lisätyt h tiedostot.
+#include "mainmenu.h"
+#include <dllpincode.h>
+#include <pincode.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -34,6 +39,7 @@ private:
     Ui::MainWindow *ui;
 
     QString cardNumber;
+    QString pinCode;
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
@@ -46,7 +52,8 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;
 
-
+    //PINCODE
+    PinCode *pin;
 
 
 
@@ -54,12 +61,15 @@ signals:
     void transactionsComplete();
     void transactionsTableReady();
     void sendCardSingal(QString);
+    void sendSignal(QString);
 
 private slots:
     void receiveCardNumber(QString);
+    void receivePinNumber(QString);
     void receiveData(QJsonArray);
     void displayData();
     void sendTransactionRequest();
+    void cardNumberHand();
 public slots:
     void readTransactionValues();
 };

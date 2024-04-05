@@ -157,6 +157,9 @@ border: 4px solid #555;</string>
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">

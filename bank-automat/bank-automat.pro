@@ -29,15 +29,12 @@ FORMS += \
     mainwindow.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/release/ -lDLLSerialport
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/debug/ -lDLLSerialport
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLPinCode/build/release/ -lDLLPinCode
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLPinCode/build/debug/ -lDLLPinCode
 
-INCLUDEPATH += $$PWD/../DLLSerialport
-DEPENDPATH += $$PWD/../DLLSerialport
+INCLUDEPATH += $$PWD/../DLLPinCode
+DEPENDPATH += $$PWD/../DLLPinCode
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLRestAPI/build/release/ -lDLLRestAPI
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLRestAPI/build/debug/ -lDLLRestAPI
@@ -45,8 +42,9 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLRestAPI/build/deb
 INCLUDEPATH += $$PWD/../DLLRestAPI
 DEPENDPATH += $$PWD/../DLLRestAPI
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLPinCode/build/release/ -lDLLPinCode
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLPinCode/build/debug/ -lDLLPinCode
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/release/ -lDLLSerialport
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/debug/ -lDLLSerialport
 
-INCLUDEPATH += $$PWD/../DLLPinCode
-DEPENDPATH += $$PWD/../DLLPinCode
+INCLUDEPATH += $$PWD/../DLLSerialport
+DEPENDPATH += $$PWD/../DLLSerialport
+

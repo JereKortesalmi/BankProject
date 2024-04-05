@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::mainMenu *ui;
+
+
 };
 
 #endif // MAINMENU_H
