@@ -39,6 +39,7 @@ private:
     Ui::MainWindow *ui;
 
     QString cardNumber;
+    QString pinCode;
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
@@ -58,10 +59,11 @@ private:
 signals:
     void transactionsComplete();
     void transactionsTableReady();
-    void sendCardSignal(QString);
+    void sendSignal(QString);
 
 private slots:
     void receiveCardNumber(QString);
+    void receivePinNumber(QString);
     void receiveData(QJsonArray);
     void displayData();
     void sendTransactionRequest();

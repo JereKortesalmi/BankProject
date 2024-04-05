@@ -26,6 +26,8 @@ PinCode::~PinCode()
     qDebug()<<"Pincode pincode destruktori";
 }
 
+
+
 void PinCode::clickHandler()
 {
     QPushButton * button = qobject_cast<QPushButton*>(sender());
@@ -49,3 +51,12 @@ void PinCode::resetHandler()
     emit sendPinCodeToMainWindow(0);
     number = 0;
 }
+
+void PinCode::cardNumberHandler(QString val)
+{
+
+    qDebug()<<"Pin kode  pinui: "<<val;
+
+
+}
+

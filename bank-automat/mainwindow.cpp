@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     //yhdistetään pinCode
     pin = new PinCode(this);
+    connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),
+            this,SLOT(receivePinNumber(QString)));
 
 
 }
@@ -116,8 +118,21 @@ void MainWindow::displayData()
 void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
+    qDebug()<<"korttinumero main: "<<cardNumber;
+    pin->show();
+
+
 
 }
+
+void MainWindow::receivePinNumber(QString val)
+{
+    pinCode=val;
+    pin->cardNumberHandler(pinCode);
+    qDebug()<<"pin numero main: "<<pinCode;
+    qDebug()<<"korttinumero main: "<<cardNumber;
+}
+
 
 
 
