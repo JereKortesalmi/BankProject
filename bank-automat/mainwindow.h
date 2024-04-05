@@ -56,6 +56,7 @@ private:
     PinCode *pin;
 
 
+
 signals:
     void transactionsComplete();
     void transactionsTableReady();
@@ -67,6 +68,7 @@ private slots:
     void receiveData(QJsonArray);
     void displayData();
     void sendTransactionRequest();
+    void cardNumberHand();
 public slots:
     void readTransactionValues();
 };
