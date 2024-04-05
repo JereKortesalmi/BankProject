@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include <DLLSerialport_global.h>
 
 //Korttien numerot
@@ -26,7 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //yhdistetään pinCode
     pin = new PinCode(this);
+    connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),
+            this,SLOT(receivePinNumber(QString)));
 
+    //kortti numero käsin
+    connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
 
 }
 
@@ -55,6 +58,13 @@ void MainWindow::sendTransactionRequest()
     test->show();
 
 
+}
+
+void MainWindow::cardNumberHand()
+{
+    cardNumber=ui->cardEdit->text();
+    qDebug()<<"Käsin korttinumero: "<<cardNumber;
+    pin->show();
 }
 
 void MainWindow::readTransactionValues()
@@ -116,7 +126,21 @@ void MainWindow::displayData()
 void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
+    qDebug()<<"korttinumero main: "<<cardNumber;
+    pin->show();
+
+
+
 }
+
+void MainWindow::receivePinNumber(QString val)
+{
+    pinCode=val;
+    pin->cardNumberHandler(pinCode);
+    qDebug()<<"pin numero main: "<<pinCode;
+    qDebug()<<"korttinumero main: "<<cardNumber;
+}
+
 
 
 
