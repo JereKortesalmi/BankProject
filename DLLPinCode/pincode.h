@@ -14,6 +14,10 @@ class DLLPINCODE_EXPORT PinCode : public QDialog
 public:
     explicit PinCode(QWidget *parent = nullptr);
     ~PinCode();
+
+    void cardNumberHandler(QString);
+
+
 signals:
     void sendPinCodeToMainWindow(QString);
 private slots:
@@ -25,6 +29,7 @@ private slots:
 private:
     Ui::PinCode *ui;
     QString number;
+    QString cardNumber;
 };
 
 #endif // PINCODE_H
