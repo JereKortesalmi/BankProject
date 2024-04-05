@@ -49,3 +49,4 @@ void PinCode::resetHandler()
     emit sendPinCodeToMainWindow(0);
     number = 0;
 }
+

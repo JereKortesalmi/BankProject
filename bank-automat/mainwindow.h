@@ -53,6 +53,7 @@ private:
 signals:
     void transactionsComplete();
     void transactionsTableReady();
+    void sendCardSingal(QString);
 
 private slots:
     void receiveCardNumber(QString);

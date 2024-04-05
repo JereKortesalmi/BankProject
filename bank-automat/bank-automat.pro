@@ -44,3 +44,9 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLRestAPI/build/deb
 
 INCLUDEPATH += $$PWD/../DLLRestAPI
 DEPENDPATH += $$PWD/../DLLRestAPI
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLPinCode/build/release/ -lDLLPinCode
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLPinCode/build/debug/ -lDLLPinCode
+
+INCLUDEPATH += $$PWD/../DLLPinCode
+DEPENDPATH += $$PWD/../DLLPinCode
