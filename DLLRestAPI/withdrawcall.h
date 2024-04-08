@@ -11,9 +11,9 @@ class DLLRESTAPI_EXPORT withdrawCall : public QObject
 {
     Q_OBJECT
 public:
-    explicit withdrawCall(QObject *parent = nullptr);
-    withdrawCall(QByteArray, int, double);
+    explicit withdrawCall(QObject *parent = nullptr);    
     ~withdrawCall();
+    void sendRequest(QByteArray, int, double);
 
     QByteArray getResponse_data() const;
 

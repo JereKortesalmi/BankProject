@@ -4,7 +4,7 @@ withdrawCall::withdrawCall(QObject *parent)
     : QObject{parent}
 {}
 
-withdrawCall::withdrawCall(QByteArray token, int id, double sum)
+void withdrawCall::sendRequest(QByteArray token, int id, double sum)
 {
     qDebug()<<"withdrawCall was constructed.";
 
