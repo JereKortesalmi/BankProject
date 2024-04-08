@@ -6,6 +6,10 @@ mainMenu::mainMenu(QWidget *parent) :
     ui(new Ui::mainMenu)
 {
     ui->setupUi(this);
+    Transactions *p_Transactions = new Transactions(this);
+
+    // näytetään Transactions-ikkuna
+    // p_Transactions->show();
 }
 
 mainMenu::~mainMenu()

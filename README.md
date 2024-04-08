@@ -4,7 +4,7 @@ Pankkiautomaattiprojektissa on tarkoituksena luoda simulaatio pankkiautomaatin t
 
 ## Tietokannan malli
 <br/>Hyväksytty tietokannan malli on lisättynä alla olevassa kuvassa.<br/>
-<img src="./bankdatabase_admin.png"></img>
+<img src="./bankdatabase_with_card_state.png"></img>
 <br/>
 ## Lisäominaisuus ADMIN tila
 Lisäominaisuuteen on tarkoitus luoda pankkiautomaatille setelien hallintaa. 

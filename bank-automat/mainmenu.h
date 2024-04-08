@@ -1,6 +1,7 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
+#include "transactions.h"
 #include <QDialog>
 
 namespace Ui {
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::mainMenu *ui;
+    Transactions *p_Transactions = nullptr;
 
 
 };

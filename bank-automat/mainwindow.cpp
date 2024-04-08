@@ -31,6 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
     //kortti numero käsin
     connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
 
+    // luodaan mainmenu (ei vielä näytetä)
+    p_mainMenu = new mainMenu(this);
+    // p_mainMenu->show();
+
 }
 
 MainWindow::~MainWindow()
