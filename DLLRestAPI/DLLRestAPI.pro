@@ -10,12 +10,14 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    balance.cpp \
     dllrestapi.cpp \
     login.cpp \
     transactions.cpp
 
 HEADERS += \
     DLLRestAPI_global.h \
+    balance.h \
     dllrestapi.h \
     login.h \
     transactions.h
@@ -27,4 +29,5 @@ unix {
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    balance.ui \
     transactions.ui
