@@ -18,6 +18,7 @@ PinCode::PinCode(QWidget *parent)
 
     connect(ui->Enter,SIGNAL(clicked(bool)),this,SLOT(enterHandler()));
     connect(ui->Reset,SIGNAL(clicked(bool)),this,SLOT(resetHandler()));
+    connect(ui->btnRevert,SIGNAL(clicked(bool)),this,SLOT(revertHandler()));
 }
 
 PinCode::~PinCode()
@@ -50,6 +51,15 @@ void PinCode::resetHandler()
     ui->pinLine->setText(0);
     emit sendPinCodeToMainWindow(0);
     number = 0;
+}
+
+void PinCode::revertHandler()
+{
+    number.remove(1,1);
+    ui->pinLine->setText(number);
+   /* QString a = 1;
+    number = number - a;
+    ui->pinLine->setText(number);*/
 }
 
 void PinCode::cardNumberHandler(QString val)
