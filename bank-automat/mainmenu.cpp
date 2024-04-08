@@ -10,9 +10,21 @@ mainMenu::mainMenu(QWidget *parent) :
 
     // näytetään Transactions-ikkuna
     // p_Transactions->show();
+
+    //webtoken
+    QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
+    // withdrawCall
+    withdrawCall *p_withdrawCall = new withdrawCall(token, 5, 20.00);
+    connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(signalReceived()));
 }
 
 mainMenu::~mainMenu()
 {
     delete ui;
+}
+
+void mainMenu::signalReceived()
+{
+    qDebug()<<"Reading was done. So no error was received.";
+
 }
