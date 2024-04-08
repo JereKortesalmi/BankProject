@@ -14,8 +14,9 @@ mainMenu::mainMenu(QWidget *parent) :
     //webtoken
     QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     // withdrawCall
-    withdrawCall *p_withdrawCall = new withdrawCall(token, 5, 20.00);
+    withdrawCall *p_withdrawCall = new withdrawCall(this);
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(signalReceived()));
+    p_withdrawCall->sendRequest(token, 5, 20.00);
 }
 
 mainMenu::~mainMenu()

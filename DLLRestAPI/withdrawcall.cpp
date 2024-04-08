@@ -2,13 +2,15 @@
 
 withdrawCall::withdrawCall(QObject *parent)
     : QObject{parent}
-{}
+{
+      qDebug()<<"withdrawCall was constructed.";
+}
 
 void withdrawCall::sendRequest(QByteArray token, int id, double sum)
 {
-    qDebug()<<"withdrawCall was constructed.";
 
 
+    qDebug()<<"sendRequest from withdrawCall()";
     //Esimerkkidata
     QDateTime current = QDateTime::currentDateTime();
     QJsonObject jsonObj;
