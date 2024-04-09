@@ -33,9 +33,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
+
     // p_mainMenu->show();
     connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
 
+    p_mainMenu->show();
+
+
+
+    ui->tableViewTransactions->hide();
 }
 
 MainWindow::~MainWindow()
@@ -135,6 +141,7 @@ void MainWindow::displayData()
 {
     qDebug()<<"displayData:";
     ui->tableViewTransactions->setModel(table_model);
+    ui->tableViewTransactions->show();
 }
 
 void MainWindow::receiveCardNumber(QString val)
