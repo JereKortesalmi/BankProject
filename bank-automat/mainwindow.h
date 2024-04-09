@@ -38,6 +38,8 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    mainMenu *p_mainMenu = nullptr;
+
     QString cardNumber;
     QString pinCode;
     DLLSerialport * sPort = nullptr;
