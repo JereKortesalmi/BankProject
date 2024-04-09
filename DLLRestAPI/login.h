@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QObject>
 #include <QDebug>
+#include <QMessageBox>
 
 
 
@@ -17,23 +18,22 @@ public:
     ~login();
     QString pinCode;
     QString cardNumber;
-    void pinCodeLog(QString);
     void cardNumberLog(QString);
-    void loginHandler(QString,QString);
+    void loginHandler(QString);
 
 
 
 signals:
-    //void sendSignalLogin(QString,QString);
+    void sendSignalLogin(QString);
 
 public slots:
-    //void loginSlot(QNetworkReply *reply);
+    void loginSlot(QNetworkReply *reply);
 private slots:
 
 
 
 private:
-    QNetworkAccessManager *loginmanager;
+    QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;
 

@@ -43,6 +43,7 @@ private:
 
     QString cardNumber;
     QString pinCode;
+    QString loginResponse;
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
@@ -65,7 +66,6 @@ signals:
     void transactionsTableReady();
     void sendCardSingal(QString);
     void sendSignal(QString);
-    void sendSignalLogin(QString,QString);
 
 private slots:
     void receiveCardNumber(QString);
@@ -74,6 +74,7 @@ private slots:
     void displayData();
     void sendTransactionRequest();
     void cardNumberHand();
+    void loginInfo(QString);
 public slots:
     void readTransactionValues();
 };

@@ -32,11 +32,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //yhditetään login
     log = new login();
-    //connect(this,SIGNAL(sendSignalLogin(QString,QString)),log,SLOT(loginHandler(QString,QString)));
+    connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
-    p_mainMenu->show();
+    //p_mainMenu->show();
 
 
     ui->tableViewTransactions->hide();
@@ -74,7 +74,14 @@ void MainWindow::cardNumberHand()
 {
     cardNumber=ui->cardEdit->text();
     qDebug()<<"Käsin korttinumero: "<<cardNumber;
+    //log->cardNumberLog(cardNumber);
     pin->show();
+}
+
+void MainWindow::loginInfo(QString res)
+{
+    loginResponse=res;
+    qDebug()<<"login vastaus: "<<loginResponse;
 }
 
 void MainWindow::readTransactionValues()
@@ -147,12 +154,12 @@ void MainWindow::receiveCardNumber(QString val)
 void MainWindow::receivePinNumber(QString val)
 {
     pinCode=val;
-    pin->cardNumberHandler(pinCode);
     qDebug()<<"pin numero main: "<<pinCode;
     qDebug()<<"korttinumero main: "<<cardNumber;
-    //log->loginHandler(pinCode,cardNumber);
-    log->pinCodeLog(pinCode);
     log->cardNumberLog(cardNumber);
+    log->loginHandler(pinCode);
+    //log->pinCodeLog(pinCode);
+
 
 }
 

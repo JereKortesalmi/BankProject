@@ -15,7 +15,6 @@ public:
     explicit PinCode(QWidget *parent = nullptr);
     ~PinCode();
 
-    void cardNumberHandler(QString);
 
 
 signals:
