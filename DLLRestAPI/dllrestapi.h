@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "DLLRestAPI_global.h"
 #include "transactions.h"
+#include "balance.h"
 
 class DLLRESTAPI_EXPORT DLLRestAPI
 {

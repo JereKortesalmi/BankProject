@@ -4,6 +4,7 @@
 #include "transactions.h"
 #include "withdrawcall.h"
 #include <QDialog>
+#include "balance.h"
 
 //tarvitaan esittämään data tableviewssä
 #include <QList>
@@ -28,6 +29,7 @@ public:
     QStandardItemModel *table_model;
     //transactions
     Transactions *test = nullptr;           //transactions
+    balance *bal = nullptr;
 
     //restapi
     DLLRestAPI *restApi = nullptr;
