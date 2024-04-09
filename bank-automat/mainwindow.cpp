@@ -67,8 +67,6 @@ void MainWindow::sendTransactionRequest()
     test = new Transactions(this);
 
     test->show();
-
-
 }
 
 void MainWindow::cardNumberHand()
@@ -78,10 +76,17 @@ void MainWindow::cardNumberHand()
     pin->show();
 }
 
-void MainWindow::sendBalanceRequest(QString bal)
+void MainWindow::sendBalanceRequest()
+{
+    saldo = new balance(this);
+    connect(saldo,SIGNAL(sendToMain(QString)),this,SLOT(showBalance()));
+    saldo->show();
+
+}
+
+void MainWindow::showBalance(QString bal)
 {
     QString balance1 = bal;
-    //saldo = new balance(this);
     ui->balanceLabel->setText(balance1);
     saldo->show();
 }
