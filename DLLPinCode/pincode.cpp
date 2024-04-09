@@ -43,6 +43,7 @@ void PinCode::clickHandler()
 
 void PinCode::enterHandler()
 {
+    number=ui->pinLine->text();
     emit sendPinCodeToMainWindow(number);
 }
 
@@ -53,16 +54,11 @@ void PinCode::resetHandler()
     number = 0;
 }
 
+
 void PinCode::revertHandler()
 {
     number.removeLast();
     ui->pinLine->setText(number);
 }
 
-void PinCode::cardNumberHandler(QString val)
-{
 
-    qDebug()<<"Pin kode  pinui: "<<val;
-
-
-}

@@ -15,7 +15,6 @@ public:
     explicit PinCode(QWidget *parent = nullptr);
     ~PinCode();
 
-    void cardNumberHandler(QString);
 
 
 signals:
@@ -30,7 +29,6 @@ private slots:
 private:
     Ui::PinCode *ui;
     QString number;
-    QString cardNumber;
 };
 
 #endif // PINCODE_H
