@@ -10,21 +10,23 @@ const card={
     },
     addCard(newCard,callback){
         bcrypt.hash(newCard.card_pin,10,function(err,hashedPassword){
-        return db.query("INSERT INTO card(card_customer_id, card_number, card_type, card_pin) VALUES(?,?,?,?)",[
+        return db.query("INSERT INTO card(card_customer_id, card_number, card_type, card_pin, card_state) VALUES(?,?,?,?,?)",[
             newCard.card_customer_id,
             newCard.card_number,
             newCard.card_type,
-            hashedPassword],
+            hashedPassword,
+            newCard.card_state],
             callback);
     });
 },
     updateCard(id, updateCard,callback){
         bcrypt.hash(updateCard.card_pin,10,function(err,hashedPassword){
-        return db.query("UPDATE card SET card_customer_id=?, card_number=?, card_type=?, card_pin=? WHERE card_id=?",[
+        return db.query("UPDATE card SET card_customer_id=?, card_number=?, card_type=?, card_pin=?, card_state=? WHERE card_id=?",[
             updateCard.card_customer_id,
             updateCard.card_number,
             updateCard.card_type,
             hashedPassword,
+            updateCard.card_state,
             id],
             callback);
     });
