@@ -65,7 +65,7 @@ void MainWindow::disconnectSerial()
 void MainWindow::sendTransactionRequest()
 {
     test = new Transactions(this);
-
+    connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
     test->show();
 }
 
