@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <DLLSerialport_global.h>
-
 //Korttien numerot
 //  -0600062211
 //  -0500CB1EF8
@@ -25,18 +24,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     //yhdistetään pinCode
     pin = new PinCode(this);
-    connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),
-            this,SLOT(receivePinNumber(QString)));
+    connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
 
     //kortti numero käsin
     connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
 
+
+    //yhditetään login
+    log = new login();
+    connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
+
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
     p_mainMenu->show();
 
-
     ui->tableViewTransactions->hide();
+
 }
 
 MainWindow::~MainWindow()
@@ -62,15 +66,37 @@ void MainWindow::sendTransactionRequest()
     test = new Transactions(this);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
     test->show();
-
-
 }
 
 void MainWindow::cardNumberHand()
 {
     cardNumber=ui->cardEdit->text();
     qDebug()<<"Käsin korttinumero: "<<cardNumber;
+    //log->cardNumberLog(cardNumber);
     pin->show();
+}
+
+
+void MainWindow::loginInfo(QString res)
+{
+    loginResponse=res;
+    qDebug()<<"login vastaus: "<<loginResponse;
+}
+
+void MainWindow::sendBalanceRequest()
+{
+    saldo = new balance(this);
+    connect(saldo,SIGNAL(sendToMain(QString)),this,SLOT(showBalance()));
+    saldo->show();
+
+}
+
+void MainWindow::showBalance(QString bal)
+{
+    QString balance1 = bal;
+    ui->balanceLabel->setText(balance1);
+    saldo->show();
+
 }
 
 void MainWindow::readTransactionValues()
@@ -135,18 +161,21 @@ void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
     qDebug()<<"korttinumero main: "<<cardNumber;
+    //log->cardNumberLog(cardNumber);
     pin->show();
-
-
 
 }
 
 void MainWindow::receivePinNumber(QString val)
 {
     pinCode=val;
-    pin->cardNumberHandler(pinCode);
     qDebug()<<"pin numero main: "<<pinCode;
     qDebug()<<"korttinumero main: "<<cardNumber;
+    log->cardNumberLog(cardNumber);
+    log->loginHandler(pinCode);
+    //log->pinCodeLog(pinCode);
+
+
 }
 
 

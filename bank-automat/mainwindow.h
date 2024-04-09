@@ -18,6 +18,7 @@
 #include "mainmenu.h"
 #include <dllpincode.h>
 #include <pincode.h>
+#include <login.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -42,9 +43,11 @@ private:
 
     QString cardNumber;
     QString pinCode;
+    QString loginResponse;
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
+    balance *saldo = nullptr;
     void connectSerial();
     void disconnectSerial();
 
@@ -54,10 +57,10 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;
 
+    login *log;
+
     //PINCODE
     PinCode *pin;
-
-
 
 signals:
     void transactionsComplete();
@@ -72,6 +75,10 @@ private slots:
     void displayData();
     void sendTransactionRequest();
     void cardNumberHand();
+    void loginInfo(QString);
+    void sendBalanceRequest();
+    void showBalance(QString bal);
+
 public slots:
     void readTransactionValues();
 };
