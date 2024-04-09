@@ -25,7 +25,17 @@ mainMenu::mainMenu(QWidget *parent) :
 
     connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
+
+    //Kikkoja esityksen osoittamiseen..
     ui->tableViewTransactions->hide();
+
+    ui->btn_transactions->move(800,200);
+    //ui->tableViewTransactions->size() = QSize(100,100);
+
+    ui->label_withdraw->hide();
+    ui->label_withdraw->move(80,200);
+    ui->label_withdraw->show();
+
 }
 
 mainMenu::~mainMenu()
@@ -73,6 +83,14 @@ void mainMenu::receiveTransactionData(QJsonArray reply)
 void mainMenu::displayData()
 {
     ui->tableViewTransactions->setModel(table_model);
+    //ui->tableViewTransactions->resizeColumnToContents(0);
+    //ui->tableViewTransactions->resizeColumnToContents(1);
+    //ui->tableViewTransactions->resizeColumnToContents(2);
+    //ui->tableViewTransactions->resizeColumnToContents(3);
+    //ui->tableViewTransactions->resizeColumnToContents(4);
+    ui->tableViewTransactions->resizeColumnsToContents();
+    ui->tableViewTransactions->setGeometry(350,0,450,200);
+    ui->tableViewTransactions->move(280,200);
     ui->tableViewTransactions->show();
 }
 
