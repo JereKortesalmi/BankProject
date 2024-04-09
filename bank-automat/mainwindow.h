@@ -19,6 +19,7 @@
 #include <dllpincode.h>
 #include <pincode.h>
 #include <login.h>
+#include <creditdebitq.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -43,7 +44,7 @@ private:
 
     QString cardNumber;
     QString pinCode;
-    QString loginResponse;
+    QString token;
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
@@ -58,6 +59,7 @@ private:
     QList<transfer> tableTransfer;
 
     login *log;
+    creditdebitq *creditDebit;
 
     //PINCODE
     PinCode *pin;

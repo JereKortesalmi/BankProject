@@ -22,7 +22,6 @@ router.post('/',function(request, response){
                             response.send(token);
                         }
                         else {
-                            response.send(result[0].card_pin);
                             console.log("Väärä pinkoodi");
                             response.send(false);
                         }

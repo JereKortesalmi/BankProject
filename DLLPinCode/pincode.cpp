@@ -49,9 +49,9 @@ void PinCode::enterHandler()
 
 void PinCode::resetHandler()
 {
-    ui->pinLine->setText(0);
-    emit sendPinCodeToMainWindow(0);
-    number = 0;
+    ui->pinLine->clear();
+    number=ui->pinLine->text();
+
 }
 
 

@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
+//app.use('/login', loginRouter);
 
 //suojaa että eka pitää kirjautua että pääsee muihin
 app.use('/card', cardRouter);
@@ -37,6 +37,7 @@ app.use('/accounts_to_cards',accounts_to_cardsRouter);
 app.use('/accounts', accountsRouter);
 app.use('/customer', customerRouter);
 app.use('/transactions_per_account',transactions_per_accountRouter);
+app.use('/login', loginRouter);
 
 
 

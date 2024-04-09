@@ -21,23 +21,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
+    //kortti numero käsin
+    connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
 
     //yhdistetään pinCode
     pin = new PinCode(this);
     connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
 
-    //kortti numero käsin
-    connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
-
-
     //yhditetään login
     log = new login();
     connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
 
+    //luodaan creditdebitq
+    creditDebit= new creditdebitq(this);
+
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
     connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
-    p_mainMenu->show();
+    //p_mainMenu->show();
 
     ui->tableViewTransactions->hide();
 
@@ -79,8 +80,11 @@ void MainWindow::cardNumberHand()
 
 void MainWindow::loginInfo(QString res)
 {
-    loginResponse=res;
-    qDebug()<<"login vastaus: "<<loginResponse;
+    token=res;
+    qDebug()<<"login vastaus: "<<token;
+    pin->hide();
+    //creditDebit->show();
+    //p_mainMenu->show();
 }
 
 void MainWindow::sendBalanceRequest()
