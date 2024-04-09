@@ -29,9 +29,18 @@ MainWindow::MainWindow(QWidget *parent)
     //kortti numero käsin
     connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
 
+
     //yhditetään login
     log = new login();
     //connect(this,SIGNAL(sendSignalLogin(QString,QString)),log,SLOT(loginHandler(QString,QString)));
+
+    // luodaan mainmenu (ei vielä näytetä)
+    p_mainMenu = new mainMenu(this);
+    p_mainMenu->show();
+
+
+    ui->tableViewTransactions->hide();
+
 }
 
 MainWindow::~MainWindow()
@@ -102,9 +111,10 @@ void MainWindow::receiveData(QJsonArray reply)
     foreach (const QJsonValue &value, reply) {
         QJsonObject json_obj = value.toObject();
 
-        obj.setTransactions_atm_id(json_obj["transaction_atm_id"].toString());
+        obj.setTransactions_atm_id(QString::number(json_obj["transaction_id"].toDouble()));
+        qDebug()<<"json: atm_id: "<<json_obj["transaction_id"];
         //obj.setTransactions_atm_id("1");
-        obj.setTransaction_account_id(json_obj["transaction_account_id"].toString());
+        obj.setTransaction_account_id(QString::number(json_obj["transaction_account_id"].toDouble()));
         //obj.setTransactions_atm_id("1");
         obj.setTransaction_time(json_obj["transaction_time"].toString());
         obj.setTransaction_type(json_obj["transaction_type"].toString());
@@ -122,6 +132,7 @@ void MainWindow::displayData()
 {
     qDebug()<<"displayData:";
     ui->tableViewTransactions->setModel(table_model);
+    ui->tableViewTransactions->show();
 }
 
 void MainWindow::receiveCardNumber(QString val)

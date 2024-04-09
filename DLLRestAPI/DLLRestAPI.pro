@@ -12,13 +12,15 @@ CONFIG += c++17
 SOURCES += \
     dllrestapi.cpp \
     login.cpp \
-    transactions.cpp
+    transactions.cpp \
+    withdrawcall.cpp
 
 HEADERS += \
     DLLRestAPI_global.h \
     dllrestapi.h \
     login.h \
-    transactions.h
+    transactions.h \
+    withdrawcall.h
 
 # Default rules for deployment.
 unix {
