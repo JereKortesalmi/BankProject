@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
-    // p_mainMenu->show();
+    p_mainMenu->show();
 
 
     ui->tableViewTransactions->hide();
