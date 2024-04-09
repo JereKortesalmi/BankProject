@@ -13,6 +13,7 @@ SOURCES += \
     balance.cpp \
     dllrestapi.cpp \
     login.cpp \
+    requestreceiver.cpp \
     transactions.cpp \
     withdrawcall.cpp
 
@@ -21,6 +22,7 @@ HEADERS += \
     balance.h \
     dllrestapi.h \
     login.h \
+    requestreceiver.h \
     transactions.h \
     withdrawcall.h
 
