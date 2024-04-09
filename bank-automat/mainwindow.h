@@ -47,6 +47,7 @@ private:
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
+    balance *saldo = nullptr;
     void connectSerial();
     void disconnectSerial();
 
@@ -75,6 +76,9 @@ private slots:
     void sendTransactionRequest();
     void cardNumberHand();
     void loginInfo(QString);
+    void sendBalanceRequest();
+    void showBalance(QString bal);
+
 public slots:
     void readTransactionValues();
 };

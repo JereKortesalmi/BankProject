@@ -23,6 +23,7 @@ private slots:
     void clickHandler();
     void enterHandler();
     void resetHandler();
+    void revertHandler();
 
 
 private:
