@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     dllrestapi.cpp \
     login.cpp \
+    requestreceiver.cpp \
     transactions.cpp \
     withdrawcall.cpp
 
@@ -19,6 +20,7 @@ HEADERS += \
     DLLRestAPI_global.h \
     dllrestapi.h \
     login.h \
+    requestreceiver.h \
     transactions.h \
     withdrawcall.h
 
