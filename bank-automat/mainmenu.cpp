@@ -88,6 +88,8 @@ void mainMenu::displayData()
     //ui->tableViewTransactions->resizeColumnToContents(2);
     //ui->tableViewTransactions->resizeColumnToContents(3);
     //ui->tableViewTransactions->resizeColumnToContents(4);
+    // 1920*1080    full hd
+    // 3840*2160    4k
     ui->tableViewTransactions->resizeColumnsToContents();
     ui->tableViewTransactions->setGeometry(350,0,450,200);
     ui->tableViewTransactions->move(280,200);
