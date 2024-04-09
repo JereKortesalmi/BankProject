@@ -16,17 +16,23 @@
   <widget class="QTableView" name="tableViewTransactions">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>150</y>
-     <width>641</width>
-     <height>301</height>
+     <x>910</x>
+     <y>120</y>
+     <width>161</width>
+     <height>101</height>
     </rect>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_transactions">
    <property name="geometry">
     <rect>
-     <x>890</x>
+     <x>930</x>
      <y>50</y>
      <width>121</width>
      <height>71</height>
@@ -34,6 +40,41 @@
    </property>
    <property name="text">
     <string>transactions</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_withdraw">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>50</y>
+     <width>121</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>withdraw</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_withdraw">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>50</y>
+     <width>601</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
    </property>
   </widget>
  </widget>
