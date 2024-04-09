@@ -29,7 +29,6 @@ private slots:
 private:
     Ui::PinCode *ui;
     QString number;
-    QString cardNumber;
 };
 
 #endif // PINCODE_H

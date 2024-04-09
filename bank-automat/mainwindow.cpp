@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <DLLSerialport_global.h>
-
 //Korttien numerot
 //  -0600062211
 //  -0500CB1EF8
@@ -25,12 +24,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     //yhdistetään pinCode
     pin = new PinCode(this);
-    connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),
-            this,SLOT(receivePinNumber(QString)));
+    connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
 
     //kortti numero käsin
     connect(ui->btnCardEdit,SIGNAL(clicked(bool)),this,SLOT(cardNumberHand()));
 
+    //yhditetään login
+    log = new login();
+    //connect(this,SIGNAL(sendSignalLogin(QString,QString)),log,SLOT(loginHandler(QString,QString)));
 }
 
 MainWindow::~MainWindow()
@@ -127,9 +128,8 @@ void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
     qDebug()<<"korttinumero main: "<<cardNumber;
+    //log->cardNumberLog(cardNumber);
     pin->show();
-
-
 
 }
 
@@ -139,6 +139,10 @@ void MainWindow::receivePinNumber(QString val)
     pin->cardNumberHandler(pinCode);
     qDebug()<<"pin numero main: "<<pinCode;
     qDebug()<<"korttinumero main: "<<cardNumber;
+    //log->loginHandler(pinCode,cardNumber);
+    log->pinCodeLog(pinCode);
+    log->cardNumberLog(cardNumber);
+
 }
 
 

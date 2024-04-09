@@ -18,6 +18,7 @@
 #include "mainmenu.h"
 #include <dllpincode.h>
 #include <pincode.h>
+#include <login.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -52,16 +53,17 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;
 
+    login *log;
+
     //PINCODE
     PinCode *pin;
-
-
 
 signals:
     void transactionsComplete();
     void transactionsTableReady();
     void sendCardSingal(QString);
     void sendSignal(QString);
+    void sendSignalLogin(QString,QString);
 
 private slots:
     void receiveCardNumber(QString);
