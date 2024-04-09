@@ -47,10 +47,3 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/
 
 INCLUDEPATH += $$PWD/../DLLSerialport
 DEPENDPATH += $$PWD/../DLLSerialport
-
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/release/ -lDLLSerialport
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/debug/ -lDLLSerialport
-
-INCLUDEPATH += $$PWD/../DLLSerialport
-DEPENDPATH += $$PWD/../DLLSerialport

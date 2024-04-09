@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
     // p_mainMenu->show();
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
 
 }
 
@@ -58,7 +59,7 @@ void MainWindow::disconnectSerial()
 void MainWindow::sendTransactionRequest()
 {
     test = new Transactions(this);
-    connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
+
     test->show();
 
 
@@ -69,6 +70,14 @@ void MainWindow::cardNumberHand()
     cardNumber=ui->cardEdit->text();
     qDebug()<<"Käsin korttinumero: "<<cardNumber;
     pin->show();
+}
+
+void MainWindow::sendBalanceRequest(QString bal)
+{
+    QString balance1 = bal;
+    //saldo = new balance(this);
+    ui->balanceLabel->setText(balance1);
+    saldo->show();
 }
 
 void MainWindow::readTransactionValues()

@@ -305,7 +305,7 @@ border: 4px solid #555;</string>
       <x>360</x>
       <y>130</y>
       <width>82</width>
-      <height>64</height>
+      <height>86</height>
      </rect>
     </property>
     <property name="sizePolicy">

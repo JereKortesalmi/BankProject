@@ -55,11 +55,8 @@ void PinCode::resetHandler()
 
 void PinCode::revertHandler()
 {
-    number.remove(1,1);
+    number.removeLast();
     ui->pinLine->setText(number);
-   /* QString a = 1;
-    number = number - a;
-    ui->pinLine->setText(number);*/
 }
 
 void PinCode::cardNumberHandler(QString val)

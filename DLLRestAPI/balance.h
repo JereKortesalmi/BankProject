@@ -1,6 +1,6 @@
 #ifndef BALANCE_H
 #define BALANCE_H
-
+#include "DLLRestAPI_global.h"
 #include <QDialog>
 #include <QtNetwork>
 #include <QNetworkAccessManager>
@@ -17,12 +17,19 @@ class balance : public QDialog
 public:
     explicit balance(QWidget *parent = nullptr);
     ~balance();
+signals:
+    void sendToMain(QString reply);
 
 private slots:
-    void showBalance();
+    void getBalance(QNetworkReply *reply);
+
+    void on_btnBalance_clicked();
 
 private:
     Ui::balance *ui;
+    QNetworkAccessManager *getManager;
+    QNetworkReply *reply;
+    QByteArray response_data;
 };
 
 #endif // BALANCE_H
