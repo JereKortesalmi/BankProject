@@ -13,14 +13,18 @@ class DLLRESTAPI_EXPORT withdrawCall : public QObject
 public:
     explicit withdrawCall(QObject *parent = nullptr);    
     ~withdrawCall();
-    void sendRequest(QByteArray, int, double);
+    void sendTransaction(QByteArray, int, double);
+    void getAtmInfo(QByteArray token,int id);
 
     QByteArray getResponse_data() const;
+
 
 private:
     QNetworkAccessManager *w_manager;
     QNetworkReply *w_reply;
     QByteArray response_data;
+
+    QByteArray myToken;
 
 private slots:
 

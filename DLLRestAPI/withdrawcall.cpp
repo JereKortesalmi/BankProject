@@ -6,7 +6,7 @@ withdrawCall::withdrawCall(QObject *parent)
       qDebug()<<"withdrawCall was constructed.";
 }
 
-void withdrawCall::sendRequest(QByteArray token, int id, double sum)
+void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
 {
 
 
@@ -25,7 +25,7 @@ void withdrawCall::sendRequest(QByteArray token, int id, double sum)
     QNetworkRequest request(url);
 
     //WEBTOKEN ALKU
-    QByteArray myToken="Bearer "+token;
+    myToken="Bearer "+token;
     request.setRawHeader(QByteArray("Authorization"),(myToken));
     //WEBTOKEN LOPPU
 
@@ -36,6 +36,28 @@ void withdrawCall::sendRequest(QByteArray token, int id, double sum)
     connect(w_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
             this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
     w_manager->deleteLater();
+}
+
+void withdrawCall::getAtmInfo(QByteArray token, int id)
+{
+    if (token.isEmpty()) {
+        return;
+    }
+    else {
+        QUrl url("http://localhost:3000/atm/" + QString::number(id));
+        QNetworkRequest request(url);
+
+        //WEBTOKEN ALKU
+        myToken="Bearer "+token;
+        request.setRawHeader(QByteArray("Authorization"),(myToken));
+        //WEBTOKEN LOPPU
+
+        w_manager = new QNetworkAccessManager(this);
+        w_reply = w_manager->get(request);
+        connect(w_manager, SIGNAL(finished(QNetworkReply*)),this,SLOT(onManagerFinished(QNetworkReply*)));
+        connect(w_reply,SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
+                this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
+    }
 }
 
 withdrawCall::~withdrawCall()

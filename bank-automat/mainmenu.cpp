@@ -16,7 +16,8 @@ mainMenu::mainMenu(QWidget *parent) :
     // withdrawCall
     withdrawCall *p_withdrawCall = new withdrawCall(this);
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(signalReceived()));
-    p_withdrawCall->sendRequest(token, 5, 20.00);
+    p_withdrawCall->sendTransaction(token, 5, 20.00);
+    p_withdrawCall->getAtmInfo(token,1);
 }
 
 mainMenu::~mainMenu()
