@@ -51,7 +51,7 @@ void login::loginSlot(QNetworkReply *reply)
             emit sendSignalLogin(response_data);
         }
         else{
-            msgBox.setText("Tunnus/salasana ei täsmää");
+            msgBox.setText("Korttinumero/pin ei täsmää");
             msgBox.exec();
         }
     }
