@@ -35,6 +35,9 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
+    //balance signals
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
+
     //Kikkoja esityksen osoittamiseen..
     ui->tableViewTransactions->hide();
 
@@ -128,4 +131,20 @@ void mainMenu::readTransactionValues()
         table_model->setItem(row,4,amount);
     }
     emit transactionsComplete();
+}
+
+void mainMenu::sendBalanceRequest()
+{
+    saldo = new balance(this);
+    connect(saldo,SIGNAL(sendToMain(QString)),this,SLOT(showBalance(QString)));
+    qDebug()<<"lähetetään pyyntö balancesta";
+    //saldo->show();
+    saldo->mainStart();
+}
+
+void mainMenu::showBalance(QString bal)
+{
+    QString balance1 = bal;
+    qDebug()<<"mainwindow balance1: "<<balance1;
+    ui->balanceLabel->setText(balance1);
 }

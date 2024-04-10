@@ -31,15 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
     //yhditetään login
     log = new login();
     connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
-
+    connect(log,SIGNAL(loginMessage(QString)),this,SLOT(loginMessageToPinCode(QString)));
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
-
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
-
     //p_mainMenu->show();
 
     ui->tableViewTransactions->hide();
@@ -89,20 +86,10 @@ void MainWindow::loginInfo(QString res)
     p_mainMenu->show();
 }
 
-void MainWindow::sendBalanceRequest()
+void MainWindow::loginMessageToPinCode(QString message)
 {
-    saldo = new balance(this);
-    connect(saldo,SIGNAL(sendToMain(QString)),this,SLOT(showBalance(QString)));
-    qDebug()<<"lähetetään pyyntö balancesta";
-    //saldo->show();
-    saldo->mainStart();
-}
-
-void MainWindow::showBalance(QString bal)
-{
-    QString balance1 = bal;
-    qDebug()<<"mainwindow balance1: "<<balance1;
-    ui->balanceLabel->setText(balance1);
+    QString mes = message;
+    pin->pinMessage(mes);
 }
 
 void MainWindow::readTransactionValues()

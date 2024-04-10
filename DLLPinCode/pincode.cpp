@@ -27,6 +27,12 @@ PinCode::~PinCode()
     qDebug()<<"Pincode pincode destruktori";
 }
 
+void PinCode::pinMessage(QString message)
+{
+    QString mes = message;
+    ui->messageLabel->setText(mes);
+}
+
 
 
 void PinCode::clickHandler()
@@ -51,7 +57,7 @@ void PinCode::resetHandler()
 {
     ui->pinLine->clear();
     number=ui->pinLine->text();
-
+    ui->messageLabel->clear();
 }
 
 
@@ -59,6 +65,7 @@ void PinCode::revertHandler()
 {
     number.removeLast();
     ui->pinLine->setText(number);
+    ui->messageLabel->clear();
 }
 
 
