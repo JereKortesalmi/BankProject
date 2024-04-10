@@ -13,17 +13,24 @@
 #include <QtNetwork>
 #include <QJsonDocument>
 
-class requestReceiver
+class DLLRESTAPI_EXPORT requestReceiver
 {
 public:
     requestReceiver();
     ~requestReceiver();
 
+    login log;
+    Transactions tra;
+    withdrawCall wit;
+
 private:
+
+    /*
     login *log = nullptr;
     Transactions *tra = nullptr;
     withdrawCall *wit = nullptr;
     QNetworkAccessManager *RManager = nullptr;
+    */
 
 signals:
     void sendResult();
