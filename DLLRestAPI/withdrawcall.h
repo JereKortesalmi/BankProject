@@ -19,6 +19,25 @@ public:
     QByteArray getResponse_data() const;
 
 
+    int bills_20 = 10;
+    int bills_50 = 10;
+    int bills_100 = 10;
+    int bills_200 = 10;
+
+    int set_200_bills = 0;
+    int set_100_bills = 0;
+    int set_50_bills = 0;
+    int set_20_bills = 0;
+
+    int amount_20;
+    int amount_50;
+    int amount_100;
+    int amount_200;
+
+    int withdrawAmount = 0;
+
+    void checkBills(int withdrawal);
+
 private:
     QNetworkAccessManager *w_manager;
     QNetworkReply *w_reply;

@@ -22,6 +22,7 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawSignalReceived()));
 
     requestRec->wit.sendTransaction(token,5,20.00);
+    requestRec->wit.checkBills(160);
 
     //p_withdrawCall->sendTransaction(token, 5, 20.00);
 
