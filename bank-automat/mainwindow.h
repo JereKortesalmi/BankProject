@@ -79,7 +79,7 @@ private slots:
     void cardNumberHand();
     void loginInfo(QString);
     void sendBalanceRequest();
-    void showBalance(QString bal);
+    void showBalance(QString);
 
 public slots:
     void readTransactionValues();
