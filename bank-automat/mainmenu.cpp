@@ -5,6 +5,10 @@ mainMenu::mainMenu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::mainMenu)
 {
+    requestRec = new requestReceiver;
+    //requestRec->sendResult();
+
+
     ui->setupUi(this);
     Transactions *p_Transactions = new Transactions(this);
 
@@ -16,8 +20,13 @@ mainMenu::mainMenu(QWidget *parent) :
     // withdrawCall
     withdrawCall *p_withdrawCall = new withdrawCall(this);
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawSignalReceived()));
-    p_withdrawCall->sendTransaction(token, 5, 20.00);
-    p_withdrawCall->getAtmInfo(token,1);
+
+    requestRec->wit.sendTransaction(token,5,20.00);
+
+    //p_withdrawCall->sendTransaction(token, 5, 20.00);
+
+    requestRec->wit.getAtmInfo(token,1);
+    //p_withdrawCall->getAtmInfo(token,1);
 
     //transactions signals and slots with button push
     connect(ui->btn_transactions,SIGNAL(clicked(bool)),

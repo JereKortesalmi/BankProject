@@ -1,6 +1,7 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
+#include "requestreceiver.h"
 #include "transactions.h"
 #include "withdrawcall.h"
 #include <QDialog>
@@ -34,6 +35,9 @@ public:
     //restapi
     DLLRestAPI *restApi = nullptr;
 
+    //requestReceiver
+    requestReceiver *requestRec = nullptr;
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions
@@ -45,7 +49,7 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
 
-private slots:
+public slots:
     //withdrawCall
     void withdrawSignalReceived();
 
