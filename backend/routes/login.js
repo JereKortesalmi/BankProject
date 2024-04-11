@@ -5,7 +5,6 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const dotenv=require('dotenv');
 dotenv.config();
-logginglock=0;
 
 router.post('/',function(request, response){
     if(request.body.card_number && request.body.card_pin){
