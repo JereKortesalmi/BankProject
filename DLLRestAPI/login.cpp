@@ -43,8 +43,8 @@ void login::loginSlot(QNetworkReply *reply)
     if(response_data=="-4078" || response_data.length()==0){
         QString message = "Virhe tietoyhteydessä";
         emit loginMessage(message);
-        msgBox.setText("Virhe tietoyhteydessä");
-        msgBox.exec();
+        /*msgBox.setText("Virhe tietoyhteydessä");
+        msgBox.exec();*/
     }
     else{
         if(response_data!="false"){
@@ -54,8 +54,8 @@ void login::loginSlot(QNetworkReply *reply)
         else{
             QString message = "Korttinumero/pin ei täsmää";
             emit loginMessage(message);
-            msgBox.setText("Korttinumero/pin ei täsmää");
-            msgBox.exec();
+            /*msgBox.setText("Korttinumero/pin ei täsmää");
+            msgBox.exec();*/
         }
     }
     reply->deleteLater();

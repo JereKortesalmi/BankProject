@@ -40,7 +40,7 @@ mainMenu::mainMenu(QWidget *parent) :
 
     //Kikkoja esityksen osoittamiseen..
     ui->tableViewTransactions->hide();
-
+    ui->balanceLabel->hide();
     ui->btn_transactions->move(800,200);
     //ui->tableViewTransactions->size() = QSize(100,100);
 
@@ -147,4 +147,5 @@ void mainMenu::showBalance(QString bal)
     QString balance1 = bal;
     qDebug()<<"mainwindow balance1: "<<balance1;
     ui->balanceLabel->setText(balance1);
+    ui->balanceLabel->show();
 }
