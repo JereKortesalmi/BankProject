@@ -6,9 +6,10 @@ balance::balance(QWidget *parent)
     , ui(new Ui::balance)
 {
     ui->setupUi(this);
-    qDebug()<<"balance konstruktori";
+    qDebug()<<"balance luotu";
     getManager = new QNetworkAccessManager(this);
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
+    connect(ui->btnBalance1,SIGNAL(clicked(bool)),this,SLOT(clickBalanceHandler()));
+    //connect(this,SIGNAL,sendBalanceRequest(),this,SLOT(clickHandler()));
     connect(getManager,SIGNAL(finished (QNetworkReply*)),this,SLOT(getBalance(QNetworkReply*)));
 }
 
@@ -17,12 +18,17 @@ balance::~balance()
     delete ui;
 }
 
+void balance::mainStart()
+{
+    clickBalanceHandler();
+}
+
 void balance::getBalance(QNetworkReply *reply)
 {
     QByteArray response_data=reply->readAll();
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     QJsonObject json_obj = json_doc.object();
-    QString bal = json_obj.value("account_balance").toString();
+    bal = json_obj.value("account_balance").toString();
     //QString id =QString::number(json_obj.value("account_id").toInt());
     //QString type = json_obj.value("account_type").toString();
     QString type = "DEBIT";
@@ -34,13 +40,13 @@ void balance::getBalance(QNetworkReply *reply)
 
     }
     qDebug()<<"balance is: "<<bal;
+    emit sendToMain(bal);
 
     ui->label->setText(bal);
 
     reply->deleteLater();
     getManager->deleteLater();
 
-    emit sendToMain(bal);
     /*QByteArray response_data=reply->readAll();
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     QJsonArray json_array = json_doc.array();
@@ -60,12 +66,11 @@ void balance::getBalance(QNetworkReply *reply)
 
     reply->deleteLater();
     getManager->deleteLater();*/
-
 }
 
-void balance::clickHandler()
+void balance::clickBalanceHandler()
 {
-    int id = 1;
+    int id = 2;
     qDebug()<<"nappia painettu";
     QUrl url("http://localhost:3000/accounts/"+ QString::number(id));
     QNetworkRequest request(url);

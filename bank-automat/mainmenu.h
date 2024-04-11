@@ -30,6 +30,7 @@ public:
     QStandardItemModel *table_model;
     //transactions
     Transactions *test = nullptr;           //transactions
+    //balance
     balance *bal = nullptr;
 
     //restapi
@@ -43,7 +44,8 @@ private:
     Transactions *p_Transactions = nullptr; //transactions
     //withdrawCall
     withdrawCall *p_withdrawCall = nullptr;
-
+    //balance
+    balance *saldo = nullptr;
     //tableview
     QList<transactions> tableTransactions;  //transactions
     QList<database> tableData;
@@ -58,6 +60,9 @@ public slots:
     void sendTransactionRequest();
     void receiveTransactionData(QJsonArray);
     void displayData();
+    //balance slots
+    void sendBalanceRequest();
+    void showBalance(QString);
 
 public slots:
     void readTransactionValues(); // transactions
