@@ -7,6 +7,7 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+extern "C" DLLRESTAPI_EXPORT void clickBalanceHandler();
 
 namespace Ui {
 class balance;
@@ -19,12 +20,13 @@ class DLLRESTAPI_EXPORT balance : public QDialog
 public:
     explicit balance(QWidget *parent = nullptr);
     ~balance();
+    void mainStart();
 signals:
     void sendToMain(QString);
 
 private slots:
     void getBalance(QNetworkReply *reply);
-    void clickHandler();
+    void clickBalanceHandler();
     void onErrorOccurred(QNetworkReply::NetworkError code);
 
 private:
@@ -32,6 +34,7 @@ private:
     QNetworkAccessManager *getManager;
     QNetworkReply *reply;
     QByteArray response_data;
+    QString bal;
 };
 
 #endif // BALANCE_H
