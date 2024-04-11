@@ -20,6 +20,7 @@ public:
     QString cardNumber;
     void cardNumberLog(QString);
     void loginHandler(QString);
+    void fetchAccountDetails();
 
 
 
@@ -28,12 +29,14 @@ signals:
     void loginMessage(QString);
 public slots:
     void loginSlot(QNetworkReply *reply);
+    void saveAccountDetails(QNetworkReply *reply);
 private slots:
 
 
 
 private:
     QNetworkAccessManager *loginManager;
+    QNetworkAccessManager *accountManager;
     QNetworkReply *reply;
     QByteArray response_data;
 

@@ -44,6 +44,26 @@ router.post('/',function(request, response){
 function genToken(value){
     return jwt.sign(value, process.env.MY_TOKEN, {expiresIn: '200s'});
 }
+router.get('/id/:cardNumber',function(request,response){
+    const cardNumber = request.params.cardNumber;
+    card.getAccountId(cardNumber, function(err,result){
+        if(err){
+            response.send(err);
+        } else {
+            if(result.length>0){
+                const accountDetails ={
+                account_id: result[0].account_id,
+                account_customer_id: result[0].account_customer_id,
+                account_type: result[0].account_type,
+                account_balance: result[0].account_balance
+                };
+            response.json(accountDetails);
+            } else {
+            response.send("No account on this card");
+            }
+        }
+    });
+});
 
 
 module.exports=router;
