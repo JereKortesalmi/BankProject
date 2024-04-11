@@ -1,4 +1,4 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `transfer_procedure3`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transfer_procedure`(
 	IN sender_id INT,
     IN recipient_id INT,
     IN amount DECIMAL(10, 2),
