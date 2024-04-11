@@ -37,8 +37,8 @@ public:
     void setTransaction_amount(const QString &newTransaction_amount);
 
 private:
-    QString transaction_account_id;         // vielä häikkää. Pitääkö lukea numerona?
-    QString transactions_atm_id;            // vielä häikkää. Pitääkö lukea numerona?
+    QString transaction_account_id;
+    QString transactions_atm_id;
     QString transaction_time;
     QString transaction_type;
     QString transaction_amount;

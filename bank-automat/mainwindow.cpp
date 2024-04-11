@@ -37,7 +37,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
     //p_mainMenu->show();
+
 
     ui->tableViewTransactions->hide();
 
@@ -83,6 +85,8 @@ void MainWindow::loginInfo(QString res)
     qDebug()<<"login vastaus: "<<token;
     pin->hide();
     //creditDebit->show();
+    //p_mainMenu->show();
+    qDebug()<<cardNumber;
     p_mainMenu->show();
 }
 
