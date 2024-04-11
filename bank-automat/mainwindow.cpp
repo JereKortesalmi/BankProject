@@ -85,12 +85,9 @@ void MainWindow::loginInfo(QString res)
     qDebug()<<"login vastaus: "<<token;
     pin->hide();
     //creditDebit->show();
-<<<<<<< HEAD
     //p_mainMenu->show();
     qDebug()<<cardNumber;
-=======
     p_mainMenu->show();
->>>>>>> origin
 }
 
 void MainWindow::loginMessageToPinCode(QString message)
