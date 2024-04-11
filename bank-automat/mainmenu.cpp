@@ -21,11 +21,11 @@ mainMenu::mainMenu(QWidget *parent) :
     withdrawCall *p_withdrawCall = new withdrawCall(this);
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawSignalReceived()));
 
-    requestRec->wit.sendTransaction(token,5,20.00);
+
 
     //p_withdrawCall->sendTransaction(token, 5, 20.00);
 
-    requestRec->wit.getAtmInfo(token,1);
+    //requestRec->wit.getAtmInfo(token,1);
     //p_withdrawCall->getAtmInfo(token,1);
 
     //transactions signals and slots with button push
@@ -43,10 +43,11 @@ mainMenu::mainMenu(QWidget *parent) :
     ui->balanceLabel->hide();
     ui->btn_transactions->move(800,200);
     //ui->tableViewTransactions->size() = QSize(100,100);
-
+    //ui->btn_withdraw
+    connect(ui->btn_withdraw, SIGNAL(clicked(bool)), this, SLOT(withdrawClicked()));
     ui->label_withdraw->hide();
     ui->label_withdraw->move(80,200);
-    ui->label_withdraw->show();
+
 
 }
 
@@ -58,6 +59,27 @@ mainMenu::~mainMenu()
 void mainMenu::withdrawSignalReceived()
 {
     qDebug()<<"Reading was done. So no error was received.";
+
+}
+
+void mainMenu::withdrawClicked()
+{
+    QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
+    ui->label_withdraw->show();
+    requestRec->wit.sendTransaction(token,5,20.00);
+    requestRec->wit.clearBills();
+    requestRec->wit.checkBills(160);
+
+    qDebug() << "Setelien määrä 20: " <<requestRec->wit.bills_20;
+    qDebug() << "setelien määrä 50: " << requestRec->wit.bills_50;
+    qDebug() << "Setelien määrä 100: " << requestRec->wit.bills_100;
+    qDebug() << "Setelien määrä 200: " << requestRec->wit.bills_200;
+
+    qDebug() << "Noston määräämät setelit: ";
+    qDebug() << "20: " << requestRec->wit.set_20_bills;
+    qDebug() << "50: " << requestRec->wit.set_50_bills;
+    qDebug() << "100: " << requestRec->wit.set_100_bills;
+    qDebug() << "200: " << requestRec->wit.set_200_bills;
 
 }
 
