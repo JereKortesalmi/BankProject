@@ -20,9 +20,12 @@ class DLLRESTAPI_EXPORT Transactions : public QDialog
     Q_OBJECT
 
 public:
-    explicit Transactions(QWidget *parent = nullptr);
+    //explicit Transactions(QWidget *parent = nullptr);
+    Transactions();
     //explicit Transactions(QList<transactions> *table);
     ~Transactions();
+
+    void requestTrasactions(int accountId);
 
 private slots:
     void clickHandler();

@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
+    //connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
     //p_mainMenu->show();
 
 
@@ -65,9 +65,9 @@ void MainWindow::disconnectSerial()
 
 void MainWindow::sendTransactionRequest()
 {
-    test = new Transactions(this);
+    test = new Transactions();
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
-    test->show();
+    //test->show();
 }
 
 void MainWindow::cardNumberHand()
