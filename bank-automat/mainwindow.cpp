@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->tableViewTransactions->hide();
-
 }
 
 MainWindow::~MainWindow()
