@@ -26,6 +26,7 @@ private slots:
     void revertHandler();
 
 
+
 private:
     Ui::PinCode *ui;
     QString number;

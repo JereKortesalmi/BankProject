@@ -25,6 +25,8 @@ public:
 
 signals:
     void sendSignalLogin(QString);
+    void loginError(QString);
+    void loginWrong(QString);
 
 public slots:
     void loginSlot(QNetworkReply *reply);

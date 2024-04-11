@@ -14,7 +14,7 @@ router.post('/',function(request, response){
                 response.json(err.errno);
             }
             else{
-                if(result.length >0){
+                if(result.length >0 && logginglock < 3){
                    bcrypt.compare(request.body.card_pin, result[0].card_pin, function(err, compareResult){
                         if(compareResult){
                             console.log('Kirjautuminen ok');
@@ -22,6 +22,7 @@ router.post('/',function(request, response){
                             response.send(token);
                         }
                         else {
+                            logginglock++
                             console.log("Väärä pinkoodi");
                             response.send(false);
                         }
