@@ -85,6 +85,7 @@ void MainWindow::loginInfo(QString res)
     pin->hide();
     //creditDebit->show();
     //p_mainMenu->show();
+    qDebug()<<cardNumber;
 }
 
 void MainWindow::sendBalanceRequest()

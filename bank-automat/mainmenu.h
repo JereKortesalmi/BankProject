@@ -52,6 +52,7 @@ private:
 public slots:
     //withdrawCall
     void withdrawSignalReceived();
+    void withdrawClicked();
 
     //tableview
     void sendTransactionRequest();

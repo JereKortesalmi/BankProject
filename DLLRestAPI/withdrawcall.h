@@ -19,8 +19,8 @@ public:
     QByteArray getResponse_data() const;
 
 
-    int bills_20 = 10;
-    int bills_50 = 10;
+    int bills_20 = 100;
+    int bills_50 = 100;
     int bills_100 = 10;
     int bills_200 = 10;
 
@@ -37,6 +37,8 @@ public:
     int withdrawAmount = 0;
 
     void checkBills(int withdrawal);
+    void clearBills();
+    void removeBills();
 
 private:
     QNetworkAccessManager *w_manager;
