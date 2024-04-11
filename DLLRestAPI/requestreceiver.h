@@ -22,6 +22,7 @@ public:
     login log;
     Transactions tra;
     withdrawCall wit;
+    balance bal;
 
 private:
 

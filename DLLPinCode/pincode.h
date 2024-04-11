@@ -15,7 +15,7 @@ public:
     explicit PinCode(QWidget *parent = nullptr);
     ~PinCode();
 
-
+    void pinMessage(QString);
 
 signals:
     void sendPinCodeToMainWindow(QString);
