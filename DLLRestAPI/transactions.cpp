@@ -1,7 +1,7 @@
 #include "transactions.h"
-#include "ui_transactions.h"
+//#include "ui_transactions.h"
 #include <QDebug>
-
+/*
 Transactions::Transactions(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Transactions)
@@ -17,17 +17,37 @@ Transactions::Transactions(QWidget *parent)
     //connect(manager, SIGNAL(finished(QNetworkReply*)),
     //        this, SLOT(onManagerFinished(QNetworkReply*)));
 }
-/*
+
 Transactions::Transactions(QList<transactions> *table)
 {
     qDebug()<<"table should be received.";
     //qDebug() << table[0].getTransactions_atm_id();
 }
 */
+Transactions::Transactions() {
+    qDebug()<<"Transactions luotu";
+}
 Transactions::~Transactions()
 {
     qDebug()<<"Tuhottu";
-    delete ui;
+    //delete ui;
+}
+
+void Transactions::requestTrasactions(int accountId)
+{
+    qDebug() << QString::number(accountId);
+    manager = new QNetworkAccessManager();
+    //connect(ui->btn_transactions, &QPushButton::clicked, this, &Transactions::clickHandler);
+    //connect(ui->btn_transactions,SIGNAL(clicked(bool)),
+    //        this,SLOT(clickHandler()));
+
+    connect(manager, &QNetworkAccessManager::finished,
+            this, &Transactions::onManagerFinished);
+
+    QUrl url("http://localhost:3000/transaction");
+    QNetworkRequest request(url);
+    reply = manager->get(request);
+    connect(reply, SIGNAL(QNetworkReply::errorOccurred(QNetworkReply::NetworkError)), this, SLOT(Transactions::onErrorOccurred(QNetworkReply::NetworkError)));
 }
 
 void Transactions::clickHandler()
@@ -60,10 +80,11 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
         transactions += json_obj["transaction_type"].toString()+" | ";
         transactions += json_obj["transaction_amount"].toString()+"\n";
     }
-    ui->txt_transactions->setText(transactions);
+    //ui->txt_transactions->setText(transactions);
 
     emit ResponseToMain(json_array);
     qDebug()<<"Vastattu";
+    manager->deleteLater();
 }
 
 void Transactions::onErrorOccurred(QNetworkReply::NetworkError code)

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="creditbtn">
+  <widget class="QPushButton" name="btnCredit">
    <property name="geometry">
     <rect>
      <x>200</x>
@@ -26,10 +26,10 @@
     <string>Credit</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="debitbtn">
+  <widget class="QPushButton" name="btnDebit">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>330</x>
      <y>170</y>
      <width>80</width>
      <height>24</height>
@@ -43,13 +43,39 @@
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>80</y>
-     <width>201</width>
+     <y>100</y>
+     <width>211</width>
      <height>51</height>
     </rect>
    </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>85</green>
+         <blue>0</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive/>
+     <disabled/>
+    </palette>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Valitse haluamasi tili:</string>
    </property>
   </widget>
  </widget>
