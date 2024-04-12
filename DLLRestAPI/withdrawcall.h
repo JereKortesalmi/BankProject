@@ -34,6 +34,11 @@ public:
     int amount_100;
     int amount_200;
 
+    bool usable_20;
+    bool usable_50;
+    bool usable_100;
+    bool usable_200;
+
     int withdrawAmount = 0;
 
     void checkBills(int withdrawal);

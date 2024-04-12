@@ -63,6 +63,8 @@ public slots:
     //balance slots
     void sendBalanceRequest();
     void showBalance(QString);
+    //hide
+    void hideShown();
 
 public slots:
     void readTransactionValues(); // transactions

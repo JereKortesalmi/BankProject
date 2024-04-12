@@ -130,6 +130,19 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnClose">
+   <property name="geometry">
+    <rect>
+     <x>1020</x>
+     <y>500</y>
+     <width>121</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CLOSE REQUEST</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
