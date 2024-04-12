@@ -176,12 +176,89 @@ void withdrawCall::clearBills()
 
 void withdrawCall::removeBills()
 {
-    if(bills_200 >= set_200_bills && bills_100>=set_100_bills && bills_50 >= set_50_bills && bills_20 >= set_20_bills) {
+    usable_200 = true;
+    usable_100 = true;
+    usable_50 = true;
+    usable_20 = true;
+    if(bills_200 >= set_200_bills) {
+        usable_200 = true;
+    }
+    else {
+        usable_200 = false;
+    }
+
+    if(bills_100 >= set_100_bills) {
+        usable_100 = true;
+    }
+    else {
+        usable_100 = false;
+    }
+
+    if(bills_50 >= set_50_bills) {
+        usable_50 = true;
+    }
+    else {
+        usable_50 = false;
+    }
+    if(bills_20 >= set_20_bills) {
+        usable_20 = true;
+    }
+    else {
+        usable_20 = false;
+    }
+
+    if(usable_200 && usable_100 && usable_50 && usable_20) {
         bills_200 = bills_200 - set_200_bills;
         bills_100 = bills_100 - set_100_bills;
         bills_50 = bills_50 - set_50_bills;
         bills_20 = bills_20 - set_20_bills;
     }
+    else {
+        if(!usable_200) {
+            if(bills_100>=(set_100_bills+set_100_bills*2)) {
+                set_100_bills=set_100_bills + (set_100_bills*2);
+            }
+            else if(bills_50>=(set_50_bills+set_50_bills*4)) {
+                set_50_bills=set_50_bills+(set_50_bills*4);
+            }
+            else if(bills_20>=(set_20_bills+set_20_bills*10)) {
+                set_20_bills=set_20_bills+(set_20_bills*10);
+            }
+        }
+        if(!usable_100) {
+            if(bills_200>=(set_200_bills+(set_100_bills/2))){
+                set_200_bills=set_200_bills+(set_100_bills/2);
+            }
+            else if(bills_50>=(set_50_bills+(set_100_bills*2))) {
+                set_50_bills=set_50_bills+(set_100_bills*2);
+            }
+            else if(bills_20>=(set_20_bills+(set_100_bills*5))) {
+                set_20_bills=set_20_bills+(set_20_bills*5);
+            }
+        }
+        if(!usable_50) {
+            if(bills_200>=(set_200_bills+(set_200_bills/4))) {
+                set_200_bills=set_200_bills+(set_50_bills/4);
+            }
+            else if(bills_100>=(set_100_bills+(set_50_bills/2))) {
+                set_100_bills = set_100_bills+(set_50_bills/2);
+            }
+            else if(bills_20>= (set_20_bills+(set_20_bills/5))) {
+                set_20_bills = set_200_bills+(set_20_bills/5);
+            }
+        }
+        if(!usable_20) {
+            if(bills_50>=(set_50_bills+(set_20_bills/5))) {
+                set_50_bills=(set_50_bills+(set_20_bills/5));
+            }
+        }
+
+
+        // can't give out bills
+    }
+
+
+    /*
     else {
         // some bills aren't enough, let's see which one.
         QList<int> test;
@@ -243,6 +320,7 @@ void withdrawCall::removeBills()
 
         }
     }
+    */
 }
 
 void withdrawCall::onManagerFinished(QNetworkReply *reply)
