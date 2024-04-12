@@ -56,5 +56,31 @@ router.delete('/:id', function(request, response){
         }
     });
 });
+
+router.get('/getaccountid/:cardNumber',function(request,response){
+    const cardNumber = request.params.cardNumber;
+    course.getAccountId(cardNumber, function(err,result){
+        if(err){
+            response.send(err);
+        } else {
+            if(result.length>0){
+                let accounts = [];
+
+                result.forEach(row => {
+                    const accountDetails ={
+                        account_id: row.account_id,
+                        account_customer_id: row.account_customer_id,
+                        account_type: row.account_type,
+                        account_balance: row.account_balance                  
+                };
+                    accounts.push(accountDetails);
+                });
+            response.json(accounts);
+            } else {
+            response.send("No account on this card");
+            }
+        }
+    });
+});
    
    module.exports=router;

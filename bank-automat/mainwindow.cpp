@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
+    //connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
     //p_mainMenu->show();
 
 
@@ -65,9 +65,9 @@ void MainWindow::disconnectSerial()
 
 void MainWindow::sendTransactionRequest()
 {
-    test = new Transactions(this);
+    test = new Transactions();
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveData(QJsonArray)));
-    test->show();
+    //test->show();
 }
 
 void MainWindow::cardNumberHand()
@@ -87,6 +87,9 @@ void MainWindow::loginInfo(QString res)
     //creditDebit->show();
     //p_mainMenu->show();
     p_mainMenu->show();
+    qDebug()<<cardNumber;
+    //p_mainMenu->show();
+    fetchAccountDetails();
 }
 
 void MainWindow::loginMessageToPinCode(QString message)
@@ -174,6 +177,33 @@ void MainWindow::receivePinNumber(QString val)
 
 }
 
+void MainWindow::fetchAccountDetails()
+{
+    QString url="http://localhost:3000/accounts/getaccountid/" + cardNumber;
+    QNetworkRequest request(url);
+    accountManager = new QNetworkAccessManager(this);
+    connect(accountManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(saveAccountDetails(QNetworkReply*)));
+    reply = accountManager->get(request);
+    qDebug() << "Fetching account details...";
+
+}
+
+void MainWindow::saveAccountDetails(QNetworkReply *reply)
+{
+    QByteArray response_data=reply->readAll();
+    qDebug()<<"Response data: "<<response_data;
+    QJsonDocument jsonResponse_data = QJsonDocument::fromJson(response_data);
+    QJsonArray jsonArray = jsonResponse_data.array();
+    if(jsonResponse_data.isObject()){
+        p_mainMenu->show();
+        QJsonObject jsonObject = jsonResponse_data.object();
+        int accountId = jsonObject.value("account_id").toInt();
+    } else if(jsonResponse_data.isArray()){
+        creditDebit->show();
+        creditDebit->selectAccountHandler(jsonArray);
+        QJsonArray jsonArray = jsonResponse_data.array();
+    }
+}
 
 
 

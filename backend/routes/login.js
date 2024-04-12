@@ -46,5 +46,4 @@ function genToken(value){
     return jwt.sign(value, process.env.MY_TOKEN, {expiresIn: '200s'});
 }
 
-
 module.exports=router;

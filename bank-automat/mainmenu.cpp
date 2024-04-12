@@ -10,7 +10,7 @@ mainMenu::mainMenu(QWidget *parent) :
 
 
     ui->setupUi(this);
-    Transactions *p_Transactions = new Transactions(this);
+    //Transactions *p_Transactions = new Transactions();
 
     // näytetään Transactions-ikkuna
     //p_Transactions->show();
@@ -48,6 +48,7 @@ mainMenu::mainMenu(QWidget *parent) :
     ui->label_withdraw->hide();
     ui->label_withdraw->move(80,200);
 
+    connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(hideShown()));
 
 }
 
@@ -85,9 +86,13 @@ void mainMenu::withdrawClicked()
 
 void mainMenu::sendTransactionRequest()
 {
-    test = new Transactions(this);
+    if(!tableTransactions.isEmpty()) {
+        tableTransactions.clear();
+    }
+    test = new Transactions();
+    test->requestTrasactions(1);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
-    test->show();
+    //test->show();
 }
 
 void mainMenu::receiveTransactionData(QJsonArray reply)
@@ -128,6 +133,7 @@ void mainMenu::displayData()
     ui->tableViewTransactions->setGeometry(350,0,450,200);
     ui->tableViewTransactions->move(280,200);
     ui->tableViewTransactions->show();
+
 }
 
 void mainMenu::readTransactionValues()
@@ -170,4 +176,11 @@ void mainMenu::showBalance(QString bal)
     qDebug()<<"mainwindow balance1: "<<balance1;
     ui->balanceLabel->setText(balance1);
     ui->balanceLabel->show();
+}
+
+void mainMenu::hideShown()
+{
+    ui->balanceLabel->hide();
+    ui->label_withdraw->hide();
+    ui->tableViewTransactions->hide();
 }
