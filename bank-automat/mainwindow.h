@@ -36,6 +36,7 @@ public:
     ~MainWindow();
 
     QStandardItemModel *table_model;
+    void fetchAccountDetails();
 
 private:
     Ui::MainWindow *ui;
@@ -63,6 +64,9 @@ private:
     //PINCODE
     PinCode *pin;
 
+    QNetworkAccessManager *accountManager;
+    QNetworkReply *reply;
+
 signals:
     void transactionsComplete();
     void transactionsTableReady();
@@ -81,5 +85,6 @@ private slots:
 
 public slots:
     void readTransactionValues();
+    void saveAccountDetails(QNetworkReply *reply);
 };
 #endif // MAINWINDOW_H
