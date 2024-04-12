@@ -35,42 +35,6 @@ void login::loginHandler(QString p)
     reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
-void login::fetchAccountDetails()
-{
-    QString url="http://localhost:3000/id/" + cardNumber;
-    QNetworkRequest request(url);
-    //QUrlQuery query;
-    //query.addQueryItem("card_number",cardNumber);
-
-    //QUrl requestUrl(url);
-    //requestUrl.setQuery(query.query());
-
-    //QNetworkRequest request(requestUrl);
-    accountManager = new QNetworkAccessManager(this);
-    connect(accountManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(saveAccountDetails(QNetworkReply*)));
-    reply = accountManager->get(request);
-    qDebug() << "Fetching account details...";
-
-}
-
-void login::saveAccountDetails(QNetworkReply *reply)
-{
-    QByteArray response_data=reply->readAll();
-    qDebug()<<"Response data: "<<response_data;
-    QJsonDocument jsonResponse_data = QJsonDocument::fromJson(response_data);
-    QJsonObject jsonObject = jsonResponse_data.object();
-    QString acc;
-    /*acc = "Account | Type | Balance";
-    foreach (const QJsonValue &value, jsonResponse_data) {
-        QJsonObject json_obj = value.toObject();
-        acc += QString::number(json_obj["account_id"].toInt())+"  |  ";
-        acc += QString::number(json_obj["account_customer_id"].toInt())+"   | ";
-        acc +=json_obj["account_type"].toString()+" | ";
-        acc +=json_obj["account_balance"].toString()+"\n";
-    }*/
-    qDebug()<<"Response data: "<<response_data;
-}
-
 void login::loginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
@@ -86,7 +50,6 @@ void login::loginSlot(QNetworkReply *reply)
         if(response_data!="false"){
             //kirjautuminen onnistui
             emit sendSignalLogin(response_data);
-            fetchAccountDetails();
         }
         else{
             QString message = "Korttinumero/pin ei täsmää";

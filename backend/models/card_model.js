@@ -39,9 +39,6 @@ const card={
     },
     getAccountId(cardNumber,callback){
         return db.query("select account_id, account_customer_id, account_type, account_balance from account inner join accounts_to_cards on account_id=reference_account_id inner join card on reference_card_id=card_id where card_number=?",[cardNumber],callback);
-    },
-    getAccount(cardNumber,callback){
-        return db.query("SELECT * FROM account inner join accounts_to_cards on account_id=reference_account_id inner join card on reference_card_id=card_id WHERE card_number=?",[cardNumber],callback);
     }
 }
 

@@ -1,8 +1,14 @@
 #ifndef CREDITDEBITQ_H
 #define CREDITDEBITQ_H
-
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QDialog>
-
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
+#include <QObject>
+#include <QDebug>
+#include <mainmenu.h>
 
 namespace Ui {
 class creditdebitq;
@@ -16,11 +22,21 @@ public:
     explicit creditdebitq(QWidget *parent = nullptr);
     ~creditdebitq();
 
+    void selectAccountHandler(const QJsonArray jsonArray);
+signals:
+    void accountSelected(int accountId);
+
 private slots:
-    void on_creditbtn_clicked();
+    void onCreditButtonClicked();
+    void onDebitButtonClicked();
 
 private:
     Ui::creditdebitq *ui;
+    int selectedAccountId = -1;
+    void selectAccount();
+    QJsonArray jsonArray;
+    mainMenu *mainmenu;
+    QString accountType;
 };
 
 #endif // CREDITDEBITQ_H
