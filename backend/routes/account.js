@@ -82,16 +82,5 @@ router.get('/getaccountid/:cardNumber',function(request,response){
         }
     });
 });
-
-router.get('/:cardNumber',function(request,response){
-    const cardNumber = request.body.card_number;
-    course.getByCardNumber(cardNumber, function(err,result){
-        if(err){
-            response.send(err);
-        } else {
-            response.send(result);
-        }
-    });
-});
    
    module.exports=router;
