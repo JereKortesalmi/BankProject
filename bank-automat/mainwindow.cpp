@@ -194,14 +194,15 @@ void MainWindow::saveAccountDetails(QNetworkReply *reply)
     qDebug()<<"Response data: "<<response_data;
     QJsonDocument jsonResponse_data = QJsonDocument::fromJson(response_data);
     QJsonArray jsonArray = jsonResponse_data.array();
-    if(jsonResponse_data.isObject()){
+    if(jsonArray.size() == 1){
         p_mainMenu->show();
         QJsonObject jsonObject = jsonResponse_data.object();
         int accountId = jsonObject.value("account_id").toInt();
-    } else if(jsonResponse_data.isArray()){
+    } else if(jsonArray.size() == 2){
+        QJsonArray jsonArray = jsonResponse_data.array();
         creditDebit->show();
         creditDebit->selectAccountHandler(jsonArray);
-        QJsonArray jsonArray = jsonResponse_data.array();
+
     }
 }
 
