@@ -42,6 +42,7 @@ public:
     int withdrawAmount = 0;
 
     void checkBills(int withdrawal);
+    bool checkBillsAvailable();
     void clearBills();
     void removeBills();
 
