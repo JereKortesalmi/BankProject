@@ -72,10 +72,18 @@ QByteArray withdrawCall::getResponse_data() const
 
 void withdrawCall::checkBills(int withdrawal)
 {
+    qDebug()<<"checkBills()";
     //int original = withdrawal;
     withdrawAmount = withdrawal;
+    bool test = checkBillsAvailable();
+    if(test==true) {
+        removeBills();
+    }
+    else {
+        qDebug()<<"No bills to give";
+    }
 
-    while(withdrawAmount != 0) {
+   /* while(withdrawAmount != 0) {
         if(withdrawAmount>=200 )  {
             if((withdrawAmount % 200)==0) {
                 set_200_bills++;
@@ -154,8 +162,8 @@ void withdrawCall::checkBills(int withdrawal)
             withdrawAmount = 0;
         }
     }
+    */
 
-    removeBills();
     /*
     qDebug()<<"Noston määrä: " << original;
     qDebug()<<"Setelit: ";
@@ -166,6 +174,241 @@ void withdrawCall::checkBills(int withdrawal)
     */
 }
 
+bool withdrawCall::checkBillsAvailable()
+{
+    qDebug()<<"checkBillsAvailable()";
+    qDebug() << "withdraw Amount = " << withdrawAmount;
+    int original = 0;
+
+// WITHDRAW SET BILLS
+
+    if(bills_200 > 0) {
+        usable_200 = true;
+    }
+    else {
+        usable_200 = false;
+    }
+    if(bills_100 > 0) {
+        usable_100 = true;
+    }
+    else {
+        usable_100=false;
+    }
+    if(bills_50 > 0) {
+        usable_50 = true;
+    }
+    else {
+        usable_50 = false;
+    }
+    if(bills_20 > 0) {
+
+        usable_20 = true;
+    }
+    else {
+        usable_20 = false;
+    }
+
+    while(withdrawAmount >= 200 && usable_200) {
+        qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
+        if(bills_200 >= set_200_bills) {
+                usable_200 = true;
+        }
+        else {
+            usable_200 = false;
+            break;
+        }
+
+        if(usable_200==true) {
+            if(((withdrawAmount) >= 200)) {
+                if((withdrawAmount % 200) == 10) {
+                    if(bills_20 >= (set_20_bills + 3)) {
+                        set_20_bills = set_20_bills+3;
+                        withdrawAmount = withdrawAmount-60;
+                    }
+                }
+                else if(((withdrawAmount) % 200) == 50) {
+                    if(bills_50>= set_50_bills+1 && bills_200 >= set_200_bills) {
+                        set_50_bills++;
+                        set_200_bills++;
+                        usable_200=true;
+                        usable_50=true;
+                        withdrawAmount = withdrawAmount-250;
+                    }
+
+                }
+                else if(((withdrawAmount) % 200) > 100) {
+                    if(bills_200>=set_200_bills) {
+                        set_200_bills++;
+                        withdrawAmount = withdrawAmount - 200;
+                        usable_200 = true;
+                    }
+                }
+                else {
+                    set_200_bills++;
+                    withdrawAmount = withdrawAmount -200;
+                }
+
+            }
+
+            else {
+
+            }
+
+        }
+        else {
+            break;
+        }
+
+    } // while 200
+
+
+    while(withdrawAmount >= 100 && usable_100) {
+        qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
+
+        if(bills_100 >= set_100_bills) {
+            usable_100 = true;
+        }
+         else {
+            usable_100 = false;
+            break;
+        }
+        if(usable_100 == true) {
+            if(((withdrawAmount) >= 100) && usable_100) {
+                if(((withdrawAmount-original) % 100) == 10) {
+                    if(bills_20 >= (set_20_bills+3)) {
+                        set_20_bills = set_20_bills +3;
+                        withdrawAmount = withdrawAmount -60;
+                        usable_20=true;
+                    }
+
+                }
+                 /*
+                else if(((withdrawAmount) % 100) == 50){
+                    set_50_bills++;
+                    set_100_bills++;
+                    withdrawAmount = withdrawAmount -150;
+                }
+                */
+                else {
+                    if(bills_100 >= (set_100_bills++ )) {
+                        set_100_bills++;
+                        withdrawAmount = withdrawAmount -100;
+                        usable_100 = true;
+                    }
+            }
+            }
+            else {
+                usable_100 = false;
+            }
+        }
+        else {
+            break;
+        }
+    } // while 100
+
+    while(withdrawAmount >= 50 && usable_50)  {
+
+        qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
+
+        if(bills_50 >= set_50_bills) {
+            usable_50 = true;
+        }
+        else {
+            usable_50 = false;
+            break;
+        }
+        if(usable_50 == true) {
+            if(((withdrawAmount) >= 50)) {
+                if((withdrawAmount % 50) == 10) {
+                    if(bills_20 >= (set_20_bills+3)) {
+                        if(bills_20 >= set_20_bills+3) {
+                            set_20_bills = set_20_bills+3;
+                            withdrawAmount=withdrawAmount-60;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    if(bills_50 >= set_50_bills++) {
+                        set_50_bills++;
+                        withdrawAmount=withdrawAmount-50;
+                        usable_50 = true;
+                    }
+                    else {
+                        usable_50 = false;
+                        return false;
+                    }
+                }
+
+            }
+            else {
+                usable_50 = false;
+            }
+        }
+        else {
+            break;
+        }
+    } // while 50
+    while(withdrawAmount>=20 && usable_20) {
+
+        qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
+
+        if(bills_20 >= set_20_bills) {
+            usable_20 = true;
+        }
+        else {
+            usable_20 = false;
+            return false;
+        }
+        if(usable_20 == true) {
+
+            if(((withdrawAmount) >= 20)) {
+                if(((withdrawAmount) % 20 ) == 10) {
+
+                    set_20_bills = false;
+                    return false;
+                    break;
+                }
+                else {
+                    if(bills_20 >= set_20_bills++) {
+                        set_20_bills++;
+                        withdrawAmount = withdrawAmount-20;
+                        usable_20=true;
+                    }
+                    else {
+                        usable_20=false;
+                        return false;
+                    }
+                }
+            }
+            else {
+                usable_20 = false;
+            }
+        }
+        else {
+            break;
+        }
+    } // while 20
+
+    /*
+    if(usable_200 && usable_100 && usable_50 && usable_20) {
+    return true;
+    }
+    else {
+    return false;
+    }
+    *
+    */
+
+    if(!usable_200 && !usable_100 && usable_50 && usable_20) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
 void withdrawCall::clearBills()
 {
     set_20_bills = 0;
@@ -176,86 +419,19 @@ void withdrawCall::clearBills()
 
 void withdrawCall::removeBills()
 {
-    usable_200 = true;
-    usable_100 = true;
-    usable_50 = true;
-    usable_20 = true;
-    if(bills_200 >= set_200_bills) {
-        usable_200 = true;
-    }
-    else {
-        usable_200 = false;
-    }
 
-    if(bills_100 >= set_100_bills) {
-        usable_100 = true;
-    }
-    else {
-        usable_100 = false;
-    }
+    qDebug()<<"Remove bills: ";
 
-    if(bills_50 >= set_50_bills) {
-        usable_50 = true;
-    }
-    else {
-        usable_50 = false;
-    }
-    if(bills_20 >= set_20_bills) {
-        usable_20 = true;
-    }
-    else {
-        usable_20 = false;
-    }
+    bills_200 = bills_200-set_200_bills;
+    bills_100 = bills_100-set_100_bills;
+    bills_50 = bills_50-set_50_bills;
+    bills_20 = bills_20-set_20_bills;
 
-    if(usable_200 && usable_100 && usable_50 && usable_20) {
-        bills_200 = bills_200 - set_200_bills;
-        bills_100 = bills_100 - set_100_bills;
-        bills_50 = bills_50 - set_50_bills;
-        bills_20 = bills_20 - set_20_bills;
-    }
-    else {
-        if(!usable_200) {
-            if(bills_100>=(set_100_bills+set_100_bills*2)) {
-                set_100_bills=set_100_bills + (set_100_bills*2);
-            }
-            else if(bills_50>=(set_50_bills+set_50_bills*4)) {
-                set_50_bills=set_50_bills+(set_50_bills*4);
-            }
-            else if(bills_20>=(set_20_bills+set_20_bills*10)) {
-                set_20_bills=set_20_bills+(set_20_bills*10);
-            }
-        }
-        if(!usable_100) {
-            if(bills_200>=(set_200_bills+(set_100_bills/2))){
-                set_200_bills=set_200_bills+(set_100_bills/2);
-            }
-            else if(bills_50>=(set_50_bills+(set_100_bills*2))) {
-                set_50_bills=set_50_bills+(set_100_bills*2);
-            }
-            else if(bills_20>=(set_20_bills+(set_100_bills*5))) {
-                set_20_bills=set_20_bills+(set_20_bills*5);
-            }
-        }
-        if(!usable_50) {
-            if(bills_200>=(set_200_bills+(set_200_bills/4))) {
-                set_200_bills=set_200_bills+(set_50_bills/4);
-            }
-            else if(bills_100>=(set_100_bills+(set_50_bills/2))) {
-                set_100_bills = set_100_bills+(set_50_bills/2);
-            }
-            else if(bills_20>= (set_20_bills+(set_20_bills/5))) {
-                set_20_bills = set_200_bills+(set_20_bills/5);
-            }
-        }
-        if(!usable_20) {
-            if(bills_50>=(set_50_bills+(set_20_bills/5))) {
-                set_50_bills=(set_50_bills+(set_20_bills/5));
-            }
-        }
+    qDebug() << "Bills removed";
+
 
 
         // can't give out bills
-    }
 
 
     /*

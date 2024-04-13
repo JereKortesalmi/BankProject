@@ -69,7 +69,7 @@ void mainMenu::withdrawClicked()
     ui->label_withdraw->show();
     requestRec->wit.sendTransaction(token,5,20.00);
     requestRec->wit.clearBills();
-    requestRec->wit.checkBills(160);
+    requestRec->wit.checkBills(120);
 
     qDebug() << "Setelien määrä 20: " <<requestRec->wit.bills_20;
     qDebug() << "setelien määrä 50: " << requestRec->wit.bills_50;
