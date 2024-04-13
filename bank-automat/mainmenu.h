@@ -61,7 +61,6 @@ public slots:
     void receiveTransactionData(QJsonArray);
     void displayData();
     //balance slots
-    void sendBalanceRequest();
     void showBalance(QString);
     //hide
     void hideShown();

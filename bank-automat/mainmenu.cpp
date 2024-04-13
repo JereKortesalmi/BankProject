@@ -36,7 +36,7 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
     //balance signals
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
 
     //Kikkoja esityksen osoittamiseen..
     ui->tableViewTransactions->hide();
@@ -161,20 +161,15 @@ void mainMenu::readTransactionValues()
     emit transactionsComplete();
 }
 
-void mainMenu::sendBalanceRequest()
-{
-    saldo = new balance(this);
-    connect(saldo,SIGNAL(sendToMain(QString)),this,SLOT(showBalance(QString)));
-    qDebug()<<"lähetetään pyyntö balancesta";
-    //saldo->show();
-    saldo->mainStart();
-}
-
 void mainMenu::showBalance(QString bal)
 {
     QString balance1 = bal;
-    qDebug()<<"mainwindow balance1: "<<balance1;
+    //QString text = QString::number(balance1);
+    qDebug()<<"mainmenu balance1: "<<balance1;
     ui->balanceLabel->setText(balance1);
+    ui->balanceBrowser->setText(balance1);
+    ui->balanceLabel->adjustSize();
+    ui->balanceLabel->repaint();
     ui->balanceLabel->show();
 }
 
