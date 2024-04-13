@@ -116,16 +116,6 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QTextBrowser" name="balanceBrowser">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>380</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>
