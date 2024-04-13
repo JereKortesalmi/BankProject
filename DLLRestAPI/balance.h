@@ -7,7 +7,7 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
-extern "C" DLLRESTAPI_EXPORT void clickBalanceHandler();
+extern "C" DLLRESTAPI_EXPORT void clickBalanceHandler(int);
 
 namespace Ui {
 class balance;
@@ -20,18 +20,19 @@ class DLLRESTAPI_EXPORT balance : public QDialog
 public:
     explicit balance(QWidget *parent = nullptr);
     ~balance();
-    void mainStart();
+    void fetchAccountDetails(QString);
+public slots:
+    void saveAccountDetails(QNetworkReply *reply);
 signals:
-    void sendToMain(QString);
+    void sendAccountIdBalance(int,QString);
+    void opencreditdebitq(QJsonArray);
 
 private slots:
-    void getBalance(QNetworkReply *reply);
-    void clickBalanceHandler();
     void onErrorOccurred(QNetworkReply::NetworkError code);
 
 private:
     Ui::balance *ui;
-    QNetworkAccessManager *getManager;
+    QNetworkAccessManager *accountManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QString bal;

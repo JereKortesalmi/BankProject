@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QObject>
 #include <dllserialport.h>
 #include <dllrestapi.h>
 #include <QList>
@@ -36,7 +37,6 @@ public:
     ~MainWindow();
 
     QStandardItemModel *table_model;
-    void fetchAccountDetails();
 
 private:
     Ui::MainWindow *ui;
@@ -49,6 +49,7 @@ private:
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
+    balance *bal = nullptr;
     void connectSerial();
     void disconnectSerial();
 
@@ -82,9 +83,10 @@ private slots:
     void cardNumberHand();
     void loginInfo(QString);
     void loginMessageToPinCode(QString);
+    void accountIdSender(int, QString);
+    void creditdebitchoose(QJsonArray);
 
 public slots:
     void readTransactionValues();
-    void saveAccountDetails(QNetworkReply *reply);
 };
 #endif // MAINWINDOW_H
