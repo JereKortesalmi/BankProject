@@ -226,7 +226,7 @@ bool withdrawCall::checkBillsAvailable()
                         withdrawAmount = withdrawAmount-60;
                     }
                 }
-                else if(((withdrawAmount) % 200) == 50) {
+                /*else if(((withdrawAmount) % 200) == 50) {
                     if(bills_50>= set_50_bills+1 && bills_200 >= set_200_bills) {
                         set_50_bills++;
                         set_200_bills++;
@@ -236,6 +236,7 @@ bool withdrawCall::checkBillsAvailable()
                     }
 
                 }
+                */
                 else if(((withdrawAmount) % 200) > 100) {
                     if(bills_200>=set_200_bills) {
                         set_200_bills++;
@@ -244,8 +245,10 @@ bool withdrawCall::checkBillsAvailable()
                     }
                 }
                 else {
-                    set_200_bills++;
-                    withdrawAmount = withdrawAmount -200;
+                    if(bills_200 >= set_200_bills+1) {
+                        set_200_bills++;
+                        withdrawAmount = withdrawAmount -200;
+                    }
                 }
 
             }
@@ -290,19 +293,22 @@ bool withdrawCall::checkBillsAvailable()
                 }
                 */
                 else {
-                    if(bills_100 >= (set_100_bills++ )) {
+                    if(bills_100 >= (set_100_bills +1 )) {
                         set_100_bills++;
                         withdrawAmount = withdrawAmount -100;
                         usable_100 = true;
                     }
-            }
+                    else {
+                        usable_100 = false;
+                    }
+                }
             }
             else {
-                usable_100 = false;
+
             }
         }
         else {
-            break;
+            //break;
         }
     } // while 100
 
@@ -317,38 +323,32 @@ bool withdrawCall::checkBillsAvailable()
             usable_50 = false;
             break;
         }
-        if(usable_50 == true) {
-            if(((withdrawAmount) >= 50)) {
-                if((withdrawAmount % 50) == 10) {
-                    if(bills_20 >= (set_20_bills+3)) {
-                        if(bills_20 >= set_20_bills+3) {
-                            set_20_bills = set_20_bills+3;
-                            withdrawAmount=withdrawAmount-60;
-                        }
-                        else {
-                            return false;
-                        }
-                    }
+        if((withdrawAmount) >= 50 && usable_50) {
+            if((withdrawAmount % 50) == 10) {
+                if(bills_20 >= (set_20_bills+3)) {
+                        set_20_bills = set_20_bills+3;
+                        withdrawAmount=withdrawAmount-60;
                 }
                 else {
-                    if(bills_50 >= set_50_bills++) {
-                        set_50_bills++;
-                        withdrawAmount=withdrawAmount-50;
-                        usable_50 = true;
-                    }
-                    else {
-                        usable_50 = false;
-                        return false;
-                    }
+                    //return false;
                 }
-
             }
             else {
-                usable_50 = false;
+                if(bills_50 >= (set_50_bills + 1)) {
+                    set_50_bills++;
+                    withdrawAmount=withdrawAmount-50;
+                    usable_50 = true;
+                }
+                else {
+                    usable_50 = false;
+                    //return false;
+                }
             }
+
         }
         else {
-            break;
+            //usable_50 = false;
+            //return false;
         }
     } // while 50
     while(withdrawAmount>=20 && usable_20) {
@@ -364,7 +364,7 @@ bool withdrawCall::checkBillsAvailable()
         }
         if(usable_20 == true) {
 
-            if(((withdrawAmount) >= 20)) {
+            if((withdrawAmount) >= 20) {
                 if(((withdrawAmount) % 20 ) == 10) {
 
                     set_20_bills = false;
@@ -372,7 +372,7 @@ bool withdrawCall::checkBillsAvailable()
                     break;
                 }
                 else {
-                    if(bills_20 >= set_20_bills++) {
+                    if(bills_20 >= set_20_bills + 1) {
                         set_20_bills++;
                         withdrawAmount = withdrawAmount-20;
                         usable_20=true;
@@ -384,7 +384,7 @@ bool withdrawCall::checkBillsAvailable()
                 }
             }
             else {
-                usable_20 = false;
+                //usable_20 = false;
             }
         }
         else {
@@ -402,7 +402,7 @@ bool withdrawCall::checkBillsAvailable()
     *
     */
 
-    if(!usable_200 && !usable_100 && usable_50 && usable_20) {
+    if(!usable_200 && !usable_100 && !usable_50 && !usable_20) {
         return false;
     }
     else {
