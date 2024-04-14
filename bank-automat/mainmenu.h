@@ -39,6 +39,8 @@ public:
     //requestReceiver
     requestReceiver *requestRec = nullptr;
 
+    int accountId;
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions

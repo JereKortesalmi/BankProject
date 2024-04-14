@@ -90,7 +90,7 @@ void mainMenu::sendTransactionRequest()
         tableTransactions.clear();
     }
     test = new Transactions();
-    test->requestTrasactions(1);
+    test->requestTrasactions(accountId);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
 }

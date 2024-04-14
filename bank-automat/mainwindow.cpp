@@ -105,6 +105,7 @@ void MainWindow::accountIdSender(int accountId, QString balance)
     int id = accountId;
     QString bal = balance;
     qDebug()<<"accountIdSender id:"<<id;
+    p_mainMenu->accountId = id;
     p_mainMenu->showBalance(bal);
     p_mainMenu->show();
 
