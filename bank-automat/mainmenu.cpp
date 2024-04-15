@@ -304,10 +304,9 @@ void mainMenu::showBalance(QString bal)
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
     ui->balanceLabel->setText(balance1);
-    ui->balanceBrowser->setText(balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
-    ui->balanceLabel->show();
+    //ui->balanceLabel->show();
 }
 
 void mainMenu::hideShown()
