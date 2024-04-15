@@ -21,6 +21,7 @@
 #include <pincode.h>
 #include <login.h>
 #include <creditdebitq.h>
+#include <admin.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -50,6 +51,7 @@ private:
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;
     balance *bal = nullptr;
+    admin *adm =nullptr;
     void connectSerial();
     void disconnectSerial();
 
@@ -83,8 +85,9 @@ private slots:
     void cardNumberHand();
     void loginInfo(QString);
     void loginMessageToPinCode(QString);
-    void accountIdSender(int, QString);
+    void accountIdSender(int, QString, QString);
     void creditdebitchoose(QJsonArray);
+    void adminState();
 
 public slots:
     void readTransactionValues();
