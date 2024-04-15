@@ -39,6 +39,9 @@ public:
     //requestReceiver
     requestReceiver *requestRec = nullptr;
 
+    int accountId;
+    QByteArray token;
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions
