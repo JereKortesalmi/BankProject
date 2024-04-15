@@ -42,6 +42,7 @@ app.use('/login', loginRouter);
 app.use(authenticateToken);
 app.use('/atm', atmRouter);
 
+
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
