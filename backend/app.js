@@ -31,7 +31,7 @@ app.use('/card', cardRouter);
 //app.use(authenticateToken);
 
 app.use('/users', usersRouter);
-app.use('/atm', atmRouter);
+
 app.use('/transaction', transactionRouter);
 app.use('/accounts_to_cards',accounts_to_cardsRouter);
 app.use('/accounts', accountsRouter);
@@ -39,7 +39,8 @@ app.use('/customer', customerRouter);
 app.use('/transactions_per_account',transactions_per_accountRouter);
 app.use('/login', loginRouter);
 
-
+app.use(authenticateToken);
+app.use('/atm', atmRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']

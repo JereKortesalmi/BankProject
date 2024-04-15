@@ -35,30 +35,41 @@ void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
     connect(w_manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(onManagerFinished(QNetworkReply*)));
     connect(w_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
             this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
-    w_manager->deleteLater();
+    //w_manager->deleteLater();
 }
 
 void withdrawCall::getAtmInfo(QByteArray token, int id)
 {
+    /*qDebug()<<"getAtmInfo()";
     if (token.isEmpty()) {
         return;
     }
     else {
+    */
         qDebug() << "sending request for getAtmInfo with atmID: " << id;
-        QUrl url("http://localhost:3000/atm/" + QString::number(id));
+        QString wUrl = "http://localhost:3000/atm/" + QString::number(id);
+        QUrl url(wUrl);
         QNetworkRequest request(url);
 
         //WEBTOKEN ALKU
         myToken="Bearer "+token;
+        qDebug() << "before crash";
         request.setRawHeader(QByteArray("Authorization"),(myToken));
         //WEBTOKEN LOPPU
 
-        w_manager = new QNetworkAccessManager(this);
-        w_reply = w_manager->get(request);
-        connect(w_manager, SIGNAL(finished(QNetworkReply*)),this,SLOT(onManagerFinished(QNetworkReply*)));
-        connect(w_reply,SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
-                this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
-    }
+
+        atm_manager = new QNetworkAccessManager(this);
+        //connect(atm_manager, SIGNAL(finished(QNetworkReply*)),this,SLOT(onManagerFinished(QNetworkReply*)));
+        //connect(atm_reply,SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
+        //        this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
+        connect(atm_manager, SIGNAL(finished(QNetworkReply*)),
+                this, SLOT(atmManagerFinished(QNetworkReply*)));
+        atm_reply = atm_manager->get(request);
+        connect(atm_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
+                this,SLOT(atmErrorOccurred(QNetworkReply::NetworkError)));
+
+                qDebug() << "Is crash here?";
+    //}
 }
 
 withdrawCall::~withdrawCall()
@@ -527,4 +538,16 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
 void withdrawCall::onErrorOccurred(QNetworkReply::NetworkError code)
 {
     qDebug()<<"Network error:" << code;
+}
+
+void withdrawCall::atmManagerFinished(QNetworkReply *reply)
+{
+    qDebug() << "atm manager done";
+    QByteArray test = reply->readAll();
+    qDebug() << test;
+}
+
+void withdrawCall::atmErrorOccurred(QNetworkReply::NetworkError code)
+{
+    qDebug() << "atmError" << code;
 }

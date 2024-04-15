@@ -58,6 +58,8 @@ public slots:
     //withdrawCall
     void withdrawSignalReceived();
     void withdrawClicked();
+    void otherClicked();
+
 
     //tableview
     void sendTransactionRequest();
@@ -70,6 +72,7 @@ public slots:
 
 public slots:
     void readTransactionValues(); // transactions
+
 
 signals:
     void transactionsComplete();        //transactions
