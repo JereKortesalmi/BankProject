@@ -54,7 +54,8 @@ void login::loginSlot(QNetworkReply *reply)
         msgBox.exec();*/
     }
     else{
-        if(response_data!="false" && cardState == "1"){
+        if(response_data!="false"){
+            // && cardState == "1"
             //kirjautuminen onnistui
             emit sendSignalLogin(response_data);
         }
