@@ -20,6 +20,8 @@ public:
     QString cardNumber;
     void cardNumberLog(QString);
     void loginHandler(QString);
+    int accountLock;
+    int cardState;
 
 
 
@@ -28,6 +30,7 @@ signals:
     void loginMessage(QString);
 public slots:
     void loginSlot(QNetworkReply *reply);
+    void lockSlot(QNetworkReply *replys);
 private slots:
 
 
@@ -36,7 +39,11 @@ private:
     QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
     QByteArray response_data;
-
+/*
+    QNetworkAccessManager *lockManager;
+    QNetworkReply *replys;
+    QByteArray response_datas;
+*/
 
 };
 

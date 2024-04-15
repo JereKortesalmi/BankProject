@@ -8,13 +8,15 @@ dotenv.config();
 
 router.post('/',function(request, response){
     if(request.body.card_number && request.body.card_pin){
+        const cardstate = request.body.card_state;
+        console.log(cardstate);
         card.login(request.body.card_number, function(err,result){
             if(err){
                 console.log(err.errno);
                 response.json(err.errno);
             }
             else{
-                if(result.length >0){
+            if(result.length >0 && cardstate == 1){
                    bcrypt.compare(request.body.card_pin, result[0].card_pin, function(err, compareResult){
                         if(compareResult){
                             console.log('Kirjautuminen ok');
@@ -27,8 +29,12 @@ router.post('/',function(request, response){
                         }
                     })
                 }
+                else if (cardstate == 0) {
+                    console.log("kortti lukittu");
+                    response.send(false);
+                }
                 else {
-                    console.log("tunnusta ei ole");
+                    console.log("korttia ei ole");
                     response.send(false);
                 }
 
