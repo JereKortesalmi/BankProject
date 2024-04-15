@@ -87,7 +87,8 @@ void MainWindow::cardNumberHand()
 
 void MainWindow::loginInfo(QString res)
 {
-    token=res;
+    //token=QByteArray::fromStdString(res);
+    token = QByteArray::fromStdString(res.toStdString());
     qDebug()<<"login vastaus: "<<token;
     pin->hide();
     qDebug()<<cardNumber;
@@ -105,7 +106,9 @@ void MainWindow::accountIdSender(int accountId, QString balance)
     int id = accountId;
     QString bal = balance;
     qDebug()<<"accountIdSender id:"<<id;
+    p_mainMenu->accountId = id;
     p_mainMenu->showBalance(bal);
+    p_mainMenu->token = token;
     p_mainMenu->show();
 
 }

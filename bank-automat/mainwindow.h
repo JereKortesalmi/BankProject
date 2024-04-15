@@ -45,7 +45,7 @@ private:
 
     QString cardNumber;
     QString pinCode;
-    QString token;
+    QByteArray token;
     DLLSerialport * sPort = nullptr;
     DLLRestAPI *restApi = nullptr;
     Transactions *test = nullptr;

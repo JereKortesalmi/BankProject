@@ -44,10 +44,10 @@ void Transactions::requestTrasactions(int accountId)
     connect(manager, &QNetworkAccessManager::finished,
             this, &Transactions::onManagerFinished);
 
-    QUrl url("http://localhost:3000/transaction");
+    QUrl url("http://localhost:3000/transactions_per_account/" + QString::number(accountId));
     QNetworkRequest request(url);
     reply = manager->get(request);
-    connect(reply, SIGNAL(QNetworkReply::errorOccurred(QNetworkReply::NetworkError)), this, SLOT(Transactions::onErrorOccurred(QNetworkReply::NetworkError)));
+    connect(reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
 }
 
 void Transactions::clickHandler()
