@@ -16,6 +16,10 @@ public:
     void sendTransaction(QByteArray token, int id, double sum);
     void getAtmInfo(QByteArray token,int id);
 
+    // print in qdebug();
+    void printAtmSetBills();
+    void printAtmBills();
+
     QByteArray getResponse_data() const;
 
 
@@ -63,6 +67,7 @@ private slots:
     void atmErrorOccurred(QNetworkReply::NetworkError code);
 signals:
     void dataRead();
+    void atmInfoSent();
 };
 
 #endif // WITHDRAWCALL_H
