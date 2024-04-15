@@ -26,6 +26,7 @@ public slots:
 signals:
     void sendAccountIdBalance(int,QString, QString);
     void opencreditdebitq(QJsonArray);
+    void openAdmin();
 
 private slots:
     void onErrorOccurred(QNetworkReply::NetworkError code);
@@ -36,6 +37,9 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QString bal;
+    int accountId;
+    //QString balance;
+    QString accountType;
 };
 
 #endif // BALANCE_H
