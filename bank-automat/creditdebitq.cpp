@@ -8,7 +8,7 @@ creditdebitq::creditdebitq(QWidget *parent)
     ui->setupUi(this);
     connect(ui->btnCredit,SIGNAL(clicked(bool)),this,SLOT(onCreditButtonClicked()));
     connect(ui->btnDebit,SIGNAL(clicked(bool)),this,SLOT(onDebitButtonClicked()));
-    mainmenu = new mainMenu;
+    mainmenu = new mainMenu(this);
 }
 
 creditdebitq::~creditdebitq()
@@ -36,10 +36,11 @@ void creditdebitq::selectAccount()
             QString type = jsonObject["account_type"].toString();
             qDebug()<<"type:"<<type<<" accountType:"<<accountType;
             if(type == accountType){
-                selectedAccountId = jsonObject["account_id"].toInt();
-                qDebug()<<"account_id:"<<selectedAccountId;
+                accountId = jsonObject["account_id"].toInt();
+                QString balance = jsonObject["account_balance"].toString();
+                qDebug()<<"account_id:"<<accountId;
                 hide();
-                mainmenu->show();
+                emit sendAccountId(accountId, balance);
                 return;
             }
         }

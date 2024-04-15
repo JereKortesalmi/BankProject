@@ -39,6 +39,9 @@ public:
     //requestReceiver
     requestReceiver *requestRec = nullptr;
 
+    int accountId;
+    QByteArray token;
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions
@@ -61,7 +64,6 @@ public slots:
     void receiveTransactionData(QJsonArray);
     void displayData();
     //balance slots
-    void sendBalanceRequest();
     void showBalance(QString);
     //hide
     void hideShown();
