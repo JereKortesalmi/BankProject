@@ -48,7 +48,9 @@ public:
 
 private:
     QNetworkAccessManager *w_manager;
+    QNetworkAccessManager *atm_manager;
     QNetworkReply *w_reply;
+    QNetworkReply *atm_reply;
     QByteArray response_data;
 
     QByteArray myToken;
@@ -57,6 +59,8 @@ private slots:
 
     void onManagerFinished(QNetworkReply* reply);
     void onErrorOccurred(QNetworkReply::NetworkError code);
+    void atmManagerFinished(QNetworkReply* reply);
+    void atmErrorOccurred(QNetworkReply::NetworkError code);
 signals:
     void dataRead();
 };

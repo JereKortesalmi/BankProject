@@ -35,29 +35,41 @@ void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
     connect(w_manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(onManagerFinished(QNetworkReply*)));
     connect(w_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
             this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
-    w_manager->deleteLater();
+    //w_manager->deleteLater();
 }
 
 void withdrawCall::getAtmInfo(QByteArray token, int id)
 {
+    /*qDebug()<<"getAtmInfo()";
     if (token.isEmpty()) {
         return;
     }
     else {
-        QUrl url("http://localhost:3000/atm/" + QString::number(id));
+    */
+        qDebug() << "sending request for getAtmInfo with atmID: " << id;
+        QString wUrl = "http://localhost:3000/atm/" + QString::number(id);
+        QUrl url(wUrl);
         QNetworkRequest request(url);
 
         //WEBTOKEN ALKU
         myToken="Bearer "+token;
+        qDebug() << "before crash";
         request.setRawHeader(QByteArray("Authorization"),(myToken));
         //WEBTOKEN LOPPU
 
-        w_manager = new QNetworkAccessManager(this);
-        w_reply = w_manager->get(request);
-        connect(w_manager, SIGNAL(finished(QNetworkReply*)),this,SLOT(onManagerFinished(QNetworkReply*)));
-        connect(w_reply,SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
-                this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
-    }
+
+        atm_manager = new QNetworkAccessManager(this);
+        //connect(atm_manager, SIGNAL(finished(QNetworkReply*)),this,SLOT(onManagerFinished(QNetworkReply*)));
+        //connect(atm_reply,SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
+        //        this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
+        connect(atm_manager, SIGNAL(finished(QNetworkReply*)),
+                this, SLOT(atmManagerFinished(QNetworkReply*)));
+        atm_reply = atm_manager->get(request);
+        connect(atm_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
+                this,SLOT(atmErrorOccurred(QNetworkReply::NetworkError)));
+
+                qDebug() << "Is crash here?";
+    //}
 }
 
 withdrawCall::~withdrawCall()
@@ -226,7 +238,7 @@ bool withdrawCall::checkBillsAvailable()
                         withdrawAmount = withdrawAmount-60;
                     }
                 }
-                else if(((withdrawAmount) % 200) == 50) {
+                /*else if(((withdrawAmount) % 200) == 50) {
                     if(bills_50>= set_50_bills+1 && bills_200 >= set_200_bills) {
                         set_50_bills++;
                         set_200_bills++;
@@ -236,6 +248,7 @@ bool withdrawCall::checkBillsAvailable()
                     }
 
                 }
+                */
                 else if(((withdrawAmount) % 200) > 100) {
                     if(bills_200>=set_200_bills) {
                         set_200_bills++;
@@ -244,8 +257,10 @@ bool withdrawCall::checkBillsAvailable()
                     }
                 }
                 else {
-                    set_200_bills++;
-                    withdrawAmount = withdrawAmount -200;
+                    if(bills_200 >= set_200_bills+1) {
+                        set_200_bills++;
+                        withdrawAmount = withdrawAmount -200;
+                    }
                 }
 
             }
@@ -290,19 +305,22 @@ bool withdrawCall::checkBillsAvailable()
                 }
                 */
                 else {
-                    if(bills_100 >= (set_100_bills++ )) {
+                    if(bills_100 >= (set_100_bills +1 )) {
                         set_100_bills++;
                         withdrawAmount = withdrawAmount -100;
                         usable_100 = true;
                     }
-            }
+                    else {
+                        usable_100 = false;
+                    }
+                }
             }
             else {
-                usable_100 = false;
+
             }
         }
         else {
-            break;
+            //break;
         }
     } // while 100
 
@@ -317,38 +335,32 @@ bool withdrawCall::checkBillsAvailable()
             usable_50 = false;
             break;
         }
-        if(usable_50 == true) {
-            if(((withdrawAmount) >= 50)) {
-                if((withdrawAmount % 50) == 10) {
-                    if(bills_20 >= (set_20_bills+3)) {
-                        if(bills_20 >= set_20_bills+3) {
-                            set_20_bills = set_20_bills+3;
-                            withdrawAmount=withdrawAmount-60;
-                        }
-                        else {
-                            return false;
-                        }
-                    }
+        if((withdrawAmount) >= 50 && usable_50) {
+            if((withdrawAmount % 50) == 10) {
+                if(bills_20 >= (set_20_bills+3)) {
+                        set_20_bills = set_20_bills+3;
+                        withdrawAmount=withdrawAmount-60;
                 }
                 else {
-                    if(bills_50 >= set_50_bills++) {
-                        set_50_bills++;
-                        withdrawAmount=withdrawAmount-50;
-                        usable_50 = true;
-                    }
-                    else {
-                        usable_50 = false;
-                        return false;
-                    }
+                    //return false;
                 }
-
             }
             else {
-                usable_50 = false;
+                if(bills_50 >= (set_50_bills + 1)) {
+                    set_50_bills++;
+                    withdrawAmount=withdrawAmount-50;
+                    usable_50 = true;
+                }
+                else {
+                    usable_50 = false;
+                    //return false;
+                }
             }
+
         }
         else {
-            break;
+            //usable_50 = false;
+            //return false;
         }
     } // while 50
     while(withdrawAmount>=20 && usable_20) {
@@ -364,7 +376,7 @@ bool withdrawCall::checkBillsAvailable()
         }
         if(usable_20 == true) {
 
-            if(((withdrawAmount) >= 20)) {
+            if((withdrawAmount) >= 20) {
                 if(((withdrawAmount) % 20 ) == 10) {
 
                     set_20_bills = false;
@@ -372,7 +384,7 @@ bool withdrawCall::checkBillsAvailable()
                     break;
                 }
                 else {
-                    if(bills_20 >= set_20_bills++) {
+                    if(bills_20 >= set_20_bills + 1) {
                         set_20_bills++;
                         withdrawAmount = withdrawAmount-20;
                         usable_20=true;
@@ -384,7 +396,7 @@ bool withdrawCall::checkBillsAvailable()
                 }
             }
             else {
-                usable_20 = false;
+                //usable_20 = false;
             }
         }
         else {
@@ -402,7 +414,7 @@ bool withdrawCall::checkBillsAvailable()
     *
     */
 
-    if(!usable_200 && !usable_100 && usable_50 && usable_20) {
+    if(!usable_200 && !usable_100 && !usable_50 && !usable_20) {
         return false;
     }
     else {
@@ -506,7 +518,18 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
         return;
     }
     response_data = reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    //QJsonArray json_array = json_doc.array();
+    qDebug() << json_doc["atm_20eur"];
 
+    bills_20 = json_doc["atm_20eur"].toInt();
+    bills_50 = json_doc["atm_50eur"].toInt();
+    bills_100 = json_doc["atm_100eur"].toInt();
+    bills_200 = json_doc["atm_200eur"].toInt();
+
+    w_manager->deleteLater();
+    reply->deleteLater();
+    //qDebug() << json_array.toVariantList();
     emit dataRead();
 
 
@@ -515,4 +538,16 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
 void withdrawCall::onErrorOccurred(QNetworkReply::NetworkError code)
 {
     qDebug()<<"Network error:" << code;
+}
+
+void withdrawCall::atmManagerFinished(QNetworkReply *reply)
+{
+    qDebug() << "atm manager done";
+    QByteArray test = reply->readAll();
+    qDebug() << test;
+}
+
+void withdrawCall::atmErrorOccurred(QNetworkReply::NetworkError code)
+{
+    qDebug() << "atmError" << code;
 }
