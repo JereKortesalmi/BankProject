@@ -16,7 +16,7 @@ mainMenu::mainMenu(QWidget *parent) :
     //p_Transactions->show();
 
     //webtoken
-    QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
+    //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     // withdrawCall
     withdrawCall *p_withdrawCall = new withdrawCall(this);
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawSignalReceived()));
