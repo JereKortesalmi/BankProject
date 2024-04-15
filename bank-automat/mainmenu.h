@@ -54,12 +54,18 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
 
+
 public slots:
     //withdrawCall
     void withdrawSignalReceived();
+    void atmSignalReceived();
     void withdrawClicked();
     void otherClicked();
-
+    void withdrawOtherPressed();
+    void eur20Pressed();
+    void eur40Pressed();
+    void eur60Pressed();
+    void eur100Pressed();
 
     //tableview
     void sendTransactionRequest();
