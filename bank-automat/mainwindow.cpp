@@ -32,13 +32,19 @@ MainWindow::MainWindow(QWidget *parent)
     log = new login();
     connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
     connect(log,SIGNAL(loginMessage(QString)),this,SLOT(loginMessageToPinCode(QString)));
+
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
+    connect(creditDebit,SIGNAL(sendAccountId(int,QString)),this,SLOT(accountIdSender(int,QString)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
-    //connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
     //p_mainMenu->show();
+
+    //luodaan balance
+    bal = new balance;
+    connect(bal,SIGNAL(sendAccountIdBalance(int,QString)),this,SLOT(accountIdSender(int,QString)));
+    connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
 
 
     ui->tableViewTransactions->hide();
@@ -81,21 +87,40 @@ void MainWindow::cardNumberHand()
 
 void MainWindow::loginInfo(QString res)
 {
-    token=res;
+    //token=QByteArray::fromStdString(res);
+    token = QByteArray::fromStdString(res.toStdString());
     qDebug()<<"login vastaus: "<<token;
     pin->hide();
     //creditDebit->show();
     //p_mainMenu->show();
     p_mainMenu->show();
     qDebug()<<cardNumber;
-    //p_mainMenu->show();
-    fetchAccountDetails();
+    bal->fetchAccountDetails(cardNumber);
 }
 
 void MainWindow::loginMessageToPinCode(QString message)
 {
     QString mes = message;
     pin->pinMessage(mes);
+}
+
+void MainWindow::accountIdSender(int accountId, QString balance)
+{
+    int id = accountId;
+    QString bal = balance;
+    qDebug()<<"accountIdSender id:"<<id;
+    p_mainMenu->accountId = id;
+    p_mainMenu->showBalance(bal);
+    p_mainMenu->token = token;
+    p_mainMenu->show();
+
+}
+
+void MainWindow::creditdebitchoose(QJsonArray array)
+{
+    QJsonArray jsonArray = array;
+    creditDebit->show();
+    creditDebit->selectAccountHandler(jsonArray);
 }
 
 void MainWindow::readTransactionValues()
@@ -176,35 +201,3 @@ void MainWindow::receivePinNumber(QString val)
 
 
 }
-
-void MainWindow::fetchAccountDetails()
-{
-    QString url="http://localhost:3000/accounts/getaccountid/" + cardNumber;
-    QNetworkRequest request(url);
-    accountManager = new QNetworkAccessManager(this);
-    connect(accountManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(saveAccountDetails(QNetworkReply*)));
-    reply = accountManager->get(request);
-    qDebug() << "Fetching account details...";
-
-}
-
-void MainWindow::saveAccountDetails(QNetworkReply *reply)
-{
-    QByteArray response_data=reply->readAll();
-    qDebug()<<"Response data: "<<response_data;
-    QJsonDocument jsonResponse_data = QJsonDocument::fromJson(response_data);
-    QJsonArray jsonArray = jsonResponse_data.array();
-    if(jsonArray.size() == 1){
-        p_mainMenu->show();
-        QJsonObject jsonObject = jsonResponse_data.object();
-        int accountId = jsonObject.value("account_id").toInt();
-    } else if(jsonArray.size() == 2){
-        QJsonArray jsonArray = jsonResponse_data.array();
-        creditDebit->show();
-        creditDebit->selectAccountHandler(jsonArray);
-
-    }
-}
-
-
-

@@ -36,7 +36,7 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
     //balance signals
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(sendBalanceRequest()));
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
 
     //Kikkoja esityksen osoittamiseen..
     ui->tableViewTransactions->hide();
@@ -49,6 +49,9 @@ mainMenu::mainMenu(QWidget *parent) :
     ui->label_withdraw->move(80,200);
 
     connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(hideShown()));
+
+    int atmId=1;
+    requestRec->wit.getAtmInfo(token, atmId);
 
 }
 
@@ -65,11 +68,14 @@ void mainMenu::withdrawSignalReceived()
 
 void mainMenu::withdrawClicked()
 {
-    QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
+
+    //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
+    //int atmId = 1;
+    //requestRec->wit.getAtmInfo(token, atmId);
     ui->label_withdraw->show();
     requestRec->wit.sendTransaction(token,5,20.00);
     requestRec->wit.clearBills();
-    requestRec->wit.checkBills(160);
+    requestRec->wit.checkBills(220);
 
     qDebug() << "Setelien määrä 20: " <<requestRec->wit.bills_20;
     qDebug() << "setelien määrä 50: " << requestRec->wit.bills_50;
@@ -90,7 +96,7 @@ void mainMenu::sendTransactionRequest()
         tableTransactions.clear();
     }
     test = new Transactions();
-    test->requestTrasactions(1);
+    test->requestTrasactions(accountId);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
 }
@@ -161,20 +167,15 @@ void mainMenu::readTransactionValues()
     emit transactionsComplete();
 }
 
-void mainMenu::sendBalanceRequest()
-{
-    saldo = new balance(this);
-    connect(saldo,SIGNAL(sendToMain(QString)),this,SLOT(showBalance(QString)));
-    qDebug()<<"lähetetään pyyntö balancesta";
-    //saldo->show();
-    saldo->mainStart();
-}
-
 void mainMenu::showBalance(QString bal)
 {
     QString balance1 = bal;
-    qDebug()<<"mainwindow balance1: "<<balance1;
+    //QString text = QString::number(balance1);
+    qDebug()<<"mainmenu balance1: "<<balance1;
     ui->balanceLabel->setText(balance1);
+    ui->balanceBrowser->setText(balance1);
+    ui->balanceLabel->adjustSize();
+    ui->balanceLabel->repaint();
     ui->balanceLabel->show();
 }
 

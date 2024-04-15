@@ -24,7 +24,7 @@ public:
 
     void selectAccountHandler(const QJsonArray jsonArray);
 signals:
-    void accountSelected(int accountId);
+    void sendAccountId(int, QString);
 
 private slots:
     void onCreditButtonClicked();
@@ -32,7 +32,7 @@ private slots:
 
 private:
     Ui::creditdebitq *ui;
-    int selectedAccountId = -1;
+    int accountId = -1;
     void selectAccount();
     QJsonArray jsonArray;
     mainMenu *mainmenu;
