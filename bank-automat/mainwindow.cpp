@@ -100,10 +100,11 @@ void MainWindow::loginMessageToPinCode(QString message)
     pin->pinMessage(mes);
 }
 
-void MainWindow::accountIdSender(int accountId, QString balance)
+void MainWindow::accountIdSender(int accountId, QString balance, QString type)
 {
     int id = accountId;
     QString bal = balance;
+    QString accountType = type;
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->showBalance(bal);
     p_mainMenu->show();

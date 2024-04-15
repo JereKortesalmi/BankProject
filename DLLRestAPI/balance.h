@@ -24,7 +24,7 @@ public:
 public slots:
     void saveAccountDetails(QNetworkReply *reply);
 signals:
-    void sendAccountIdBalance(int,QString);
+    void sendAccountIdBalance(int,QString, QString);
     void opencreditdebitq(QJsonArray);
 
 private slots:

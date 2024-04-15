@@ -83,7 +83,7 @@ private slots:
     void cardNumberHand();
     void loginInfo(QString);
     void loginMessageToPinCode(QString);
-    void accountIdSender(int, QString);
+    void accountIdSender(int, QString, QString);
     void creditdebitchoose(QJsonArray);
 
 public slots:
