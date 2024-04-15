@@ -72,8 +72,8 @@ router.get('/getCardState/:card_number',function(request, response){
             response.send(err);
         }
         else {
-            response.send(result);
-           // response.send(result[0].card_state.toString()); 
+            //response.send(result);
+            response.send(result[0].card_state.toString()); 
         }
     });
 });

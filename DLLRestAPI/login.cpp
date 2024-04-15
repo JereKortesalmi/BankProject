@@ -16,7 +16,7 @@ void login::cardNumberLog(QString val)
     cardNumber=val;
     qDebug()<<"login cardnumber: "<<cardNumber;
 
-   QString cardStateurl="http://localhost:3000/card/getCardState" + cardNumber;
+   QString cardStateurl="http://localhost:3000/card/getCardState/" + cardNumber;
     QNetworkRequest request(cardStateurl);
     loginManager = new QNetworkAccessManager(this);
     connect(loginManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cardStateSlot(QNetworkReply*)));
@@ -30,6 +30,7 @@ void login::loginHandler(QString p)
     QJsonObject jsonObj;
     jsonObj.insert("card_number",cardNumber);
     jsonObj.insert("card_pin",pinCode);
+    jsonObj.insert("card_pin",cardState);
 
     QString site_url="http://localhost:3000/login";
     QNetworkRequest request((site_url));
@@ -54,7 +55,7 @@ void login::loginSlot(QNetworkReply *reply)
         msgBox.exec();*/
     }
     else{
-        if(response_data!="false" && cardState == "1"){
+        if(response_data!="false" && cardState !="0"){
             //kirjautuminen onnistui
             emit sendSignalLogin(response_data);
         }
@@ -106,7 +107,6 @@ void login::lockSlot(QNetworkReply *replys)
 void login::cardStateSlot(QNetworkReply *repl)
 {
     response_data=repl->readAll();
-    cardState=response_data;
     qDebug()<<"cardState response data: "<<response_data;
 
     repl->deleteLater();
