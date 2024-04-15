@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
 
     //yhditetään login
-    log = new login();
+    log = new login;
     connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
     connect(log,SIGNAL(loginMessage(QString)),this,SLOT(loginMessageToPinCode(QString)));
 
@@ -80,7 +80,7 @@ void MainWindow::cardNumberHand()
 {
     cardNumber=ui->cardEdit->text();
     qDebug()<<"Käsin korttinumero: "<<cardNumber;
-    //log->cardNumberLog(cardNumber);
+    log->cardNumberLog(cardNumber);
     pin->show();
 }
 
@@ -91,6 +91,9 @@ void MainWindow::loginInfo(QString res)
     token = QByteArray::fromStdString(res.toStdString());
     qDebug()<<"login vastaus: "<<token;
     pin->hide();
+    //creditDebit->show();
+    //p_mainMenu->show();
+    p_mainMenu->show();
     qDebug()<<cardNumber;
     bal->fetchAccountDetails(cardNumber);
 }
@@ -182,7 +185,7 @@ void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
     qDebug()<<"korttinumero main: "<<cardNumber;
-    //log->cardNumberLog(cardNumber);
+    log->cardNumberLog(cardNumber);
     pin->show();
 
 }
@@ -192,7 +195,7 @@ void MainWindow::receivePinNumber(QString val)
     pinCode=val;
     qDebug()<<"pin numero main: "<<pinCode;
     qDebug()<<"korttinumero main: "<<cardNumber;
-    log->cardNumberLog(cardNumber);
+    //log->cardNumberLog(cardNumber);
     log->loginHandler(pinCode);
     //log->pinCodeLog(pinCode);
 

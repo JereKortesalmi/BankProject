@@ -56,5 +56,26 @@ router.delete('/:id',function(request, response){
         }
     });
 });
+router.put('/loginLock/:card_number',function(request, response){
+    card.loginLock(request.params.card_number,request.body, function(err, result){
+        if(err){
+            response.send(err);
+        }
+        else {
+            response.json(result);
+        }
+    });
+});
+router.get('/getCardState/:card_number',function(request, response){
+    card.getCardState(request.params.card_number, function(err, result){
+        if(err){
+            response.send(err);
+        }
+        else {
+            response.send(result);
+           // response.send(result[0].card_state.toString()); 
+        }
+    });
+});
 
 module.exports=router;
