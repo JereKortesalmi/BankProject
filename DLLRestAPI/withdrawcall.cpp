@@ -44,6 +44,7 @@ void withdrawCall::getAtmInfo(QByteArray token, int id)
         return;
     }
     else {
+        qDebug() << "sending request for getAtmInfo with atmID: " << id;
         QUrl url("http://localhost:3000/atm/" + QString::number(id));
         QNetworkRequest request(url);
 
@@ -506,7 +507,18 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
         return;
     }
     response_data = reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    //QJsonArray json_array = json_doc.array();
+    qDebug() << json_doc["atm_20eur"];
 
+    bills_20 = json_doc["atm_20eur"].toInt();
+    bills_50 = json_doc["atm_50eur"].toInt();
+    bills_100 = json_doc["atm_100eur"].toInt();
+    bills_200 = json_doc["atm_200eur"].toInt();
+
+    w_manager->deleteLater();
+    reply->deleteLater();
+    //qDebug() << json_array.toVariantList();
     emit dataRead();
 
 

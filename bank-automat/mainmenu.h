@@ -40,6 +40,7 @@ public:
     requestReceiver *requestRec = nullptr;
 
     int accountId;
+    QByteArray token;
 
 private:
     Ui::mainMenu *ui;
