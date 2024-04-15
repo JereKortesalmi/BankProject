@@ -45,7 +45,10 @@ const card={
             loginLock.card_state,
             cardnumber],
             callback);
-        }    
+    },
+    getCardState(card_number,callback){
+        return db.query("SELECT card_state FROM card where card_number=?",[card_number], callback);
+    }    
 }
 
 module.exports=card;
