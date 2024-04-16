@@ -17,7 +17,7 @@ router.post('/',function(request, response){
                 response.json(err.errno);
             }
             else{
-            if(result.length >0){
+            if(result.length >0 && cardstate == 1){
                    bcrypt.compare(request.body.card_pin, result[0].card_pin, function(err, compareResult){
                         if(compareResult){
                             console.log('Kirjautuminen ok');
@@ -31,10 +31,14 @@ router.post('/',function(request, response){
                     })
                 }
 
-                else {
-                    //console.log("korttia ei ole");
+                else if (cardstate == 0) {
                     console.log("kortti lukittu"); 
                     response.send("kortti lukittu");
+                }
+                else{
+                    console.log("korttia ei ole");
+                    response.send(false)
+
                 }
 
             }
