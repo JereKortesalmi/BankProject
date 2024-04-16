@@ -21,12 +21,16 @@ public:
     explicit balance(QWidget *parent = nullptr);
     ~balance();
     void fetchAccountDetails(QString);
+    void fetchBalance(int);
 public slots:
     void saveAccountDetails(QNetworkReply *reply);
+    void getBalance(QNetworkReply *reply);
+    void updateBalance(int, QString);
 signals:
     void sendAccountIdBalance(int,QString, QString);
     void opencreditdebitq(QJsonArray);
     void openAdmin();
+    void balanceToMainmenu(QString);
 
 private slots:
     void onErrorOccurred(QNetworkReply::NetworkError code);
@@ -34,6 +38,7 @@ private slots:
 private:
     Ui::balance *ui;
     QNetworkAccessManager *accountManager;
+    QNetworkAccessManager *balanceManager;
     QNetworkReply *reply;
     QByteArray response_data;
     QString bal;

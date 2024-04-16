@@ -15,7 +15,9 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
     //balance signals
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
+    bal = new balance;
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(fetchBalance()));
+    connect(bal,SIGNAL(balanceToMainmenu(QString)),this,SLOT(showBalance(QString)));
 
     //Trics to show stuff
     ui->tableViewTransactions->hide();
@@ -268,7 +270,12 @@ void mainMenu::showBalance(QString bal)
     ui->balanceLabel->setText(balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
-    //ui->balanceLabel->show();
+    ui->balanceLabel->show();
+}
+
+void mainMenu::fetchBalance()
+{
+    bal->fetchBalance(accountId);
 }
 
 void mainMenu::hideShown()

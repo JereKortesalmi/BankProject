@@ -25,10 +25,9 @@ void balance::fetchAccountDetails(QString cardn)
     QString url="http://localhost:3000/accounts/getaccountid/" + cardNumber;
     QNetworkRequest request(url);
     accountManager = new QNetworkAccessManager(this);
-    connect(accountManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(saveAccountDetails(QNetworkReply*)));
-    reply = accountManager->get(request);
-    qDebug() << "Fetching account details...";
-
+        connect(accountManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(saveAccountDetails(QNetworkReply*)));
+        reply = accountManager->get(request);
+        qDebug() << "Fetching account details...";
 }
 
 void balance::saveAccountDetails(QNetworkReply *reply)
@@ -56,3 +55,42 @@ void balance::saveAccountDetails(QNetworkReply *reply)
     }
 }
 
+void balance::fetchBalance(int accountId)
+{
+    int id = accountId;
+    QString url="http://localhost:3000/accounts/" + QString::number(id);
+    QNetworkRequest request(url);
+    balanceManager = new QNetworkAccessManager(this);
+    connect(balanceManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(getBalance(QNetworkReply*)));
+    reply = balanceManager->get(request);
+    qDebug() << "Fetching balance...";
+}
+
+void balance::getBalance(QNetworkReply *reply){
+        QByteArray response_data=reply->readAll();
+        qDebug()<<"Response data: "<<response_data;
+        QJsonDocument jsonResponse_data = QJsonDocument::fromJson(response_data);
+        //QJsonArray jsonArray = jsonResponse_data.array();
+            //QJsonObject jsonObject = jsonArray[0].toObject();
+        QJsonObject jsonObj = jsonResponse_data.object();
+            QString balance = jsonObj["account_balance"].toString();
+            qDebug()<<"account balance: "<<balance;
+            emit balanceToMainmenu(balance);
+}
+
+void balance::updateBalance(int accountId, QString balance)
+{
+    int id = accountId;
+    QString bal = balance;
+    QJsonObject jsonObject;
+    jsonObject.insert("account_balance", bal);
+
+    QUrl url("http://localhost:3000/accounts/" + QString::number(id));
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray accountBalance = QJsonDocument(jsonObject).toJson();
+    balanceManager = new QNetworkAccessManager(this);
+
+    balanceManager->put(request, accountBalance);
+
+}
