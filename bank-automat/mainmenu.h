@@ -41,6 +41,7 @@ public:
 
     int accountId;
     QByteArray token;
+    QString accountType;
 
 private:
     Ui::mainMenu *ui;

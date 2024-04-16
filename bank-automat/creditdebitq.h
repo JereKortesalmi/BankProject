@@ -24,7 +24,7 @@ public:
 
     void selectAccountHandler(const QJsonArray jsonArray);
 signals:
-    void sendAccountId(int, QString);
+    void sendAccountId(int, QString,QString);
 
 private slots:
     void onCreditButtonClicked();

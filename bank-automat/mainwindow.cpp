@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
-    connect(creditDebit,SIGNAL(sendAccountId(int,QString)),this,SLOT(accountIdSender(int,QString)));
+    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
@@ -116,6 +116,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     p_mainMenu->accountId = id;
     p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
+    p_mainMenu->accountType = type;
     p_mainMenu->show();
 
 }
