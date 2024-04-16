@@ -67,6 +67,7 @@ public slots:
     void eur40Pressed();
     void eur60Pressed();
     void eur100Pressed();
+    void on_btnlogout_clicked();
 
     //tableview
     void sendTransactionRequest();
@@ -84,6 +85,8 @@ public slots:
 signals:
     void transactionsComplete();        //transactions
     void transactionsTableReady();      //transactions
+    void logOutSignal();
+private slots:
 };
 
 #endif // MAINMENU_H
