@@ -40,7 +40,9 @@ void creditdebitq::selectAccount()
                 QString balance = jsonObject["account_balance"].toString();
                 qDebug()<<"account_id:"<<accountId;
                 hide();
+
                 emit sendAccountId(accountId, balance, type);
+
                 return;
             }
         }

@@ -114,6 +114,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     p_mainMenu->accountId = id;
     p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
+    p_mainMenu->accountType = type;
     p_mainMenu->show();
 
 }
