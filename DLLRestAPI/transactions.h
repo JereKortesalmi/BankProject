@@ -25,7 +25,7 @@ public:
     //explicit Transactions(QList<transactions> *table);
     ~Transactions();
 
-    void requestTrasactions(int accountId);
+    void requestTrasactions(QByteArray token,int accountId);
 
 private slots:
     void clickHandler();
@@ -37,6 +37,7 @@ private:
     QNetworkAccessManager* manager;
     QNetworkReply* reply;
     QByteArray response_data;
+    QByteArray myToken;
 
 signals:
     void ResponseToMain(QJsonArray reply);
