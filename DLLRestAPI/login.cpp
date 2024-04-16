@@ -57,7 +57,18 @@ void login::loginSlot(QNetworkReply *reply)
         if(response_data!="false"){
             // && cardState == "1"
             //kirjautuminen onnistui
-            emit sendSignalLogin(response_data);
+            qDebug() << "Kortin tila: " <<cardState;
+            if(cardState == "0") {
+                qDebug() << "cardstate 0";
+                QString message = "kortti lukittu.";
+                emit loginMessage(message);
+            }
+            else {
+                qDebug() << "cardstate 1";
+                QString message = "Tervetuloa..";
+                emit sendSignalLogin(response_data);
+                emit loginMessage(message);
+            }
         }
         else{
             QString message = "Korttinumero/pin ei täsmää";

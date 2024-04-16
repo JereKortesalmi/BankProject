@@ -83,7 +83,7 @@ void withdrawCall::printAtmSetBills()
 
 void withdrawCall::printAtmBills()
 {
-    qDebug()<<" Bills set on ATM:";
+    qDebug()<<" Bills on ATM:";
     qDebug()<< "20 €: " << bills_20;
     qDebug()<< "50 €: " << bills_50;
     qDebug()<< "100 €: " << bills_100;
@@ -333,12 +333,12 @@ void withdrawCall::removeBills()
 {
 
     qDebug()<<"Remove bills: ";
-
+    printAtmBills();
     bills_200 = bills_200-set_200_bills;
     bills_100 = bills_100-set_100_bills;
     bills_50 = bills_50-set_50_bills;
     bills_20 = bills_20-set_20_bills;
-
+    printAtmBills();
     qDebug() << "Bills removed";
 
 }
