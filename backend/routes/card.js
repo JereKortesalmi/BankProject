@@ -57,12 +57,14 @@ router.delete('/:id',function(request, response){
     });
 });
 router.put('/loginLock/:card_number',function(request, response){
-    card.loginLock(request.params.card_number,request.body, function(err, result){
+    card.loginLock(request.params.card_number, function(err, result){
         if(err){
             response.send(err);
+            console.log("ei toimi");
         }
         else {
             response.json(result);
+            console.log("toimii");
         }
     });
 });
@@ -72,8 +74,8 @@ router.get('/getCardState/:card_number',function(request, response){
             response.send(err);
         }
         else {
-            //response.send(result);
-            response.send(result[0].card_state.toString()); 
+            response.json(result[0]);
+            //response.send(card_state); 
         }
     });
 });
