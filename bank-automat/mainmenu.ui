@@ -126,26 +126,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="text_other">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>150</y>
-     <width>261</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Arial Black</family>
-     <pointsize>15</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QWidget" name="eur100" native="true">
    <property name="geometry">
     <rect>
@@ -296,6 +276,39 @@
       </property>
       <property name="text">
        <string>Other sum</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="withdrawOther" native="true">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>150</y>
+     <width>335</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLineEdit" name="text_other">
+      <property name="font">
+       <font>
+        <family>Arial Black</family>
+        <pointsize>15</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btnWithdrawOther">
+      <property name="text">
+       <string>withdraw</string>
       </property>
      </widget>
     </item>

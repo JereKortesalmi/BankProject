@@ -69,7 +69,25 @@ void withdrawCall::getAtmInfo(QByteArray token, int id)
                 this,SLOT(atmErrorOccurred(QNetworkReply::NetworkError)));
 
                 qDebug() << "Is crash here?";
-    //}
+        //}
+}
+
+void withdrawCall::printAtmSetBills()
+{
+    qDebug()<<" Bills set on ATM:";
+    qDebug()<< "20 €: " << set_200_bills;
+    qDebug()<< "50 €: " << set_50_bills;
+    qDebug()<< "100 €: " << set_100_bills;
+    qDebug()<< "200 €: " << set_200_bills;
+}
+
+void withdrawCall::printAtmBills()
+{
+    qDebug()<<" Bills on ATM:";
+    qDebug()<< "20 €: " << bills_20;
+    qDebug()<< "50 €: " << bills_50;
+    qDebug()<< "100 €: " << bills_100;
+    qDebug()<< "200 €: " << bills_200;
 }
 
 withdrawCall::~withdrawCall()
@@ -94,96 +112,6 @@ void withdrawCall::checkBills(int withdrawal)
     else {
         qDebug()<<"No bills to give";
     }
-
-   /* while(withdrawAmount != 0) {
-        if(withdrawAmount>=200 )  {
-            if((withdrawAmount % 200)==0) {
-                set_200_bills++;
-                withdrawAmount = withdrawAmount-200;
-            }
-            else if((withdrawAmount % 100) == 0) {
-
-            }
-            else if((withdrawAmount % 50) != 0) {
-
-            }
-            else {
-                if((withdrawAmount % 10) == 0 && (withdrawAmount % 20) != 0 && (withdrawAmount % 50) != 0) {
-                    set_200_bills++;
-                    withdrawAmount = withdrawAmount-200;
-                }
-                else {
-                    set_200_bills++;
-                    withdrawAmount = withdrawAmount-200;
-                }
-            }
-        }
-        if(withdrawAmount>=100) {
-            if((withdrawAmount % 100) == 0 ) {
-                set_100_bills++;
-                withdrawAmount = withdrawAmount-100;
-            }
-            else if((withdrawAmount % 50 != 0) && (withdrawAmount %200) != 0) {
-
-            }
-            else {
-                set_100_bills++;
-                withdrawAmount = withdrawAmount-100;
-
-            }
-        }
-        if(withdrawAmount>=50) {
-            if((withdrawAmount % 50) == 0) {
-                // jos 50 tulee sopiva lukema
-                set_50_bills++;
-                withdrawAmount = withdrawAmount-50;
-            }
-            else if((withdrawAmount % 20) == 0) {
-                // jos 20 tulee sopiva lukema
-            }
-            else {
-                if((withdrawAmount % 10) == 0 && (withdrawAmount % 20) != 0) {
-                    set_50_bills++;
-                    withdrawAmount = withdrawAmount-50;
-                }
-                else {
-                    set_50_bills++;
-                    withdrawAmount = withdrawAmount-50;
-
-                }
-            }
-        }
-        if(withdrawAmount>=20) {
-            if((withdrawAmount % 20)==0) {
-                set_20_bills++;
-                withdrawAmount = withdrawAmount-20;
-            }
-            else if((withdrawAmount % 100) == 0){
-
-            }
-            else if((withdrawAmount % 50) == 0) {
-
-            }
-
-            else {
-                set_20_bills++;
-                withdrawAmount = withdrawAmount-20;
-            }
-        }
-        else {
-            withdrawAmount = 0;
-        }
-    }
-    */
-
-    /*
-    qDebug()<<"Noston määrä: " << original;
-    qDebug()<<"Setelit: ";
-    qDebug()<<"200: " << set_200_bills;
-    qDebug()<<"100: "<< set_100_bills;
-    qDebug()<<"50: " << set_50_bills;
-    qDebug()<<"20: " << set_20_bills;
-    */
 }
 
 bool withdrawCall::checkBillsAvailable()
@@ -238,17 +166,6 @@ bool withdrawCall::checkBillsAvailable()
                         withdrawAmount = withdrawAmount-60;
                     }
                 }
-                /*else if(((withdrawAmount) % 200) == 50) {
-                    if(bills_50>= set_50_bills+1 && bills_200 >= set_200_bills) {
-                        set_50_bills++;
-                        set_200_bills++;
-                        usable_200=true;
-                        usable_50=true;
-                        withdrawAmount = withdrawAmount-250;
-                    }
-
-                }
-                */
                 else if(((withdrawAmount) % 200) > 100) {
                     if(bills_200>=set_200_bills) {
                         set_200_bills++;
@@ -297,13 +214,6 @@ bool withdrawCall::checkBillsAvailable()
                     }
 
                 }
-                 /*
-                else if(((withdrawAmount) % 100) == 50){
-                    set_50_bills++;
-                    set_100_bills++;
-                    withdrawAmount = withdrawAmount -150;
-                }
-                */
                 else {
                     if(bills_100 >= (set_100_bills +1 )) {
                         set_100_bills++;
@@ -404,16 +314,6 @@ bool withdrawCall::checkBillsAvailable()
         }
     } // while 20
 
-    /*
-    if(usable_200 && usable_100 && usable_50 && usable_20) {
-    return true;
-    }
-    else {
-    return false;
-    }
-    *
-    */
-
     if(!usable_200 && !usable_100 && !usable_50 && !usable_20) {
         return false;
     }
@@ -433,82 +333,14 @@ void withdrawCall::removeBills()
 {
 
     qDebug()<<"Remove bills: ";
-
+    printAtmBills();
     bills_200 = bills_200-set_200_bills;
     bills_100 = bills_100-set_100_bills;
     bills_50 = bills_50-set_50_bills;
     bills_20 = bills_20-set_20_bills;
-
+    printAtmBills();
     qDebug() << "Bills removed";
 
-
-
-        // can't give out bills
-
-
-    /*
-    else {
-        // some bills aren't enough, let's see which one.
-        QList<int> test;
-        if(bills_200 <= set_200_bills ) {
-            test.append(200);
-        }
-        if(bills_100 <= set_100_bills) {
-            test.append(100);
-        }
-        if(bills_50 <= set_50_bills) {
-            test.append(50);
-        }
-        if(bills_20 <= set_20_bills) {
-            test.append(20);
-        }
-
-        for(int i=0; i< test.length();i++) {
-            if(test[i] == 200) {
-                if(bills_100 >= (set_100_bills + (set_200_bills * 2))) {
-                    set_100_bills = set_100_bills + set_200_bills * 2;
-                    set_200_bills = 0;
-                    //test.removeFirst();
-                }
-                else if(bills_50 >= (set_50_bills+ (set_200_bills *4))) {
-                    set_50_bills = set_50_bills + set_200_bills * 4;
-                    set_200_bills = 0;
-                    //test.removeFirst();
-                }
-                else if(bills_20 >= (set_20_bills + (set_200_bills * 10))) {
-                    set_20_bills = set_20_bills + set_200_bills * 10;
-                    set_200_bills = 0;
-                    //test.removeFirst();
-                }
-                else {
-                    //impossible so far
-                }
-            }
-            if(test[i] == 100) {
-                if(bills_50 >= (set_50_bills + (set_100_bills *2))) {
-                    set_50_bills = set_50_bills + set_100_bills * 2;
-                    set_100_bills = 0;
-                    //test.removeFirst();
-                }
-                else if(bills_20 >= (set_20_bills + (set_100_bills * 5))) {
-                    set_20_bills = set_20_bills + set_100_bills * 5;
-                    set_100_bills = 0;
-                    //test.removeFirst();
-                }
-                else {
-                    // impossible so far
-                }
-            }
-            if(test[i] == 50) {
-                // impossible if value is 50, 110, 190 etc.
-            }
-            if(test[i] == 20) {
-                // impossible for 20, 40, 60, 80, 110 160, 190 but 50 and 100, 200 can be possible.
-            }
-
-        }
-    }
-    */
 }
 
 void withdrawCall::onManagerFinished(QNetworkReply *reply)
@@ -520,13 +352,13 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
     response_data = reply->readAll();
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     //QJsonArray json_array = json_doc.array();
-    qDebug() << json_doc["atm_20eur"];
-
+    //qDebug() << json_doc["atm_20eur"];
+    qDebug() << "set Bills: ";
     bills_20 = json_doc["atm_20eur"].toInt();
     bills_50 = json_doc["atm_50eur"].toInt();
     bills_100 = json_doc["atm_100eur"].toInt();
     bills_200 = json_doc["atm_200eur"].toInt();
-
+    qDebug() << "Bills were set";
     w_manager->deleteLater();
     reply->deleteLater();
     //qDebug() << json_array.toVariantList();
@@ -542,9 +374,25 @@ void withdrawCall::onErrorOccurred(QNetworkReply::NetworkError code)
 
 void withdrawCall::atmManagerFinished(QNetworkReply *reply)
 {
-    qDebug() << "atm manager done";
-    QByteArray test = reply->readAll();
-    qDebug() << test;
+    /*if(reply->error()) {
+        qDebug() << reply->errorString();
+        return;
+    }
+    */
+    response_data = reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    //QJsonArray json_array = json_doc.array();
+    //qDebug() << json_doc["atm_20eur"];
+
+    bills_20 = json_doc["atm_20eur"].toInt();
+    bills_50 = json_doc["atm_50eur"].toInt();
+    bills_100 = json_doc["atm_100eur"].toInt();
+    bills_200 = json_doc["atm_200eur"].toInt();
+
+    //w_manager->deleteLater();
+    //reply->deleteLater();
+    //qDebug() << json_array.toVariantList();
+    emit atmInfoSent();
 }
 
 void withdrawCall::atmErrorOccurred(QNetworkReply::NetworkError code)

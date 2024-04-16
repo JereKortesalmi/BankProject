@@ -73,6 +73,7 @@ void login::loginSlot(QNetworkReply *reply)
     }
     else{
         if(response_data!="false"){
+<<<<<<< HEAD
 
             if(response_data == "kortti lukittu"){
                 QString message="Kortti lukittu, ota yhteyttä pankkiin";
@@ -83,6 +84,21 @@ void login::loginSlot(QNetworkReply *reply)
                 //kirjautuminen onnistui
                 emit sendSignalLogin(response_data);
                 accountLock=0;
+=======
+            // && cardState == "1"
+            //kirjautuminen onnistui
+            qDebug() << "Kortin tila: " <<cardState;
+            if(cardState == "0") {
+                qDebug() << "cardstate 0";
+                QString message = "kortti lukittu.";
+                emit loginMessage(message);
+            }
+            else {
+                qDebug() << "cardstate 1";
+                QString message = "Tervetuloa..";
+                emit sendSignalLogin(response_data);
+                emit loginMessage(message);
+>>>>>>> origin
             }
         }
         else{

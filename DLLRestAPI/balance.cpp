@@ -39,11 +39,17 @@ void balance::saveAccountDetails(QNetworkReply *reply)
     QJsonArray jsonArray = jsonResponse_data.array();
     if(jsonArray.size() == 1){
         QJsonObject jsonObject = jsonArray[0].toObject();
-        int accountId = jsonObject["account_id"].toInt();
+        accountId = jsonObject["account_id"].toInt();
         QString balance = jsonObject["account_balance"].toString();
+        accountType = jsonObject["account_type"].toString();
         qDebug()<<"account id saveACcountDetailsissä: "<<accountId;
         qDebug()<<"account balance: "<<balance;
-        emit sendAccountIdBalance(accountId, balance);
+        qDebug()<<"accountType: "<<accountType;
+        if(accountType == "ADMIN"){
+            emit openAdmin();
+        }else{
+            emit sendAccountIdBalance(accountId, balance, accountType);
+        }
     } else if(jsonArray.size() == 2){
         QJsonArray jsonArray = jsonResponse_data.array();
         emit opencreditdebitq(jsonArray);
