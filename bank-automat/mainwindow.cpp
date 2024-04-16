@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
-    connect(creditDebit,SIGNAL(sendAccountId(int,QString)),this,SLOT(accountIdSender(int,QString)));
+    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
@@ -45,10 +45,9 @@ MainWindow::MainWindow(QWidget *parent)
     bal = new balance;
     connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
-
+    connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
     //luodaan admin
     adm = new admin;
-    connect (adm, SIGNAL(openAdmin()),this,SLOT(adminState()));
 
     ui->tableViewTransactions->hide();
 
@@ -96,7 +95,6 @@ void MainWindow::loginInfo(QString res)
     pin->hide();
     //creditDebit->show();
     //p_mainMenu->show();
-    p_mainMenu->show();
     qDebug()<<cardNumber;
     bal->fetchAccountDetails(cardNumber);
 }
