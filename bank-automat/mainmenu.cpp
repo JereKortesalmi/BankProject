@@ -5,59 +5,38 @@ mainMenu::mainMenu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::mainMenu)
 {
-    //requestRec = new requestReceiver;
-    //requestRec->sendResult();
 
 
     ui->setupUi(this);
-    //Transactions *p_Transactions = new Transactions();
-
-    // näytetään Transactions-ikkuna
-    //p_Transactions->show();
-
-    //webtoken
-    //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
-    // withdrawCall
-    //withdrawCall *p_withdrawCall = new withdrawCall(this);
-
-
-
-
-    //p_withdrawCall->sendTransaction(token, 5, 20.00);
-
-    //requestRec->wit.getAtmInfo(token,1);
-    //p_withdrawCall->getAtmInfo(token,1);
-
-    //transactions signals and slots with button push
+    // connect transaction buttons and signals so they are timed after one another.
     connect(ui->btn_transactions,SIGNAL(clicked(bool)),
             this,SLOT(sendTransactionRequest()));
-
     connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
     //balance signals
     connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
 
-    //Kikkoja esityksen osoittamiseen..
+    //Trics to show stuff
     ui->tableViewTransactions->hide();
     ui->balanceLabel->hide();
     ui->btn_transactions->move(800,200);
-    //ui->tableViewTransactions->size() = QSize(100,100);
-    //ui->btn_withdraw
+
+    // withdraw button connection
     connect(ui->btn_withdraw, SIGNAL(clicked(bool)), this, SLOT(withdrawClicked()));
+
+
     ui->label_withdraw->hide();
     ui->label_withdraw->move(80,200);
 
 
-    connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
 
+    // connect btnClose
     connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(hideShown()));
 
-    //int atmId=1;
-    //p_withdrawCall->getAtmInfo(token, atmId);
-
+    //hide all shown windows.
     hideShown();
-
+    // withdraw call buttons connects
     connect(ui->btn_other, SIGNAL(clicked(bool)), this, SLOT(otherClicked()));
     connect(ui->btnWithdrawOther, SIGNAL(clicked(bool)), this, SLOT(withdrawOtherPressed()));
     connect(ui->btn_20eur, SIGNAL(clicked(bool)), this, SLOT(eur20Pressed()));
@@ -82,8 +61,8 @@ void mainMenu::atmSignalReceived()
     qDebug()<<"ATM info was read. So no error was received.";
 
     // print bills available on ATM
-    p_withdrawCall->printAtmBills();
-    p_withdrawCall->printAtmSetBills();
+    //p_withdrawCall->printAtmBills();
+    //p_withdrawCall->printAtmSetBills();
 
 }
 
@@ -95,6 +74,7 @@ void mainMenu::withdrawClicked()
     //requestRec->wit.getAtmInfo(token, atmId);
     p_withdrawCall = new withdrawCall(this);
     p_withdrawCall->getAtmInfo(token,1);
+     connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
 
 
     // 20 € - 100 € napit ja labelit yhdistettynä widgettinä.
@@ -141,24 +121,6 @@ void mainMenu::withdrawClicked()
     ui->label_withdraw->setText("Valitse haluamasi määrä");
     ui->label_withdraw->move(400,100);
 
-
-    //p_withdrawCall->sendTransaction(token,5,20.00);
-    //p_withdrawCall->clearBills();
-    //p_withdrawCall->checkBills(220);
-
-    /*
-    qDebug() << "Setelien määrä 20: " <<requestRec->wit.bills_20;
-    qDebug() << "setelien määrä 50: " << requestRec->wit.bills_50;
-    qDebug() << "Setelien määrä 100: " << requestRec->wit.bills_100;
-    qDebug() << "Setelien määrä 200: " << requestRec->wit.bills_200;
-
-    qDebug() << "Noston määräämät setelit: ";
-    qDebug() << "20: " << requestRec->wit.set_20_bills;
-    qDebug() << "50: " << requestRec->wit.set_50_bills;
-    qDebug() << "100: " << requestRec->wit.set_100_bills;
-    qDebug() << "200: " << requestRec->wit.set_200_bills;
-    */
-
 }
 
 void mainMenu::otherClicked()
@@ -182,7 +144,7 @@ void mainMenu::withdrawOtherPressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(ui->text_other->text().toInt());
 
-    p_withdrawCall->printAtmBills();
+   // p_withdrawCall->printAtmBills();
 }
 
 void mainMenu::eur20Pressed()
@@ -191,7 +153,7 @@ void mainMenu::eur20Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(20);
 
-    p_withdrawCall->printAtmBills();
+    //p_withdrawCall->printAtmBills();
 }
 
 void mainMenu::eur40Pressed()
@@ -200,7 +162,7 @@ void mainMenu::eur40Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(40);
 
-    p_withdrawCall->printAtmBills();
+    //p_withdrawCall->printAtmBills();
 }
 
 void mainMenu::eur60Pressed()
@@ -209,7 +171,7 @@ void mainMenu::eur60Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(60);
 
-    p_withdrawCall->printAtmBills();
+    //p_withdrawCall->printAtmBills();
 }
 
 void mainMenu::eur100Pressed()
@@ -218,7 +180,7 @@ void mainMenu::eur100Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(100);
 
-    p_withdrawCall->printAtmBills();
+    //p_withdrawCall->printAtmBills();
 }
 
 void mainMenu::sendTransactionRequest()
