@@ -16,20 +16,22 @@ void login::cardNumberLog(QString val)
     cardNumber=val;
     qDebug()<<"login cardnumber: "<<cardNumber;
 
-   QString cardStateurl="http://localhost:3000/card/getCardState" + cardNumber;
+   QString cardStateurl="http://localhost:3000/card/getCardState/" + cardNumber;
     QNetworkRequest request(cardStateurl);
-    loginManager = new QNetworkAccessManager(this);
-    connect(loginManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cardStateSlot(QNetworkReply*)));
-    reply = loginManager->get(request);
+    stateManager = new QNetworkAccessManager(this);
+    connect(stateManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cardStateSlot(QNetworkReply*)));
+    reply = stateManager->get(request);
 }
 
 void login::loginHandler(QString p)
 {
     pinCode=p;
     qDebug()<<"kortti: "<<cardNumber<<"pin: "<<pinCode;
+    qDebug()<<"cardstate"<<cardState;
     QJsonObject jsonObj;
     jsonObj.insert("card_number",cardNumber);
     jsonObj.insert("card_pin",pinCode);
+    jsonObj.insert("card_state",cardState);
 
     QString site_url="http://localhost:3000/login";
     QNetworkRequest request((site_url));
@@ -41,12 +43,28 @@ void login::loginHandler(QString p)
     reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
+void login::cardStateHandler()
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("card_number",cardNumber);
+    qDebug()<<"json objekti: "<<jsonObj;
+
+    QString site_url_="http://localhost:3000/card/loginLock/"+ cardNumber;
+    QNetworkRequest request((site_url_));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    stateManager = new QNetworkAccessManager(this);
+    connect(stateManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(lockSlot(QNetworkReply*)));
+
+    reply = stateManager->put(request, QJsonDocument(jsonObj).toJson());
+}
+
 void login::loginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
     QMessageBox msgBox;
     qDebug()<<"jdkjgbfjbgkdbgjfdbgdkjbgfdbgkjfd::::card_state= "<<cardState;
-    //qDebug()<<response_data;
+    qDebug()<<"fksjdlkfdnslkfndskndslf"<<response_data;
     if(response_data=="-4078" || response_data.length()==0){
         QString message = "Virhe tietoyhteydessä";
         emit loginMessage(message);
@@ -55,6 +73,18 @@ void login::loginSlot(QNetworkReply *reply)
     }
     else{
         if(response_data!="false"){
+<<<<<<< HEAD
+
+            if(response_data == "kortti lukittu"){
+                QString message="Kortti lukittu, ota yhteyttä pankkiin";
+                emit loginMessage(message);
+
+            }
+            else{
+                //kirjautuminen onnistui
+                emit sendSignalLogin(response_data);
+                accountLock=0;
+=======
             // && cardState == "1"
             //kirjautuminen onnistui
             qDebug() << "Kortin tila: " <<cardState;
@@ -68,6 +98,7 @@ void login::loginSlot(QNetworkReply *reply)
                 QString message = "Tervetuloa..";
                 emit sendSignalLogin(response_data);
                 emit loginMessage(message);
+>>>>>>> origin
             }
         }
         else{
@@ -75,26 +106,11 @@ void login::loginSlot(QNetworkReply *reply)
             accountLock++;
             emit loginMessage(message);
 
-            if(accountLock == 3){
+            if(accountLock >= 3){
                 QString message="Kortti lukittu, ota yhteyttä pankkiin";
                 emit loginMessage(message);
-
-                QJsonObject jsonObj;
-                jsonObj.insert("card_number",cardNumber);
-                QString site_url_="http://localhost:3000/card/loginLock/"+ cardNumber;
-                QNetworkRequest request((site_url_));
-                request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-                loginManager = new QNetworkAccessManager(this);
-                connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(lockSlot(QNetworkReply*)));
-
-                reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
-            }
-
-                if(response_data == "kortti lukittu"){
-                    QString message="Kortti lukittu, ota yhteyttä pankkiin";
-                    emit loginMessage(message);
-
+                cardState=0;
+                cardStateHandler();
             }
 
             /*msgBox.setText("Korttinumero/pin ei täsmää");
@@ -111,17 +127,21 @@ void login::lockSlot(QNetworkReply *replys)
     qDebug()<<"lock Slotin response data: "<<response_data;
 
     replys->deleteLater();
-    loginManager->deleteLater();
+    stateManager->deleteLater();
 
 }
 
 void login::cardStateSlot(QNetworkReply *repl)
 {
     response_data=repl->readAll();
-    cardState=response_data;
-    qDebug()<<"cardState response data: "<<response_data;
+    //response_data=cardState;
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    QJsonObject jsonObj = json_doc.object();
+    cardState = jsonObj["card_state"].toInt();
+    qDebug() << "cardState response data:" << cardState;
+
 
     repl->deleteLater();
-    loginManager->deleteLater();
+    stateManager->deleteLater();
 }
 
