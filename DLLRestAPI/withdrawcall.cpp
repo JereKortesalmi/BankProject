@@ -13,16 +13,19 @@ void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
     qDebug()<<"sendRequest from withdrawCall()";
     //Esimerkkidata
     QDateTime current = QDateTime::currentDateTime();
+    QString formattedTime = current.toString("yyyy-MM-dd hh:mm:ss");
+    qDebug() << formattedTime;
     QJsonObject jsonObj;
     jsonObj.insert("transaction_account_id", id);
     jsonObj.insert("transaction_atm_id","1");           // read from file will be added somewhere else, so will need to add variable here
-    jsonObj.insert("transaction_time", current.toString());
+    jsonObj.insert("transaction_time", formattedTime);
     jsonObj.insert("transaction_type","WITHDRAW");
-    jsonObj.insert("transaction_amount", QString::number(sum));
+    jsonObj.insert("transaction_amount", sum);
 
 
-    QUrl url("http://localhost:3000/withdraw/" + QString::number(id));
+    QUrl url("http://localhost:3000/transaction/");
     QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     //WEBTOKEN ALKU
     myToken="Bearer "+token;
@@ -31,11 +34,12 @@ void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
 
 
     w_manager = new QNetworkAccessManager(this);
-    w_reply = w_manager->put(request,QJsonDocument(jsonObj).toJson());
+    w_reply = w_manager->post(request,QJsonDocument(jsonObj).toJson());
     connect(w_manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(onManagerFinished(QNetworkReply*)));
     connect(w_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
             this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
     //w_manager->deleteLater();
+
 }
 
 void withdrawCall::getAtmInfo(QByteArray token, int id)
@@ -75,6 +79,7 @@ void withdrawCall::getAtmInfo(QByteArray token, int id)
 void withdrawCall::printAtmSetBills()
 {
     qDebug()<<" Bills set on ATM:";
+    qDebug() << "ATM balance: " << atmBalance;
     qDebug()<< "20 €: " << set_200_bills;
     qDebug()<< "50 €: " << set_50_bills;
     qDebug()<< "100 €: " << set_100_bills;
@@ -84,6 +89,7 @@ void withdrawCall::printAtmSetBills()
 void withdrawCall::printAtmBills()
 {
     qDebug()<<" Bills on ATM:";
+    qDebug() << "ATM balance: " << atmBalance;
     qDebug()<< "20 €: " << bills_20;
     qDebug()<< "50 €: " << bills_50;
     qDebug()<< "100 €: " << bills_100;
@@ -343,6 +349,57 @@ void withdrawCall::removeBills()
 
 }
 
+void withdrawCall::updateBills(QByteArray token,int id, double sum)
+{
+    qDebug() << "Writing to database bill values.";
+
+    qDebug() << "updateBills with atmID: " << id;
+    QString wUrl = "http://localhost:3000/atm/" + QString::number(id);
+    QUrl url(wUrl);
+    QNetworkRequest request(url);
+    QJsonObject obj;
+
+    qDebug()<<"atmBalance: "<<atmBalance;
+
+    int result = atmBalance-sum;
+    if(result < 0) {
+        result = 0;
+    }
+    qDebug() << "result: " << result;
+
+    // inserting values to object
+    obj.insert("atm_500eur", 0);
+    obj.insert("atm_200eur", bills_200);
+    obj.insert("atm_100eur", bills_100);
+    obj.insert("atm_50eur", bills_50);
+    obj.insert("atm_20eur", bills_20);
+    obj.insert("atm_balance", result);
+    //obj.insert("atm_id", id);
+
+    //header
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    // debug print object
+    qDebug() << "object: " << obj;
+
+    //WEBTOKEN ALKU
+    myToken="Bearer "+token;
+    qDebug() << "before crash";
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
+
+    atm_write_manager = new QNetworkAccessManager(this);
+    connect(atm_write_manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(onbillsManagerFinished(QNetworkReply*)));
+
+
+    qDebug()<<"JsonDocument: " << QJsonDocument(obj).toJson();
+    atm_reply = atm_write_manager->put(request, QJsonDocument(obj).toJson());
+    connect(atm_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
+            this,SLOT(onBillsErrorOccurred(QNetworkReply::NetworkError)));
+
+}
+
 void withdrawCall::onManagerFinished(QNetworkReply *reply)
 {
     if(reply->error()) {
@@ -354,6 +411,7 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
     //QJsonArray json_array = json_doc.array();
     //qDebug() << json_doc["atm_20eur"];
     qDebug() << "set Bills: ";
+    atmBalance = json_doc["atm_balance"].toDouble();
     bills_20 = json_doc["atm_20eur"].toInt();
     bills_50 = json_doc["atm_50eur"].toInt();
     bills_100 = json_doc["atm_100eur"].toInt();
@@ -383,12 +441,12 @@ void withdrawCall::atmManagerFinished(QNetworkReply *reply)
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     //QJsonArray json_array = json_doc.array();
     //qDebug() << json_doc["atm_20eur"];
-
+    atmBalance = json_doc["atm_balance"].toDouble();
     bills_20 = json_doc["atm_20eur"].toInt();
     bills_50 = json_doc["atm_50eur"].toInt();
     bills_100 = json_doc["atm_100eur"].toInt();
     bills_200 = json_doc["atm_200eur"].toInt();
-
+    qDebug()<<json_doc;
     //w_manager->deleteLater();
     //reply->deleteLater();
     //qDebug() << json_array.toVariantList();
@@ -398,4 +456,17 @@ void withdrawCall::atmManagerFinished(QNetworkReply *reply)
 void withdrawCall::atmErrorOccurred(QNetworkReply::NetworkError code)
 {
     qDebug() << "atmError" << code;
+}
+
+void withdrawCall::onbillsManagerFinished(QNetworkReply *reply)
+{
+    response_data = reply->readAll();
+    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    qDebug()<<json_doc;
+    emit billsdataWritten();
+}
+
+void withdrawCall::onBillsErrorOccurred(QNetworkReply::NetworkError code)
+{
+    qDebug()<<"Network error:" << code;
 }
