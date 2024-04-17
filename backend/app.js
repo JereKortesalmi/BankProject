@@ -32,7 +32,7 @@ app.use('/card', cardRouter);
 
 app.use('/users', usersRouter);
 
-app.use('/transaction', transactionRouter);
+
 app.use('/accounts_to_cards',accounts_to_cardsRouter);
 app.use('/accounts', accountsRouter);
 app.use('/customer', customerRouter);
@@ -41,6 +41,7 @@ app.use('/login', loginRouter);
 
 app.use(authenticateToken);
 app.use('/atm', atmRouter);
+app.use('/transaction', transactionRouter);
 
 
 function authenticateToken(req, res, next) {
