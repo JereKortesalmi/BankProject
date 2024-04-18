@@ -25,7 +25,7 @@ public:
 public slots:
     void saveAccountDetails(QNetworkReply *reply);
     void getBalance(QNetworkReply *reply);
-    void updateBalance(int, QString);
+    void updateBalance(QByteArray, int, QString);
 signals:
     void sendAccountIdBalance(int,QString, QString);
     void opencreditdebitq(QJsonArray);
@@ -34,6 +34,7 @@ signals:
 
 private slots:
     void onErrorOccurred(QNetworkReply::NetworkError code);
+    void balanceUpdateFinished(QNetworkReply*);
 
 private:
     Ui::balance *ui;
@@ -41,6 +42,7 @@ private:
     QNetworkAccessManager *balanceManager;
     QNetworkReply *reply;
     QByteArray response_data;
+    QByteArray myToken;
     QString bal;
     int accountId;
     //QString balance;

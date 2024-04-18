@@ -154,7 +154,7 @@ void mainMenu::eur20Pressed()
     qDebug() << "20  €";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(20);
-
+    //bal->updateBalance(token, id, a);
     //p_withdrawCall->printAtmBills();
 }
 

@@ -82,5 +82,15 @@ router.get('/getaccountid/:cardNumber',function(request,response){
         }
     });
 });
+router.put('/updateBalance/:id',function(request,response){
+    course.updateBalance(request.params.id, request.body, function(err,result){
+            if(err){
+                response.send(err);
+            }
+            else {
+                response.json(result.affectedRows);
+            }
+        });
+    });
    
    module.exports=router;

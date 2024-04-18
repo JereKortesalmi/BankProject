@@ -19,6 +19,12 @@ void balance::onErrorOccurred(QNetworkReply::NetworkError code)
     qDebug()<<"Network error:" << code;
 }
 
+void balance::balanceUpdateFinished(QNetworkReply *reply)
+{
+    QByteArray response = reply->readAll();
+    qDebug()<<response;
+}
+
 void balance::fetchAccountDetails(QString cardn)
 {
     QString cardNumber = cardn;
@@ -78,19 +84,32 @@ void balance::getBalance(QNetworkReply *reply){
             emit balanceToMainmenu(balance);
 }
 
-void balance::updateBalance(int accountId, QString balance)
+void balance::updateBalance(QByteArray token, int accountId, QString balance)
 {
     int id = accountId;
     QString bal = balance;
+    qDebug()<<"id ja balance updateBalance:"<<id<<bal;
     QJsonObject jsonObject;
     jsonObject.insert("account_balance", bal);
+    //QByteArray accountBalance = QJsonDocument(jsonObject).toJson();
 
-    QUrl url("http://localhost:3000/accounts/" + QString::number(id));
+    QUrl url("http://localhost:3000/accounts/updateBalance/" + QString::number(id));
     QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray accountBalance = QJsonDocument(jsonObject).toJson();
-    balanceManager = new QNetworkAccessManager(this);
 
-    balanceManager->put(request, accountBalance);
+    //WEBTOKEN ALKU
+    myToken="Bearer "+token;
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    balanceManager = new QNetworkAccessManager(this);
+    //QNetworkAccessManager *balanceManager = new QNetworkAccessManager(this);
+    reply = balanceManager->put(request, QJsonDocument(jsonObject).toJson());
+    connect(balanceManager, SIGNAL(finished(QNetworkReply*)),this,SLOT(balanceUpdateFinished(QNetworkReply*)));
+
+
+
+    //balanceManager->put(request, accountBalance);
 
 }
