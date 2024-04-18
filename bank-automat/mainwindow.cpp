@@ -130,6 +130,8 @@ void MainWindow::creditdebitchoose(QJsonArray array)
 void MainWindow::adminState()
 {
     adm->show();
+    adm->token = token;
+    adm->fetchBalance(1, token);
 }
 
 void MainWindow::logOutSlot()
