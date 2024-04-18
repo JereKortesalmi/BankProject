@@ -57,7 +57,8 @@ void mainMenu::withdrawSignalReceived()
     hideShown();
     ui->label_withdraw->show();
     ui->label_withdraw->setText("Withdraw complete. Have a good day");
-
+    delete p_withdrawCall;
+    p_withdrawCall = nullptr;
 }
 
 void mainMenu::atmSignalReceived()
