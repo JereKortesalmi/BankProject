@@ -29,23 +29,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
 
     //yhditetään login
-    log = new login();
+    log = new login;
     connect(log,SIGNAL(sendSignalLogin(QString)),this,SLOT(loginInfo(QString)));
     connect(log,SIGNAL(loginMessage(QString)),this,SLOT(loginMessageToPinCode(QString)));
 
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
-    connect(creditDebit,SIGNAL(sendAccountId(int,QString)),this,SLOT(accountIdSender(int,QString)));
+    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
     //p_mainMenu->show();
+    connect(p_mainMenu,SIGNAL(logOutSignal()),this,SLOT(logOutSlot()));
 
     //luodaan balance
     bal = new balance;
-    connect(bal,SIGNAL(sendAccountIdBalance(int,QString)),this,SLOT(accountIdSender(int,QString)));
+    connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
-
+    connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
+    //luodaan admin
+    adm = new admin;
 
     ui->tableViewTransactions->hide();
 
@@ -80,7 +83,7 @@ void MainWindow::cardNumberHand()
 {
     cardNumber=ui->cardEdit->text();
     qDebug()<<"Käsin korttinumero: "<<cardNumber;
-    //log->cardNumberLog(cardNumber);
+    log->cardNumberLog(cardNumber);
     pin->show();
 }
 
@@ -91,6 +94,8 @@ void MainWindow::loginInfo(QString res)
     token = QByteArray::fromStdString(res.toStdString());
     qDebug()<<"login vastaus: "<<token;
     pin->hide();
+    //creditDebit->show();
+    //p_mainMenu->show();
     qDebug()<<cardNumber;
     bal->fetchAccountDetails(cardNumber);
 }
@@ -101,14 +106,16 @@ void MainWindow::loginMessageToPinCode(QString message)
     pin->pinMessage(mes);
 }
 
-void MainWindow::accountIdSender(int accountId, QString balance)
+void MainWindow::accountIdSender(int accountId, QString balance, QString type)
 {
     int id = accountId;
     QString bal = balance;
+    QString accountType = type;
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->accountId = id;
-    p_mainMenu->showBalance(bal);
+    //p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
+    p_mainMenu->accountType = type;
     p_mainMenu->show();
 
 }
@@ -118,6 +125,25 @@ void MainWindow::creditdebitchoose(QJsonArray array)
     QJsonArray jsonArray = array;
     creditDebit->show();
     creditDebit->selectAccountHandler(jsonArray);
+}
+
+void MainWindow::adminState()
+{
+    adm->show();
+    adm->token = token;
+    adm->fetchBalance(1, token);
+}
+
+void MainWindow::logOutSlot()
+{
+    qDebug()<<"logoutSLot toimii";
+    ui->cardEdit->clear();
+    token=nullptr;
+    pin->resetHandler();
+    pin->close();
+    p_mainMenu->close();
+    creditDebit->close();
+    adm->close();
 }
 
 void MainWindow::readTransactionValues()
@@ -182,7 +208,7 @@ void MainWindow::receiveCardNumber(QString val)
 {
     cardNumber=val;
     qDebug()<<"korttinumero main: "<<cardNumber;
-    //log->cardNumberLog(cardNumber);
+    log->cardNumberLog(cardNumber);
     pin->show();
 
 }
@@ -192,7 +218,7 @@ void MainWindow::receivePinNumber(QString val)
     pinCode=val;
     qDebug()<<"pin numero main: "<<pinCode;
     qDebug()<<"korttinumero main: "<<cardNumber;
-    log->cardNumberLog(cardNumber);
+    //log->cardNumberLog(cardNumber);
     log->loginHandler(pinCode);
     //log->pinCodeLog(pinCode);
 

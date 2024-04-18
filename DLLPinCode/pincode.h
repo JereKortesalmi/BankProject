@@ -19,11 +19,13 @@ public:
 
 signals:
     void sendPinCodeToMainWindow(QString);
+public slots:
+    void resetHandler();
 private slots:
     void clickHandler();
     void enterHandler();
-    void resetHandler();
     void revertHandler();
+
 
 
 private:

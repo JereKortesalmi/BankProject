@@ -35,11 +35,19 @@ const card={
         return db.query("DELETE FROM card WHERE card_id=?",[id],callback);
     },
     login(un, callback){
-        return db.query("SELECT card_pin FROM card where card_number=?",[un], callback);
+        return db.query("SELECT card_pin, card_state FROM card where card_number=?",[un], callback);
     },
     getAccountId(cardNumber,callback){
         return db.query("select account_id, account_customer_id, account_type, account_balance from account inner join accounts_to_cards on account_id=reference_account_id inner join card on reference_card_id=card_id where card_number=?",[cardNumber],callback);
-    }
+    },
+    loginLock(cardnumber,callback){
+        return db.query("UPDATE card SET card_state='0' WHERE card_number=?",[
+            cardnumber],
+            callback);
+    },
+    getCardState(card_number,callback){
+        return db.query("SELECT card_state FROM card where card_number=?",[card_number], callback);
+    }    
 }
 
 module.exports=card;

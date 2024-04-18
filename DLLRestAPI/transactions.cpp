@@ -33,7 +33,7 @@ Transactions::~Transactions()
     //delete ui;
 }
 
-void Transactions::requestTrasactions(int accountId)
+void Transactions::requestTrasactions(QByteArray token, int accountId)
 {
     qDebug() << QString::number(accountId);
     manager = new QNetworkAccessManager();
@@ -46,6 +46,12 @@ void Transactions::requestTrasactions(int accountId)
 
     QUrl url("http://localhost:3000/transactions_per_account/" + QString::number(accountId));
     QNetworkRequest request(url);
+
+    //WEBTOKEN ALKU
+    myToken="Bearer "+token;
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
+
     reply = manager->get(request);
     connect(reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
 }
