@@ -326,3 +326,11 @@ void mainMenu::hideShown()
     ui->text_other->hide();
     */
 }
+
+void mainMenu::on_btnlogout_clicked()
+{
+    hideShown();
+    emit logOutSignal();
+
+}
+

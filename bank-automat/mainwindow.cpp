@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
     //p_mainMenu->show();
+    connect(p_mainMenu,SIGNAL(logOutSignal()),this,SLOT(logOutSlot()));
 
     //luodaan balance
     bal = new balance;
@@ -131,6 +132,18 @@ void MainWindow::creditdebitchoose(QJsonArray array)
 void MainWindow::adminState()
 {
     adm->show();
+}
+
+void MainWindow::logOutSlot()
+{
+    qDebug()<<"logoutSLot toimii";
+    ui->cardEdit->clear();
+    token=nullptr;
+    pin->resetHandler();
+    pin->close();
+    p_mainMenu->close();
+    creditDebit->close();
+    adm->close();
 }
 
 void MainWindow::readTransactionValues()
