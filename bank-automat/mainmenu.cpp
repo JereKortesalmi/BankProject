@@ -15,7 +15,9 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
     //balance signals
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
+    bal = new balance;
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(fetchBalance()));
+    connect(bal,SIGNAL(balanceToMainmenu(QString)),this,SLOT(showBalance(QString)));
 
     //Trics to show stuff
     ui->tableViewTransactions->hide();
@@ -157,7 +159,7 @@ void mainMenu::eur20Pressed()
     qDebug() << "20  €";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(20);
-
+    //bal->updateBalance(token, id, a);
     //p_withdrawCall->printAtmBills();
     p_withdrawCall->sendTransaction(token,accountId,20.00);
     p_withdrawCall->updateBills(token,1,20);
@@ -294,7 +296,12 @@ void mainMenu::showBalance(QString bal)
     ui->balanceLabel->setText(balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
-    //ui->balanceLabel->show();
+    ui->balanceLabel->show();
+}
+
+void mainMenu::fetchBalance()
+{
+    bal->fetchBalance(accountId);
 }
 
 void mainMenu::hideShown()

@@ -76,6 +76,7 @@ public slots:
     void displayData();
     //balance slots
     void showBalance(QString);
+    void fetchBalance();
     //hide
     void hideShown();
 

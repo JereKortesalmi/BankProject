@@ -46,10 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     bal = new balance;
     connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
-
+    connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
     //luodaan admin
     adm = new admin;
-    connect (adm, SIGNAL(openAdmin()),this,SLOT(adminState()));
 
     ui->tableViewTransactions->hide();
 
@@ -97,7 +96,6 @@ void MainWindow::loginInfo(QString res)
     pin->hide();
     //creditDebit->show();
     //p_mainMenu->show();
-    p_mainMenu->show();
     qDebug()<<cardNumber;
     bal->fetchAccountDetails(cardNumber);
 }
@@ -115,7 +113,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     QString accountType = type;
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->accountId = id;
-    p_mainMenu->showBalance(bal);
+    //p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->show();
