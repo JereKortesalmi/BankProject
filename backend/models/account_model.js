@@ -27,6 +27,12 @@ const account={
             id],
             callback);
     },
+    updateBalance(id,updateBalance,callback){
+        return db.query("UPDATE account SET account_balance=? WHERE account_id=?",
+    [updateBalance.account_balance,
+    id],
+    callback);
+    },
     deleteAccount(id,callback) {
         return db.query("DELETE FROM account WHERE account_id=?", [id], callback);
     },
