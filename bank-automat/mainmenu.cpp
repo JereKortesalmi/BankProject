@@ -52,7 +52,9 @@ mainMenu::~mainMenu()
 
 void mainMenu::withdrawSignalReceived()
 {
-
+    hideShown();
+    ui->label_withdraw->show();
+    ui->label_withdraw->setText("Withdraw complete. Have a good day");
 
 }
 
@@ -75,7 +77,7 @@ void mainMenu::withdrawClicked()
     p_withdrawCall = new withdrawCall(this);
     p_withdrawCall->getAtmInfo(token,1);
      connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
-
+    connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawReady()));
 
     // 20 € - 100 € napit ja labelit yhdistettynä widgettinä.
     ui->eur20->show();
@@ -143,8 +145,11 @@ void mainMenu::withdrawOtherPressed()
     qDebug()<< ui->text_other->text().toInt() << "€";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(ui->text_other->text().toInt());
-
+    p_withdrawCall->sendTransaction(token,accountId,ui->text_other->text().toDouble());
+    p_withdrawCall->updateBills(token,1, ui->text_other->text().toDouble());
    // p_withdrawCall->printAtmBills();
+
+    hideShown();
 }
 
 void mainMenu::eur20Pressed()
@@ -154,6 +159,9 @@ void mainMenu::eur20Pressed()
     p_withdrawCall->checkBills(20);
 
     //p_withdrawCall->printAtmBills();
+    p_withdrawCall->sendTransaction(token,accountId,20.00);
+    p_withdrawCall->updateBills(token,1,20);
+    hideShown();
 }
 
 void mainMenu::eur40Pressed()
@@ -161,8 +169,11 @@ void mainMenu::eur40Pressed()
     qDebug() << "40  €";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(40);
-
+    p_withdrawCall->sendTransaction(token,accountId,40.00);
+    p_withdrawCall->updateBills(token,1,40);
     //p_withdrawCall->printAtmBills();
+
+    hideShown();
 }
 
 void mainMenu::eur60Pressed()
@@ -170,8 +181,11 @@ void mainMenu::eur60Pressed()
     qDebug() << "60  €";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(60);
-
+    p_withdrawCall->sendTransaction(token,accountId,60.00);
+    p_withdrawCall->updateBills(token,1,60);
     //p_withdrawCall->printAtmBills();
+
+    hideShown();
 }
 
 void mainMenu::eur100Pressed()
@@ -179,8 +193,20 @@ void mainMenu::eur100Pressed()
     qDebug() << "100  €";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(100);
-
+    p_withdrawCall->sendTransaction(token,accountId,100.00);
+    p_withdrawCall->updateBills(token,1,100);
     //p_withdrawCall->printAtmBills();
+
+    hideShown();
+}
+
+void mainMenu::withdrawReady()
+{
+    //p_withdrawCall->deleteLater();
+    //p_withdrawCall = nullptr;
+    hideShown();
+    ui->label_withdraw->setText("Withdraw complete.");
+    ui->label_withdraw->show();
 }
 
 void mainMenu::sendTransactionRequest()
@@ -189,7 +215,7 @@ void mainMenu::sendTransactionRequest()
         tableTransactions.clear();
     }
     test = new Transactions();
-    test->requestTrasactions(accountId);
+    test->requestTrasactions(token,accountId);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
 }

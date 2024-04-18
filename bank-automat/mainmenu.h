@@ -68,6 +68,7 @@ public slots:
     void eur60Pressed();
     void eur100Pressed();
     void on_btnlogout_clicked();
+    void withdrawReady();
 
     //tableview
     void sendTransactionRequest();
