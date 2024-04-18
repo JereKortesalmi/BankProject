@@ -51,6 +51,8 @@ private:
     int fiveHundred = 0;
     int dataFiveHundred;
     int atmId = 1;
+    int state = 0;
+    QString num = 0;
 };
 
 #endif // ADMIN_H

@@ -188,13 +188,21 @@ void admin::getBalance(QNetworkReply *reply){
 void admin::clickHandler()
 {
     QPushButton * button = qobject_cast<QPushButton*>(sender());
-    QString pin = button->objectName();
-    qDebug() <<"Button: "<<pin;
-
-    QString a= pin.last(1);
-    number = number + a;
-
-    ui->pinLine->setText(number);
+    QString btn = button->objectName();
+    qDebug() <<"Button: "<<btn;
+    QString a = btn.last(1);
+    num = num + a;
+    if(state == 1){
+        ui->twentyEdit->setText(num);
+    }else if(state == 2){
+        ui->fiftyEdit->setText(num);
+    }else if(state == 3){
+        ui->hundredEdit->setText(num);
+    }else if(state == 4){
+        ui->twoHundredEdit->setText(num);
+    }else if(state == 5){
+        ui->fiveHundredEdit->setText(num);
+    }
 }
 
 void admin::selectedLineEdit()
@@ -204,12 +212,19 @@ void admin::selectedLineEdit()
     qDebug() <<"Button: "<<btn;
 
     if(btn == "btn20"){
-
-        QString a =btn.last(1);
-        QString number = number + a;
-        ui->twentyEdit->setText(number);
+        state = 1;
+        num = 0;
     }else if(btn == "btn50"){
-        QString a = btn.last(1);
-        QString number1 = number1 + a;
+        state = 2;
+        num = 0;
+    }else if(btn == "btn100"){
+        state = 3;
+        num = 0;
+    }else if(btn == "btn200"){
+        state = 4;
+        num = 0;
+    }else if(btn == "btn 500"){
+        state = 5;
+        num = 0;
     }
 }
