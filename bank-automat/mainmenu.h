@@ -55,6 +55,7 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
 
+    QTimer * bankTimer = nullptr;
 
 public slots:
     //withdrawCall

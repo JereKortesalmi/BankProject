@@ -56,28 +56,5 @@ router.delete('/:id',function(request, response){
         }
     });
 });
-router.put('/loginLock/:card_number',function(request, response){
-    card.loginLock(request.params.card_number, function(err, result){
-        if(err){
-            response.send(err);
-            console.log("ei toimi");
-        }
-        else {
-            response.json(result);
-            console.log("toimii");
-        }
-    });
-});
-router.get('/getCardState/:card_number',function(request, response){
-    card.getCardState(request.params.card_number, function(err, result){
-        if(err){
-            response.send(err);
-        }
-        else {
-            response.json(result[0]);
-            //response.send(card_state); 
-        }
-    });
-});
 
 module.exports=router;

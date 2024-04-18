@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <DLLSerialport_global.h>
+#include <QCursor>
+#include <QApplication>
+
 //Korttien numerot
 //  -0600062211
 //  -0500CB1EF8
@@ -12,9 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connectSerial();
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()), this, SLOT(checkMousePosition()));
+    timer->start(1000);
 
     //readTransactionValues();
-
     connect(ui->btn_transactions,SIGNAL(clicked(bool)),
             this,SLOT(sendTransactionRequest()));
 
@@ -144,6 +149,25 @@ void MainWindow::logOutSlot()
     p_mainMenu->close();
     creditDebit->close();
     adm->close();
+}
+
+void MainWindow::checkMousePosition()
+{
+    QPoint currentPos = QCursor::pos();
+    if (currentPos == lastPos) {
+        mouseTime++;
+        if (mouseTime == 12) {
+            qDebug() << "Hiiri oli paikallaan 10 sekunttia!";
+            logOutSlot();
+            p_mainMenu->on_btnlogout_clicked();
+            QMessageBox msgBox;
+            msgBox.setText("Kirjauduttu ulos,olit toimeettomana liian kauan");
+            msgBox.exec();
+        }
+    } else {
+        mouseTime = 0;
+        lastPos = currentPos;
+    }
 }
 
 void MainWindow::readTransactionValues()
