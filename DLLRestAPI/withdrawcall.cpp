@@ -1,9 +1,14 @@
 #include "withdrawcall.h"
-
+/*
 withdrawCall::withdrawCall(QObject *parent)
     : QObject{parent}
 {
-      qDebug()<<"withdrawCall was constructed.";
+    qDebug()<<"withdrawCall was constructed.";
+}
+*/
+withdrawCall::withdrawCall()
+{
+    qDebug() << "withdrawCall was constructed.";
 }
 
 void withdrawCall::sendTransaction(QByteArray token, int id, double sum)

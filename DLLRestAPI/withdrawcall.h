@@ -11,7 +11,8 @@ class DLLRESTAPI_EXPORT withdrawCall : public QObject
 {
     Q_OBJECT
 public:
-    explicit withdrawCall(QObject *parent = nullptr);    
+    //explicit withdrawCall(QObject *parent = nullptr);
+    withdrawCall();
     ~withdrawCall();
     void sendTransaction(QByteArray token, int id, double sum);
     void getAtmInfo(QByteArray token,int id);

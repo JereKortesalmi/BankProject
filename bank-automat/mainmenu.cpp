@@ -71,10 +71,12 @@ void mainMenu::atmSignalReceived()
 void mainMenu::withdrawClicked()
 {
     qDebug()<<"Withdraw clicked";
+
+    hideShown();
     //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     //int atmId = 1;
     //requestRec->wit.getAtmInfo(token, atmId);
-    p_withdrawCall = new withdrawCall(this);
+    p_withdrawCall = new withdrawCall();
     p_withdrawCall->getAtmInfo(token,1);
      connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawReady()));
@@ -211,6 +213,7 @@ void mainMenu::withdrawReady()
 
 void mainMenu::sendTransactionRequest()
 {
+    hideShown();
     if(!tableTransactions.isEmpty()) {
         tableTransactions.clear();
     }
@@ -255,7 +258,7 @@ void mainMenu::displayData()
     // 1920*1080    full hd
     // 3840*2160    4k
     ui->tableViewTransactions->resizeColumnsToContents();
-    ui->tableViewTransactions->setGeometry(350,0,450,200);
+    ui->tableViewTransactions->setGeometry(350,0,420,200);
     ui->tableViewTransactions->move(280,200);
     ui->tableViewTransactions->show();
 
@@ -311,6 +314,9 @@ void mainMenu::hideShown()
 
     //ui->text_other->hide();
     ui->withdrawOther->hide();
+
+    delete p_withdrawCall;
+    p_withdrawCall = nullptr;
 
     /*
     ui->btn_20eur->hide();
