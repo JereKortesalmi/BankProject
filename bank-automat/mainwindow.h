@@ -44,6 +44,7 @@ private:
 
     mainMenu *p_mainMenu = nullptr;
 
+    //int id;
     QString cardNumber;
     QString pinCode;
     QByteArray token;
@@ -88,6 +89,7 @@ private slots:
     void accountIdSender(int, QString, QString);
     void creditdebitchoose(QJsonArray);
     void adminState();
+    void logOutSlot();
 
 public slots:
     void readTransactionValues();
