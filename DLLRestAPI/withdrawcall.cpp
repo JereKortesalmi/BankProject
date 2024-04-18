@@ -119,9 +119,11 @@ void withdrawCall::checkBills(int withdrawal)
     withdrawAmount = withdrawal;
     bool test = checkBillsAvailable();
     if(test==true) {
+        emit billsOK(true);
         removeBills();
     }
     else {
+        emit billsOK(false);
         qDebug()<<"No bills to give";
     }
 }

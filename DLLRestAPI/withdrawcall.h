@@ -74,6 +74,7 @@ signals:
     void dataRead();
     void billsdataWritten();
     void atmInfoSent();
+    void billsOK(bool);
 };
 
 #endif // WITHDRAWCALL_H

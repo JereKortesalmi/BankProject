@@ -55,6 +55,10 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
 
+    bool checkBalance(double amount);
+    void reduceBalance(double amount);
+    QString balance1;
+    bool billsready;
 
 public slots:
     //withdrawCall
@@ -67,8 +71,12 @@ public slots:
     void eur40Pressed();
     void eur60Pressed();
     void eur100Pressed();
-    void on_btnlogout_clicked();
+    void onBtnlogoutClicked();
     void withdrawReady();
+    void closeWithdrawCall();
+    void billsOk (bool);
+
+
 
     //tableview
     void sendTransactionRequest();
