@@ -43,6 +43,7 @@ public:
     QByteArray token;
     QString accountType;
 
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions
@@ -55,7 +56,15 @@ private:
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
 
+<<<<<<< HEAD
     QTimer * bankTimer = nullptr;
+=======
+    bool checkBalance(double amount);
+    void reduceBalance(double amount);
+    QString balance1;
+    bool billsready;
+
+>>>>>>> origin
 
 public slots:
     //withdrawCall
@@ -68,8 +77,12 @@ public slots:
     void eur40Pressed();
     void eur60Pressed();
     void eur100Pressed();
-    void on_btnlogout_clicked();
+    void onBtnlogoutClicked();
     void withdrawReady();
+    void closeWithdrawCall();
+    void billsOk (bool);
+
+
 
     //tableview
     void sendTransactionRequest();
@@ -77,8 +90,11 @@ public slots:
     void displayData();
     //balance slots
     void showBalance(QString);
+    void fetchBalance();
     //hide
     void hideShown();
+    void resetView();
+
 
 public slots:
     void readTransactionValues(); // transactions

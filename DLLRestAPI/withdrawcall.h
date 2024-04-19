@@ -11,7 +11,8 @@ class DLLRESTAPI_EXPORT withdrawCall : public QObject
 {
     Q_OBJECT
 public:
-    explicit withdrawCall(QObject *parent = nullptr);    
+    //explicit withdrawCall(QObject *parent = nullptr);
+    withdrawCall();
     ~withdrawCall();
     void sendTransaction(QByteArray token, int id, double sum);
     void getAtmInfo(QByteArray token,int id);
@@ -27,7 +28,9 @@ public:
     int bills_50 = 100;
     int bills_100 = 10;
     int bills_200 = 10;
+    int bills_500 = 0;
 
+    int set_500_bills = 0;
     int set_200_bills = 0;
     int set_100_bills = 0;
     int set_50_bills = 0;
@@ -42,6 +45,7 @@ public:
     bool usable_50;
     bool usable_100;
     bool usable_200;
+    bool usable_500;
 
     int withdrawAmount = 0;
 
@@ -73,6 +77,7 @@ signals:
     void dataRead();
     void billsdataWritten();
     void atmInfoSent();
+    void billsOK(bool);
 };
 
 #endif // WITHDRAWCALL_H

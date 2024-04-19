@@ -51,10 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
     bal = new balance;
     connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
-
+    connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
     //luodaan admin
     adm = new admin;
-    connect (adm, SIGNAL(openAdmin()),this,SLOT(adminState()));
 
     ui->tableViewTransactions->hide();
 
@@ -102,7 +101,6 @@ void MainWindow::loginInfo(QString res)
     pin->hide();
     //creditDebit->show();
     //p_mainMenu->show();
-    p_mainMenu->show();
     qDebug()<<cardNumber;
     bal->fetchAccountDetails(cardNumber);
 }
@@ -120,7 +118,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     QString accountType = type;
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->accountId = id;
-    p_mainMenu->showBalance(bal);
+    //p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->show();
@@ -147,6 +145,9 @@ void MainWindow::logOutSlot()
     pin->resetHandler();
     pin->close();
     p_mainMenu->close();
+    p_mainMenu->resetView();
+    //delete p_mainMenu;
+    //p_mainMenu = nullptr;
     creditDebit->close();
     adm->close();
 }
@@ -159,7 +160,7 @@ void MainWindow::checkMousePosition()
         if (mouseTime == 12) {
             qDebug() << "Hiiri oli paikallaan 10 sekunttia!";
             logOutSlot();
-            p_mainMenu->on_btnlogout_clicked();
+            p_mainMenu->onBtnlogoutClicked();
             QMessageBox msgBox;
             msgBox.setText("Kirjauduttu ulos,olit toimeettomana liian kauan");
             msgBox.exec();

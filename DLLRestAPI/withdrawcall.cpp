@@ -1,9 +1,15 @@
-#include "withdrawcall.h"
 
+#include "withdrawcall.h"
+/*
 withdrawCall::withdrawCall(QObject *parent)
     : QObject{parent}
 {
-      qDebug()<<"withdrawCall was constructed.";
+    qDebug()<<"withdrawCall was constructed.";
+}
+*/
+withdrawCall::withdrawCall()
+{
+    qDebug() << "withdrawCall was constructed.";
 }
 
 void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
@@ -84,6 +90,7 @@ void withdrawCall::printAtmSetBills()
     qDebug()<< "50 €: " << set_50_bills;
     qDebug()<< "100 €: " << set_100_bills;
     qDebug()<< "200 €: " << set_200_bills;
+    qDebug()<< "500 €: " << set_500_bills;
 }
 
 void withdrawCall::printAtmBills()
@@ -94,6 +101,7 @@ void withdrawCall::printAtmBills()
     qDebug()<< "50 €: " << bills_50;
     qDebug()<< "100 €: " << bills_100;
     qDebug()<< "200 €: " << bills_200;
+    qDebug() << "500 €: " << bills_500;
 }
 
 withdrawCall::~withdrawCall()
@@ -113,9 +121,11 @@ void withdrawCall::checkBills(int withdrawal)
     withdrawAmount = withdrawal;
     bool test = checkBillsAvailable();
     if(test==true) {
+        emit billsOK(true);
         removeBills();
     }
     else {
+        emit billsOK(false);
         qDebug()<<"No bills to give";
     }
 }
@@ -127,7 +137,12 @@ bool withdrawCall::checkBillsAvailable()
     int original = 0;
 
 // WITHDRAW SET BILLS
-
+    if(bills_500 > 0) {
+        usable_500 = true;
+    }
+    else {
+        usable_500 = false;
+    }
     if(bills_200 > 0) {
         usable_200 = true;
     }
@@ -153,7 +168,51 @@ bool withdrawCall::checkBillsAvailable()
     else {
         usable_20 = false;
     }
+    while(withdrawAmount >= 500 && usable_500) {
+        qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
+        if(bills_500 >= set_500_bills) {
+            usable_200 = true;
+        }
+        else {
+            usable_200 = false;
+            break;
+        }
 
+        if(usable_500==true) {
+            if(((withdrawAmount) >= 500)) {
+                if((withdrawAmount % 500) == 10) {
+                    if(bills_20 >= (set_20_bills + 3)) {
+                        set_20_bills = set_20_bills+3;
+                        withdrawAmount = withdrawAmount-60;
+                    }
+                }
+                else if(((withdrawAmount) % 500) > 100) {
+                    if(bills_500>=set_500_bills) {
+                        set_500_bills++;
+                        withdrawAmount = withdrawAmount - 500;
+                        usable_500 = true;
+                    }
+                }
+                else {
+                    if(bills_200 >= set_200_bills+2 && bills_100 >= set_100_bills + 1) {
+                        set_200_bills = set_200_bills +2;
+                        set_100_bills++;
+                        withdrawAmount = withdrawAmount -500;
+                    }
+                }
+
+            }
+
+            else {
+
+            }
+
+        }
+        else {
+            break;
+        }
+
+    } // while 500
     while(withdrawAmount >= 200 && usable_200) {
         qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
         if(bills_200 >= set_200_bills) {
@@ -320,7 +379,7 @@ bool withdrawCall::checkBillsAvailable()
         }
     } // while 20
 
-    if(!usable_200 && !usable_100 && !usable_50 && !usable_20) {
+    if(!usable_500 && !usable_200 && !usable_100 && !usable_50 && !usable_20) {
         return false;
     }
     else {
@@ -333,6 +392,7 @@ void withdrawCall::clearBills()
     set_50_bills = 0;
     set_100_bills = 0;
     set_200_bills = 0;
+    set_500_bills = 0;
 }
 
 void withdrawCall::removeBills()
@@ -340,6 +400,7 @@ void withdrawCall::removeBills()
 
     qDebug()<<"Remove bills: ";
     printAtmBills();
+    bills_500 = bills_500-set_500_bills;
     bills_200 = bills_200-set_200_bills;
     bills_100 = bills_100-set_100_bills;
     bills_50 = bills_50-set_50_bills;
@@ -368,7 +429,7 @@ void withdrawCall::updateBills(QByteArray token,int id, double sum)
     qDebug() << "result: " << result;
 
     // inserting values to object
-    obj.insert("atm_500eur", 0);
+    obj.insert("atm_500eur", bills_500);
     obj.insert("atm_200eur", bills_200);
     obj.insert("atm_100eur", bills_100);
     obj.insert("atm_50eur", bills_50);
@@ -416,6 +477,7 @@ void withdrawCall::onManagerFinished(QNetworkReply *reply)
     bills_50 = json_doc["atm_50eur"].toInt();
     bills_100 = json_doc["atm_100eur"].toInt();
     bills_200 = json_doc["atm_200eur"].toInt();
+    bills_500 = json_doc["atm_500eur"].toInt();
     qDebug() << "Bills were set";
     w_manager->deleteLater();
     reply->deleteLater();
@@ -446,6 +508,7 @@ void withdrawCall::atmManagerFinished(QNetworkReply *reply)
     bills_50 = json_doc["atm_50eur"].toInt();
     bills_100 = json_doc["atm_100eur"].toInt();
     bills_200 = json_doc["atm_200eur"].toInt();
+    bills_500 = json_doc["atm_500eur"].toInt();
     qDebug()<<json_doc;
     //w_manager->deleteLater();
     //reply->deleteLater();
