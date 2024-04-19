@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     adm = new admin;
 
     ui->tableViewTransactions->hide();
+    ui->btn_transactions->hide();
 
 }
 
