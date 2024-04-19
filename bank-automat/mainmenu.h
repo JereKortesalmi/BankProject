@@ -45,6 +45,7 @@ public:
     int offsetInteger;
     int transactionCount;
 
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions
@@ -56,6 +57,11 @@ private:
     QList<transactions> tableTransactions;  //transactions
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
+
+    bool checkBalance(double amount);
+    void reduceBalance(double amount);
+    QString balance1;
+    bool billsready;
 
 
 public slots:
@@ -69,10 +75,14 @@ public slots:
     void eur40Pressed();
     void eur60Pressed();
     void eur100Pressed();
-    void on_btnlogout_clicked();
+    void onBtnlogoutClicked();
     void withdrawReady();
     void next5Transactions();
     void previous5Transactions();
+    void closeWithdrawCall();
+    void billsOk (bool);
+
+
 
     //tableview
     void sendTransactionRequest();
@@ -83,6 +93,8 @@ public slots:
     void fetchBalance();
     //hide
     void hideShown();
+    void resetView();
+
 
 public slots:
     void readTransactionValues(); // transactions
