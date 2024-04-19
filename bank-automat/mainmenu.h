@@ -57,12 +57,10 @@ private:
     QList<transactions> tableTransactions;  //transactions
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
-
     bool checkBalance(double amount);
     void reduceBalance(double amount);
     QString balance1;
     bool billsready;
-
 
 public slots:
     //withdrawCall

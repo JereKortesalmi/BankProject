@@ -6,7 +6,6 @@ mainMenu::mainMenu(QWidget *parent) :
     ui(new Ui::mainMenu)
 {
 
-
     ui->setupUi(this);
     // connect transaction buttons and signals so they are timed after one another.
     connect(ui->btn_transactions,SIGNAL(clicked(bool)),
@@ -111,6 +110,25 @@ void mainMenu::withdrawClicked()
     ui->eur60->move(300,380);
     ui->eur100->show();
     ui->eur100->move(480,300);
+    if(p_withdrawCall->bills_20 > 0) {
+        //ui->btn_20eur->show();
+        //ui->btn_20eur->move(200,200);
+        //ui->label_20->show();
+        //ui->label_20->move(200,220);
+        //ui->eur20->hide();
+    }
+    if(p_withdrawCall->bills_20 > 2) {
+        //ui->btn_40eur->show();
+        //ui->label_40->show();
+    }
+    if(p_withdrawCall->bills_20 > 3) {
+        //ui->btn_60eur->show();
+        //ui->label_60->show();
+    }
+    if(p_withdrawCall->bills_100 > 0) {
+        //ui->btn_100eur->show();
+        //ui->label_100->show();
+    }
 
     //ui->btn_other->show();
     //ui->label_other->show();
