@@ -25,7 +25,7 @@ public:
     //explicit Transactions(QList<transactions> *table);
     ~Transactions();
 
-    void requestTrasactions(QByteArray token,int accountId);
+    void requestTrasactions(QByteArray token,int accountId, int offsetInteger);
 
 private slots:
     void clickHandler();
@@ -41,6 +41,7 @@ private:
 
 signals:
     void ResponseToMain(QJsonArray reply);
+    void handleEmptyResponse();
 };
 
 #endif // TRANSACTIONS_H
