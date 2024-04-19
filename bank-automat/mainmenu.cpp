@@ -496,7 +496,6 @@ void mainMenu::hideShown()
 
     ui->btnClose->show();
 
-<<<<<<< HEAD
     /*
     ui->btn_20eur->hide();
     ui->label_20->hide();
@@ -513,13 +512,11 @@ void mainMenu::hideShown()
 
     ui->btnprevious5->hide();
     ui->btnnext5->hide();
-=======
 /*    ui->btnBalance->show();
     ui->btn_transactions->show();
 
     ui->btn_withdraw->show();
 */
->>>>>>> origin
 }
 
 void mainMenu::onBtnlogoutClicked()
