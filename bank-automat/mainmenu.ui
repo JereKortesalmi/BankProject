@@ -314,6 +314,32 @@
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="btnnext5">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>340</y>
+     <width>121</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next 5 transactions</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnprevious5">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>300</y>
+     <width>151</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Previous 5 transactions</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

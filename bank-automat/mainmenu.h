@@ -42,6 +42,8 @@ public:
     int accountId;
     QByteArray token;
     QString accountType;
+    int offsetInteger;
+    int transactionCount;
 
 private:
     Ui::mainMenu *ui;
@@ -68,6 +70,8 @@ public slots:
     void eur60Pressed();
     void eur100Pressed();
     void withdrawReady();
+    void next5Transactions();
+    void previous5Transactions();
 
     //tableview
     void sendTransactionRequest();

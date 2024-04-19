@@ -33,8 +33,9 @@ Transactions::~Transactions()
     //delete ui;
 }
 
-void Transactions::requestTrasactions(QByteArray token, int accountId)
+void Transactions::requestTrasactions(QByteArray token, int accountId, int offsetInteger)
 {
+    QString offsetValue = QString::number(offsetInteger);
     qDebug() << QString::number(accountId);
     manager = new QNetworkAccessManager();
     //connect(ui->btn_transactions, &QPushButton::clicked, this, &Transactions::clickHandler);
@@ -43,16 +44,18 @@ void Transactions::requestTrasactions(QByteArray token, int accountId)
 
     connect(manager, &QNetworkAccessManager::finished,
             this, &Transactions::onManagerFinished);
+    QUrlQuery params;
+    params.addQueryItem("offset", offsetValue);
+    QUrl url("http://localhost:3000/transactions_per_account/getLimitedTransactionsPerAccount/" + QString::number(accountId));
 
-    QUrl url("http://localhost:3000/transactions_per_account/" + QString::number(accountId));
     QNetworkRequest request(url);
-
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     //WEBTOKEN ALKU
     myToken="Bearer "+token;
     request.setRawHeader(QByteArray("Authorization"),(myToken));
     //WEBTOKEN LOPPU
 
-    reply = manager->get(request);
+    reply = manager->post(request, params.query(QUrl::FullyEncoded).toUtf8());
     connect(reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this, SLOT(onErrorOccurred(QNetworkReply::NetworkError)));
 }
 
@@ -73,7 +76,20 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
         return;
     }
     response_data = reply->readAll();
+    if (response_data.isEmpty())
+    {
+        qDebug() << "No more older transactions";
+        //emit handleEmptyResponse();
+        return;
+    }
+
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    if (json_doc.isArray() && json_doc.array().isEmpty())
+    {
+        qDebug() << "Received empty JSON array";
+        //handleEmptyJsonArray();
+        return;
+    }
     QJsonArray json_array = json_doc.array();
     QString transactions;
     transactions = "Account | ATM | Time                                     | Type        | Amount \n";

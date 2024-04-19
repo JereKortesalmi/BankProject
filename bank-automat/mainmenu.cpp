@@ -14,6 +14,11 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(this,SIGNAL(transactionsTableReady()), this, SLOT(readTransactionValues()));
     connect(this,SIGNAL(transactionsComplete()),this,SLOT(displayData()));
 
+    // buttons for next and previous 5 transactions
+    connect(ui->btnnext5,SIGNAL(clicked(bool)), this, SLOT(next5Transactions()));
+    connect(ui->btnprevious5,SIGNAL(clicked(bool)), this, SLOT(previous5Transactions()));
+    ui->btnnext5->setEnabled(false);
+
     //balance signals
     connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
 
@@ -43,6 +48,8 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(ui->btn_40eur, SIGNAL(clicked(bool)), this, SLOT(eur40Pressed()));
     connect(ui->btn_60eur, SIGNAL(clicked(bool)), this, SLOT(eur60Pressed()));
     connect(ui->btn_100eur, SIGNAL(clicked(bool)), this, SLOT(eur100Pressed()));
+
+    this->offsetInteger = 0;
 }
 
 mainMenu::~mainMenu()
@@ -209,13 +216,45 @@ void mainMenu::withdrawReady()
     ui->label_withdraw->show();
 }
 
+void mainMenu::next5Transactions()
+{
+    if(!tableTransactions.isEmpty()) {
+        tableTransactions.clear();
+    }
+    test = new Transactions();
+    this->offsetInteger -= 5;
+    if (this->offsetInteger == 0)
+    {
+        ui->btnnext5->setEnabled(false);
+    }
+    ui->btnprevious5->setEnabled(true);
+    ui->btnprevious5->setText("Previous 5 transactions");
+    test->requestTrasactions(token,accountId,this->offsetInteger);
+    connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
+    //test->show();
+}
+
+void mainMenu::previous5Transactions()
+{
+    if(!tableTransactions.isEmpty()) {
+        tableTransactions.clear();
+    }
+    test = new Transactions();
+    this->offsetInteger += 5;
+    ui->btnnext5->setEnabled(true);
+    test->requestTrasactions(token,accountId,this->offsetInteger);
+    connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
+    //test->show();
+}
+
 void mainMenu::sendTransactionRequest()
 {
     if(!tableTransactions.isEmpty()) {
         tableTransactions.clear();
     }
     test = new Transactions();
-    test->requestTrasactions(token,accountId);
+    this->offsetInteger = 0;
+    test->requestTrasactions(token,accountId,this->offsetInteger);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
 }
@@ -223,6 +262,17 @@ void mainMenu::sendTransactionRequest()
 void mainMenu::receiveTransactionData(QJsonArray reply)
 {
     qDebug() << "Vastaus Mainille: "<<reply;
+    if (reply.isEmpty())
+    {
+        qDebug() << "Ei vanhempia tilitapahtumia";
+        ui->btnprevious5->setEnabled(false);
+        ui->btnprevious5->setText("No older transactions");
+        QStandardItemModel *model = new QStandardItemModel();
+        model->clear();
+        ui->tableViewTransactions->setModel(model);
+        ui->tableViewTransactions->show();
+        return;
+    }
     transactions obj;
 
     foreach (const QJsonValue &value, reply) {
@@ -258,6 +308,8 @@ void mainMenu::displayData()
     ui->tableViewTransactions->setGeometry(350,0,450,200);
     ui->tableViewTransactions->move(280,200);
     ui->tableViewTransactions->show();
+    ui->btnnext5->show();
+    ui->btnprevious5->show();
 
 }
 
@@ -325,4 +377,7 @@ void mainMenu::hideShown()
     ui->label_other->hide();
     ui->text_other->hide();
     */
+
+    ui->btnprevious5->hide();
+    ui->btnnext5->hide();
 }
