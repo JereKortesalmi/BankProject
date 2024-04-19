@@ -338,6 +338,8 @@
    </property>
    <property name="text">
     <string>Previous 5 transactions</string>
+    </property>
+   </widget>
   <widget class="QPushButton" name="btnlogout">
    <property name="geometry">
     <rect>
