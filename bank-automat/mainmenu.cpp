@@ -16,7 +16,7 @@ mainMenu::mainMenu(QWidget *parent) :
 
     //balance signals
     bal = new balance;
-    //connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(fetchBalance()));
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(fetchBalance()));
     connect(bal,SIGNAL(balanceToMainmenu(QString)),this,SLOT(showBalance(QString)));
 
     //Trics to show stuff
@@ -34,10 +34,10 @@ mainMenu::mainMenu(QWidget *parent) :
 
 
     // connect btnClose
-    connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(hideShown()));
+    connect(ui->btnClose, SIGNAL(clicked(bool)), this, SLOT(resetView()));
 
     //hide all shown windows.
-    hideShown();
+    resetView();
     // withdraw call buttons connects
     connect(ui->btn_other, SIGNAL(clicked(bool)), this, SLOT(otherClicked()));
     connect(ui->btnWithdrawOther, SIGNAL(clicked(bool)), this, SLOT(withdrawOtherPressed()));
@@ -247,7 +247,7 @@ void mainMenu::withdrawReady()
 {
     //p_withdrawCall->deleteLater();
     //p_withdrawCall = nullptr;
-    hideShown();
+    //resetView();
     ui->btn_withdraw->hide();
     ui->btnBalance->hide();
     ui->btn_transactions->hide();
@@ -296,9 +296,41 @@ void mainMenu::reduceBalance(double amount)
     QTimer::singleShot(3000, this, SLOT(onBtnlogoutClicked()));
 }
 
+void mainMenu::resetView()
+{
+    ui->balanceLabel->hide();
+    ui->label_withdraw->hide();
+    ui->tableViewTransactions->hide();
+
+    ui->eur20->hide();
+    ui->eur40->hide();
+    ui->eur60->hide();
+    ui->eur100->hide();
+    ui->eurOther->hide();
+
+    //ui->text_other->hide();
+    ui->withdrawOther->hide();
+    ui->balanceBrowser->hide();
+
+    ui->btnClose->hide();
+
+    ui->btnBalance->show();
+    ui->btn_transactions->show();
+    //ui->btnClose->show();
+    ui->btn_withdraw->show();
+    if(p_withdrawCall != nullptr) {
+        delete p_withdrawCall;
+        p_withdrawCall = nullptr;
+    }
+}
+
 void mainMenu::sendTransactionRequest()
 {
     hideShown();
+    ui->btnBalance->hide();
+    ui->btn_transactions->hide();
+    ui->btn_withdraw->hide();
+
     if(!tableTransactions.isEmpty()) {
         tableTransactions.clear();
     }
@@ -376,7 +408,11 @@ void mainMenu::readTransactionValues()
 
 void mainMenu::showBalance(QString bal)
 {
-    fetchBalance();
+    //fetchBalance();
+    ui->btnClose->show();
+    ui->btn_withdraw->hide();
+    ui->btnBalance->hide();
+    ui->btn_transactions->hide();
     balance1 = bal;
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
@@ -407,11 +443,13 @@ void mainMenu::hideShown()
     ui->withdrawOther->hide();
     ui->balanceBrowser->hide();
 
-    ui->btnBalance->show();
-    ui->btn_transactions->show();
     ui->btnClose->show();
-    ui->btn_withdraw->show();
 
+/*    ui->btnBalance->show();
+    ui->btn_transactions->show();
+
+    ui->btn_withdraw->show();
+*/
 }
 
 void mainMenu::onBtnlogoutClicked()

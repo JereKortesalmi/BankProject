@@ -43,6 +43,7 @@ public:
     QByteArray token;
     QString accountType;
 
+
 private:
     Ui::mainMenu *ui;
     Transactions *p_Transactions = nullptr; //transactions
@@ -59,6 +60,7 @@ private:
     void reduceBalance(double amount);
     QString balance1;
     bool billsready;
+
 
 public slots:
     //withdrawCall
@@ -87,6 +89,8 @@ public slots:
     void fetchBalance();
     //hide
     void hideShown();
+    void resetView();
+
 
 public slots:
     void readTransactionValues(); // transactions

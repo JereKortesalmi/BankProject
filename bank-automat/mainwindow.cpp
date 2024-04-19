@@ -140,6 +140,9 @@ void MainWindow::logOutSlot()
     pin->resetHandler();
     pin->close();
     p_mainMenu->close();
+    p_mainMenu->resetView();
+    //delete p_mainMenu;
+    //p_mainMenu = nullptr;
     creditDebit->close();
     adm->close();
 }
