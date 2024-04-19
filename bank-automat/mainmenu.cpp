@@ -110,29 +110,6 @@ void mainMenu::withdrawClicked()
     ui->eur60->move(300,380);
     ui->eur100->show();
     ui->eur100->move(480,300);
-    if(p_withdrawCall->bills_20 > 0) {
-        //ui->btn_20eur->show();
-        //ui->btn_20eur->move(200,200);
-        //ui->label_20->show();
-        //ui->label_20->move(200,220);
-        //ui->eur20->hide();
-    }
-    if(p_withdrawCall->bills_20 > 2) {
-        //ui->btn_40eur->show();
-        //ui->label_40->show();
-    }
-    if(p_withdrawCall->bills_20 > 3) {
-        //ui->btn_60eur->show();
-        //ui->label_60->show();
-    }
-    if(p_withdrawCall->bills_100 > 0) {
-        //ui->btn_100eur->show();
-        //ui->label_100->show();
-    }
-
-    //ui->btn_other->show();
-    //ui->label_other->show();
-    //ui->text_other->show();
 
     // btn_other ja text_other yhdessä widgettinä.
     ui->eurOther->show();
@@ -331,6 +308,8 @@ void mainMenu::resetView()
     ui->eur60->hide();
     ui->eur100->hide();
     ui->eurOther->hide();
+    ui->btnnext5->hide();
+    ui->btnprevious5->hide();
 
     //ui->text_other->hide();
     ui->withdrawOther->hide();
@@ -514,19 +493,6 @@ void mainMenu::hideShown()
 
     ui->btnClose->show();
 
-    /*
-    ui->btn_20eur->hide();
-    ui->label_20->hide();
-    ui->btn_40eur->hide();
-    ui->label_40->hide();
-    ui->btn_60eur->hide();
-    ui->label_60->hide();
-    ui->btn_100eur->hide();
-    ui->label_100->hide();
-    ui->btn_other->hide();
-    ui->label_other->hide();
-    ui->text_other->hide();
-    */
 
     ui->btnprevious5->hide();
     ui->btnnext5->hide();
