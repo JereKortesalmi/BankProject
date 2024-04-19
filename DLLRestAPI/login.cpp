@@ -3,7 +3,6 @@
 login::login()
 {
     qDebug()<<"login luotu";
-    accountLock =0;
 }
 
 login::~login()
@@ -15,8 +14,9 @@ void login::cardNumberLog(QString val)
 {
     cardNumber=val;
     qDebug()<<"login cardnumber: "<<cardNumber;
+    accountLock =0;
 
-   QString cardStateurl="http://localhost:3000/card/getCardState/" + cardNumber;
+   QString cardStateurl="http://localhost:3000/login/getCardState/" + cardNumber;
     QNetworkRequest request(cardStateurl);
     stateManager = new QNetworkAccessManager(this);
     connect(stateManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(cardStateSlot(QNetworkReply*)));
@@ -49,7 +49,7 @@ void login::cardStateHandler()
     jsonObj.insert("card_number",cardNumber);
     //qDebug()<<"json objekti: "<<jsonObj;
 
-    QString site_url_="http://localhost:3000/card/loginLock/"+ cardNumber;
+    QString site_url_="http://localhost:3000/login/loginLock/"+ cardNumber;
     QNetworkRequest request((site_url_));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 

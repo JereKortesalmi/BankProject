@@ -15,6 +15,10 @@
 #include <QStandarditemModel>
 #include <QStandardItem>
 
+#include <QCoreApplication>
+#include <QTimer>
+#include <QCursor>
+
 //lisätyt h tiedostot.
 #include "mainmenu.h"
 #include <dllpincode.h>
@@ -44,7 +48,10 @@ private:
 
     mainMenu *p_mainMenu = nullptr;
 
-    //int id;
+    QTimer *timer;
+    QPoint lastPos;
+    int mouseTime = 0;
+
     QString cardNumber;
     QString pinCode;
     QByteArray token;
@@ -90,6 +97,7 @@ private slots:
     void creditdebitchoose(QJsonArray);
     void adminState();
     void logOutSlot();
+    void checkMousePosition();
 
 public slots:
     void readTransactionValues();

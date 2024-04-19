@@ -45,7 +45,7 @@
   <widget class="QPushButton" name="btn_withdraw">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>100</x>
      <y>50</y>
      <width>121</width>
      <height>71</height>
@@ -81,7 +81,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>400</y>
+     <y>480</y>
      <width>121</width>
      <height>71</height>
     </rect>
@@ -93,7 +93,7 @@
   <widget class="QPushButton" name="btnClose">
    <property name="geometry">
     <rect>
-     <x>1020</x>
+     <x>1070</x>
      <y>500</y>
      <width>121</width>
      <height>71</height>
@@ -107,7 +107,7 @@
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>410</y>
+     <y>480</y>
      <width>171</width>
      <height>61</height>
     </rect>
@@ -314,10 +314,36 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="btnlogout">
+  <widget class="QPushButton" name="btnnext5">
    <property name="geometry">
     <rect>
      <x>790</x>
+     <y>340</y>
+     <width>121</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Next 5 transactions</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnprevious5">
+   <property name="geometry">
+    <rect>
+     <x>780</x>
+     <y>300</y>
+     <width>151</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Previous 5 transactions</string>
+    </property>
+   </widget>
+  <widget class="QPushButton" name="btnlogout">
+   <property name="geometry">
+    <rect>
+     <x>930</x>
      <y>500</y>
      <width>121</width>
      <height>71</height>
