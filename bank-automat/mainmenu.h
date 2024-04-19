@@ -57,16 +57,10 @@ private:
     QList<transactions> tableTransactions;  //transactions
     QList<database> tableData;
     QList<transfer> tableTransfer;          //transactions
-
-<<<<<<< HEAD
-    QTimer * bankTimer = nullptr;
-=======
     bool checkBalance(double amount);
     void reduceBalance(double amount);
     QString balance1;
     bool billsready;
-
->>>>>>> origin
 
 public slots:
     //withdrawCall
