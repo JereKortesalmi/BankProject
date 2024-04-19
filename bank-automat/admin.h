@@ -23,11 +23,7 @@ public:
 public slots:
     void fetchBalance(int atmId, QByteArray token);
 private slots:
-    void twentyHandler();
-    void fiftyHandler();
-    void hundredHandler();
-    void twoHundredHandler();
-    void fiveHundredHandler();
+    void btnHandler();
     void saveBillsToAtm();
     void atmManagerFinished(QNetworkReply*);
     void getBalance(QNetworkReply *reply);

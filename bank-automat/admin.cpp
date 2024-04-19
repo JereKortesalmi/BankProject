@@ -6,17 +6,11 @@ admin::admin(QWidget *parent)
     , ui(new Ui::admin)
 {
     ui->setupUi(this);
-    connect(ui->btnMinus20,SIGNAL(clicked(bool)),this,SLOT(twentyHandler()));
-    connect(ui->btnPlus20,SIGNAL(clicked(bool)),this,SLOT(twentyHandler()));
-    connect(ui->btnMinus50,SIGNAL(clicked(bool)),this,SLOT(fiftyHandler()));
-    connect(ui->btnPlus50,SIGNAL(clicked(bool)),this,SLOT(fiftyHandler()));
-    connect(ui->btnMinus100,SIGNAL(clicked(bool)),this,SLOT(hundredHandler()));
-    connect(ui->btnPlus100,SIGNAL(clicked(bool)),this,SLOT(hundredHandler()));
-    connect(ui->btnMinus200,SIGNAL(clicked(bool)),this,SLOT(twoHundredHandler()));
-    connect(ui->btnPlus200,SIGNAL(clicked(bool)),this,SLOT(twoHundredHandler()));
-    connect(ui->btnMinus500,SIGNAL(clicked(bool)),this,SLOT(fiveHundredHandler()));
-    connect(ui->btnPlus500,SIGNAL(clicked(bool)),this,SLOT(fiveHundredHandler()));
     connect(ui->btnSaveBills,SIGNAL(clicked(bool)),this,SLOT(saveBillsToAtm()));
+
+    connect(ui->btnPlus,SIGNAL(clicked(bool)),this,SLOT(btnHandler()));
+    connect(ui->btnMinus,SIGNAL(clicked(bool)),this,SLOT(btnHandler()));
+
 
     connect(ui->N1,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N2,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
@@ -27,6 +21,12 @@ admin::admin(QWidget *parent)
     connect(ui->N7,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N8,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N9,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
+
+    connect(ui->btn20,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
+    connect(ui->btn50,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
+    connect(ui->btn100,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
+    connect(ui->btn200,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
+    connect(ui->btn500,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
     qDebug()<<"Admin luotu";
 }
 
@@ -35,79 +35,64 @@ admin::~admin()
     delete ui;
 }
 
-void admin::twentyHandler()
+void admin::btnHandler()
 {
     QPushButton * button = qobject_cast<QPushButton*>(sender());
     QString push = button->objectName();
     qDebug() <<"Button: "<<push;
 
-    if(push == "btnPlus20"){
-        twenty ++;
-        ui->twentyEdit->setText(QString::number(twenty));
-    }else{
-        twenty --;
-        ui->twentyEdit->setText(QString::number(twenty));
+    if(state == 1){
+        if(push == "btnPlus"){
+            twenty ++;
+            ui->amountEdit->setText(QString::number(twenty));
+            ui->twentyEdit->setText(QString::number(twenty));
+        }else{
+            twenty --;
+            ui->amountEdit->setText(QString::number(twenty));
+            ui->twentyEdit->setText(QString::number(twenty));
+        }
+    }else if(state == 2){
+        if(push == "btnPlus"){
+            fifty ++;
+            ui->amountEdit->setText(QString::number(fifty));
+            ui->fiftyEdit->setText(QString::number(fifty));
+        }else{
+            fifty --;
+            ui->amountEdit->setText(QString::number(fifty));
+            ui->fiftyEdit->setText(QString::number(fifty));
+        }
+    }else if(state == 3){
+        if(push == "btnPlus"){
+            hundred ++;
+            ui->amountEdit->setText(QString::number(hundred));
+            ui->hundredEdit->setText(QString::number(hundred));
+        }else{
+            hundred --;
+            ui->amountEdit->setText(QString::number(hundred));
+            ui->hundredEdit->setText(QString::number(hundred));
+        }
+    }else if(state == 4){
+        if(push == "btnPlus"){
+            twoHundred ++;
+            ui->amountEdit->setText(QString::number(twoHundred));
+            ui->twoHundredEdit->setText(QString::number(twoHundred));
+        }else{
+            twoHundred --;
+            ui->amountEdit->setText(QString::number(twoHundred));
+            ui->twoHundredEdit->setText(QString::number(twoHundred));
+        }
+    }else if(state == 5){
+        if(push == "btnPlus"){
+            fiveHundred ++;
+            ui->amountEdit->setText(QString::number(fiveHundred));
+            ui->fiveHundredEdit->setText(QString::number(fiveHundred));
+        }else{
+            fiveHundred --;
+            ui->amountEdit->setText(QString::number(fiveHundred));
+            ui->fiveHundredEdit->setText(QString::number(fiveHundred));
+        }
     }
-}
 
-void admin::fiftyHandler()
-{
-    QPushButton * button = qobject_cast<QPushButton*>(sender());
-    QString push = button->objectName();
-    qDebug() <<"Button: "<<push;
-
-    if(push == "btnPlus50"){
-        fifty ++;
-        ui->fiftyEdit->setText(QString::number(fifty));
-    }else{
-        fifty --;
-        ui->fiftyEdit->setText(QString::number(fifty));
-    }
-}
-
-void admin::hundredHandler()
-{
-    QPushButton * button = qobject_cast<QPushButton*>(sender());
-    QString push = button->objectName();
-    qDebug() <<"Button: "<<push;
-
-    if(push == "btnPlus100"){
-        hundred ++;
-        ui->hundredEdit->setText(QString::number(hundred));
-    }else{
-        hundred --;
-        ui->hundredEdit->setText(QString::number(hundred));
-    }
-}
-
-void admin::twoHundredHandler()
-{
-    QPushButton * button = qobject_cast<QPushButton*>(sender());
-    QString push = button->objectName();
-    qDebug() <<"Button: "<<push;
-
-    if(push == "btnPlus200"){
-        twoHundred ++;
-        ui->twoHundredEdit->setText(QString::number(twoHundred));
-    }else{
-        twoHundred --;
-        ui->twoHundredEdit->setText(QString::number(twoHundred));
-    }
-}
-
-void admin::fiveHundredHandler()
-{
-    QPushButton * button = qobject_cast<QPushButton*>(sender());
-    QString push = button->objectName();
-    qDebug() <<"Button: "<<push;
-
-    if(push == "btnPlus500"){
-        fiveHundred ++;
-        ui->fiveHundredEdit->setText(QString::number(fiveHundred));
-    }else{
-        fiveHundred --;
-        ui->fiveHundredEdit->setText(QString::number(fiveHundred));
-    }
 }
 
 void admin::saveBillsToAtm()
@@ -193,14 +178,25 @@ void admin::clickHandler()
     QString a = btn.last(1);
     num = num + a;
     if(state == 1){
+        twenty = num.toInt();
+        ui->amountEdit->setText(QString::number(twenty));
         ui->twentyEdit->setText(num);
+        ui->amountEdit->setText(num);
     }else if(state == 2){
+        fifty = num.toInt();
+        ui->amountEdit->setText(QString::number(fifty));
         ui->fiftyEdit->setText(num);
     }else if(state == 3){
+        hundred = num.toInt();
+        ui->amountEdit->setText(QString::number(hundred));
         ui->hundredEdit->setText(num);
     }else if(state == 4){
+        twoHundred = num.toInt();
+        ui->amountEdit->setText(QString::number(twoHundred));
         ui->twoHundredEdit->setText(num);
     }else if(state == 5){
+        fiveHundred = num.toInt();
+        ui->amountEdit->setText(QString::number(fiveHundred));
         ui->fiveHundredEdit->setText(num);
     }
 }
@@ -214,17 +210,32 @@ void admin::selectedLineEdit()
     if(btn == "btn20"){
         state = 1;
         num = 0;
+        ui->billSelected->setText("20 bills Selected");
+        ui->amountEdit->setText(QString::number(twenty));
     }else if(btn == "btn50"){
         state = 2;
         num = 0;
+        ui->billSelected->setText("50 bills Selected");
+        ui->amountEdit->setText(QString::number(fifty));
     }else if(btn == "btn100"){
         state = 3;
         num = 0;
+        ui->billSelected->setText("100 bills Selected");
+        ui->amountEdit->setText(QString::number(hundred));
     }else if(btn == "btn200"){
         state = 4;
         num = 0;
-    }else if(btn == "btn 500"){
+        ui->billSelected->setText("200 bills Selected");
+        ui->amountEdit->setText(QString::number(twoHundred));
+    }else if(btn == "btn500"){
         state = 5;
         num = 0;
+        ui->billSelected->setText("500 bills Selected");
+        ui->amountEdit->setText(QString::number(fiveHundred));
+    }else{
+        state = 0;
+        num = 0;
+        ui->billSelected->setText("no bills Selected");
+        ui->amountEdit->clear();
     }
 }
