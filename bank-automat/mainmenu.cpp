@@ -126,14 +126,39 @@ void mainMenu::otherClicked()
     //ui->text_other->show();
     //ui->text_other->move(200,200);
     ui->withdrawOther->show();
+    ui->wKeyboard->show();
     ui->withdrawOther->move(300,200);
+    ui->wKeyboard->move(350,300);
     ui->eurOther->hide();
     ui->eur20->hide();
     ui->eur40->hide();
     ui->eur60->hide();
     ui->eur100->hide();
     ui->label_withdraw->setText("Give amount");
+
+    connect(ui->b0, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b1, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b2, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b3, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b4, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b5, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b6, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
 }
+
+void mainMenu::clickHandler()
+{
+    QPushButton * button = qobject_cast<QPushButton*>(sender());
+    QString btn = button->objectName();
+    qDebug() <<"Button: "<<btn;
+    QString a = btn.last(1);
+    w_other_num = w_other_num+a;
+
+    ui->text_other->setText(w_other_num);
+}
+
 
 void mainMenu::withdrawOtherPressed()
 {
@@ -270,6 +295,7 @@ void mainMenu::billsOk(bool a)
     billsready = a;
 }
 
+
 bool mainMenu::checkBalance(double amount)
 {
 
@@ -325,6 +351,8 @@ void mainMenu::resetView()
         delete p_withdrawCall;
         p_withdrawCall = nullptr;
     }
+
+    ui->wKeyboard->hide();
 }
 
 void mainMenu::next5Transactions()

@@ -171,10 +171,10 @@ bool withdrawCall::checkBillsAvailable()
     while(withdrawAmount >= 500 && usable_500) {
         qDebug() << "withdraw Amount =" << withdrawAmount << " current=" << original;
         if(bills_500 >= set_500_bills) {
-            usable_200 = true;
+            usable_500 = true;
         }
         else {
-            usable_200 = false;
+            usable_500 = false;
             break;
         }
 
@@ -186,11 +186,15 @@ bool withdrawCall::checkBillsAvailable()
                         withdrawAmount = withdrawAmount-60;
                     }
                 }
-                else if(((withdrawAmount) % 500) > 100) {
+                else if(((withdrawAmount) % 500) >= 100) {
                     if(bills_500>=set_500_bills) {
                         set_500_bills++;
                         withdrawAmount = withdrawAmount - 500;
                         usable_500 = true;
+                    }
+                    else {
+                        usable_500 = false;
+                        break;
                     }
                 }
                 else {
@@ -198,6 +202,19 @@ bool withdrawCall::checkBillsAvailable()
                         set_200_bills = set_200_bills +2;
                         set_100_bills++;
                         withdrawAmount = withdrawAmount -500;
+                    }
+                    else {
+                        if(bills_500 >= set_500_bills+1) {
+                            usable_500 = true;
+                            set_500_bills++;
+                            withdrawAmount=withdrawAmount-500;
+                        }
+                        else {
+
+                            usable_200 = false;
+                            usable_100 = false;
+                        }
+                        break;
                     }
                 }
 
@@ -209,6 +226,7 @@ bool withdrawCall::checkBillsAvailable()
 
         }
         else {
+            usable_500 = false;
             break;
         }
 
@@ -318,6 +336,12 @@ bool withdrawCall::checkBillsAvailable()
                 }
                 else {
                     //return false;
+                }
+            }
+            else if(withdrawAmount % 50 == 30) {
+                if(bills_20 >= (set_20_bills+4)) {
+                    set_20_bills = set_20_bills+4;
+                    withdrawAmount=withdrawAmount-80;
                 }
             }
             else {
