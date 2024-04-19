@@ -47,7 +47,7 @@ void login::cardStateHandler()
 {
     QJsonObject jsonObj;
     jsonObj.insert("card_number",cardNumber);
-    qDebug()<<"json objekti: "<<jsonObj;
+    //qDebug()<<"json objekti: "<<jsonObj;
 
     QString site_url_="http://localhost:3000/card/loginLock/"+ cardNumber;
     QNetworkRequest request((site_url_));
@@ -63,8 +63,8 @@ void login::loginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
     QMessageBox msgBox;
-    qDebug()<<"jdkjgbfjbgkdbgjfdbgdkjbgfdbgkjfd::::card_state= "<<cardState;
-    qDebug()<<"fksjdlkfdnslkfndskndslf"<<response_data;
+    qDebug()<<"card_state= "<<cardState;
+    //qDebug()<<"fksjdlkfdnslkfndskndslf"<<response_data;
     if(response_data=="-4078" || response_data.length()==0){
         QString message = "Virhe tietoyhteydessä";
         emit loginMessage(message);
@@ -73,7 +73,6 @@ void login::loginSlot(QNetworkReply *reply)
     }
     else{
         if(response_data!="false"){
-
             if(response_data == "kortti lukittu"){
                 QString message="Kortti lukittu, ota yhteyttä pankkiin";
                 emit loginMessage(message);
@@ -122,7 +121,7 @@ void login::cardStateSlot(QNetworkReply *repl)
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     QJsonObject jsonObj = json_doc.object();
     cardState = jsonObj["card_state"].toInt();
-    qDebug() << "cardState response data:" << cardState;
+    qDebug() << "cardStateSlot response data:" << cardState;
 
 
     repl->deleteLater();

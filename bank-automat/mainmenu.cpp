@@ -20,7 +20,9 @@ mainMenu::mainMenu(QWidget *parent) :
     ui->btnnext5->setEnabled(false);
 
     //balance signals
-    connect(ui->btnBalance,SIGNAL(clicked(bool)),ui->balanceLabel,SLOT(show()));
+    bal = new balance;
+    connect(ui->btnBalance,SIGNAL(clicked(bool)),this,SLOT(fetchBalance()));
+    connect(bal,SIGNAL(balanceToMainmenu(QString)),this,SLOT(showBalance(QString)));
 
     //Trics to show stuff
     ui->tableViewTransactions->hide();
@@ -62,7 +64,8 @@ void mainMenu::withdrawSignalReceived()
     hideShown();
     ui->label_withdraw->show();
     ui->label_withdraw->setText("Withdraw complete. Have a good day");
-
+    delete p_withdrawCall;
+    p_withdrawCall = nullptr;
 }
 
 void mainMenu::atmSignalReceived()
@@ -78,10 +81,12 @@ void mainMenu::atmSignalReceived()
 void mainMenu::withdrawClicked()
 {
     qDebug()<<"Withdraw clicked";
+
+    hideShown();
     //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     //int atmId = 1;
     //requestRec->wit.getAtmInfo(token, atmId);
-    p_withdrawCall = new withdrawCall(this);
+    p_withdrawCall = new withdrawCall();
     p_withdrawCall->getAtmInfo(token,1);
      connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
     connect(p_withdrawCall, SIGNAL(dataRead()), this, SLOT(withdrawReady()));
@@ -164,7 +169,7 @@ void mainMenu::eur20Pressed()
     qDebug() << "20  €";
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(20);
-
+    //bal->updateBalance(token, id, a);
     //p_withdrawCall->printAtmBills();
     p_withdrawCall->sendTransaction(token,accountId,20.00);
     p_withdrawCall->updateBills(token,1,20);
@@ -249,6 +254,7 @@ void mainMenu::previous5Transactions()
 
 void mainMenu::sendTransactionRequest()
 {
+    hideShown();
     if(!tableTransactions.isEmpty()) {
         tableTransactions.clear();
     }
@@ -305,7 +311,7 @@ void mainMenu::displayData()
     // 1920*1080    full hd
     // 3840*2160    4k
     ui->tableViewTransactions->resizeColumnsToContents();
-    ui->tableViewTransactions->setGeometry(350,0,450,200);
+    ui->tableViewTransactions->setGeometry(350,0,420,200);
     ui->tableViewTransactions->move(280,200);
     ui->tableViewTransactions->show();
     ui->btnnext5->show();
@@ -346,7 +352,12 @@ void mainMenu::showBalance(QString bal)
     ui->balanceLabel->setText(balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
-    //ui->balanceLabel->show();
+    ui->balanceLabel->show();
+}
+
+void mainMenu::fetchBalance()
+{
+    bal->fetchBalance(accountId);
 }
 
 void mainMenu::hideShown()
@@ -363,6 +374,9 @@ void mainMenu::hideShown()
 
     //ui->text_other->hide();
     ui->withdrawOther->hide();
+
+    delete p_withdrawCall;
+    p_withdrawCall = nullptr;
 
     /*
     ui->btn_20eur->hide();
@@ -381,3 +395,11 @@ void mainMenu::hideShown()
     ui->btnprevious5->hide();
     ui->btnnext5->hide();
 }
+
+void mainMenu::on_btnlogout_clicked()
+{
+    hideShown();
+    emit logOutSignal();
+
+}
+
