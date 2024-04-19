@@ -42,6 +42,8 @@ public:
     int accountId;
     QByteArray token;
     QString accountType;
+    int offsetInteger;
+    int transactionCount;
 
 
 private:
@@ -79,6 +81,8 @@ public slots:
     void eur100Pressed();
     void onBtnlogoutClicked();
     void withdrawReady();
+    void next5Transactions();
+    void previous5Transactions();
     void closeWithdrawCall();
     void billsOk (bool);
 
