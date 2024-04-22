@@ -22,7 +22,10 @@ public:
     QByteArray token;
 public slots:
     void fetchBalance(int atmId, QByteArray token);
+signals:
+    void logOutAdmin();
 private slots:
+    void onBtnlogoutAdminClicked();
     void btnHandler();
     void saveBillsToAtm();
     void atmManagerFinished(QNetworkReply*);
@@ -50,5 +53,7 @@ private:
     int state = 0;
     QString num = 0;
 };
+
+
 
 #endif // ADMIN_H

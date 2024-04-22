@@ -50,3 +50,11 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../DLLSerialport/build/
 
 INCLUDEPATH += $$PWD/../DLLSerialport
 DEPENDPATH += $$PWD/../DLLSerialport
+
+RESOURCES += \
+    ../../resurs.qrc \
+    resurs.qrc
+
+DISTFILES += \
+    ../../myStyle.qss \
+    myStyle.qss

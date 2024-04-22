@@ -16,7 +16,7 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>340</x>
      <y>50</y>
      <width>221</width>
      <height>31</height>
@@ -106,7 +106,7 @@
     <rect>
      <x>230</x>
      <y>90</y>
-     <width>401</width>
+     <width>331</width>
      <height>171</height>
     </rect>
    </property>
@@ -269,14 +269,14 @@
    <widget class="QPushButton" name="btnSaveBills">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>200</x>
       <y>20</y>
       <width>91</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
-     <string>Tallenna setelit</string>
+     <string>Save Bills</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn500">
@@ -350,14 +350,27 @@
   <widget class="QLabel" name="billSelected">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>410</y>
-     <width>141</width>
-     <height>31</height>
+     <x>260</x>
+     <y>500</y>
+     <width>261</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnLogout">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>100</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Logout</string>
    </property>
   </widget>
   <zorder>frame</zorder>
@@ -367,6 +380,7 @@
   <zorder>btnPlus</zorder>
   <zorder>btnMinus</zorder>
   <zorder>billSelected</zorder>
+  <zorder>btnLogout</zorder>
  </widget>
  <resources/>
  <connections/>
