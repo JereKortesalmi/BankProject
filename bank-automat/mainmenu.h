@@ -62,6 +62,8 @@ private:
     QString balance1;
     bool billsready;
 
+    QString w_other_num = "";
+
 public slots:
     //withdrawCall
     void withdrawSignalReceived();
@@ -80,7 +82,7 @@ public slots:
     void closeWithdrawCall();
     void billsOk (bool);
 
-
+    void clickHandler();
 
     //tableview
     void sendTransactionRequest();

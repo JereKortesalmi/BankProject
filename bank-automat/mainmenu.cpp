@@ -87,11 +87,11 @@ void mainMenu::withdrawClicked()
 {
     qDebug()<<"Withdraw clicked";
     fetchBalance();
-    ui->balanceLabel->hide();
     ui->btnBalance->hide();
     ui->btn_withdraw->hide();
     ui->btn_transactions->hide();
     hideShown();
+    ui->balanceLabel->hide();
     //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     //int atmId = 1;
     //requestRec->wit.getAtmInfo(token, atmId);
@@ -125,15 +125,41 @@ void mainMenu::otherClicked()
 {
     //ui->text_other->show();
     //ui->text_other->move(200,200);
+    ui->balanceLabel->hide();
     ui->withdrawOther->show();
+    ui->wKeyboard->show();
     ui->withdrawOther->move(300,200);
+    ui->wKeyboard->move(350,300);
     ui->eurOther->hide();
     ui->eur20->hide();
     ui->eur40->hide();
     ui->eur60->hide();
     ui->eur100->hide();
     ui->label_withdraw->setText("Give amount");
+
+    connect(ui->b0, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b1, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b2, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b3, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b4, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b5, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b6, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
 }
+
+void mainMenu::clickHandler()
+{
+    QPushButton * button = qobject_cast<QPushButton*>(sender());
+    QString btn = button->objectName();
+    qDebug() <<"Button: "<<btn;
+    QString a = btn.last(1);
+    w_other_num = w_other_num+a;
+
+    ui->text_other->setText(w_other_num);
+}
+
 
 void mainMenu::withdrawOtherPressed()
 {
@@ -218,7 +244,7 @@ void mainMenu::eur60Pressed()
         ui->label_withdraw->show();
     }
 
-    hideShown();
+    //hideShown();
 }
 
 void mainMenu::eur100Pressed()
@@ -241,7 +267,7 @@ void mainMenu::eur100Pressed()
         ui->label_withdraw->show();
     }
 
-    hideShown();
+    //hideShown();
 }
 
 void mainMenu::withdrawReady()
@@ -270,16 +296,19 @@ void mainMenu::billsOk(bool a)
     billsready = a;
 }
 
+
 bool mainMenu::checkBalance(double amount)
 {
 
     qDebug() << amount;
     if(amount > balance1.toDouble()) {
-        qDebug() <<"Balance success :" << balance1.toDouble();
+        qDebug() <<"Balance failed :" << balance1.toDouble();
+        //ui->label_withdraw->setText("Withdraw failed.");
+        //ui->label_withdraw->show();
         return false;
     }
     else {
-        qDebug() << "Balance failed :" << balance1.toDouble();
+        qDebug() << "Balance success :" << balance1.toDouble();
         return true;
     }
 
@@ -291,6 +320,7 @@ void mainMenu::reduceBalance(double amount)
     double newBalance = 0;
     newBalance = balance1.toDouble();
     newBalance = newBalance-amount;
+    ui->btnClose->hide();
 
     bal->updateBalance(token, accountId, QString::number(newBalance));
     QTimer::singleShot(1000, this, SLOT(closeWithdrawCall()));
@@ -325,6 +355,8 @@ void mainMenu::resetView()
         delete p_withdrawCall;
         p_withdrawCall = nullptr;
     }
+
+    ui->wKeyboard->hide();
 }
 
 void mainMenu::next5Transactions()
@@ -464,7 +496,8 @@ void mainMenu::showBalance(QString bal)
     balance1 = bal;
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
-    ui->balanceLabel->setText(balance1);
+    ui->balanceLabel->move(400,200);
+    ui->balanceLabel->setText("Balance :" + balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
     ui->balanceLabel->show();
@@ -493,7 +526,7 @@ void mainMenu::hideShown()
 
     ui->btnClose->show();
 
-
+    ui->wKeyboard->hide();
     ui->btnprevious5->hide();
     ui->btnnext5->hide();
 /*    ui->btnBalance->show();
