@@ -87,11 +87,11 @@ void mainMenu::withdrawClicked()
 {
     qDebug()<<"Withdraw clicked";
     fetchBalance();
-    ui->balanceLabel->hide();
     ui->btnBalance->hide();
     ui->btn_withdraw->hide();
     ui->btn_transactions->hide();
     hideShown();
+    ui->balanceLabel->hide();
     //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     //int atmId = 1;
     //requestRec->wit.getAtmInfo(token, atmId);
@@ -125,6 +125,7 @@ void mainMenu::otherClicked()
 {
     //ui->text_other->show();
     //ui->text_other->move(200,200);
+    ui->balanceLabel->hide();
     ui->withdrawOther->show();
     ui->wKeyboard->show();
     ui->withdrawOther->move(300,200);
@@ -243,7 +244,7 @@ void mainMenu::eur60Pressed()
         ui->label_withdraw->show();
     }
 
-    hideShown();
+    //hideShown();
 }
 
 void mainMenu::eur100Pressed()
@@ -266,7 +267,7 @@ void mainMenu::eur100Pressed()
         ui->label_withdraw->show();
     }
 
-    hideShown();
+    //hideShown();
 }
 
 void mainMenu::withdrawReady()
@@ -301,11 +302,13 @@ bool mainMenu::checkBalance(double amount)
 
     qDebug() << amount;
     if(amount > balance1.toDouble()) {
-        qDebug() <<"Balance success :" << balance1.toDouble();
+        qDebug() <<"Balance failed :" << balance1.toDouble();
+        //ui->label_withdraw->setText("Withdraw failed.");
+        //ui->label_withdraw->show();
         return false;
     }
     else {
-        qDebug() << "Balance failed :" << balance1.toDouble();
+        qDebug() << "Balance success :" << balance1.toDouble();
         return true;
     }
 
@@ -317,6 +320,7 @@ void mainMenu::reduceBalance(double amount)
     double newBalance = 0;
     newBalance = balance1.toDouble();
     newBalance = newBalance-amount;
+    ui->btnClose->hide();
 
     bal->updateBalance(token, accountId, QString::number(newBalance));
     QTimer::singleShot(1000, this, SLOT(closeWithdrawCall()));
@@ -492,7 +496,8 @@ void mainMenu::showBalance(QString bal)
     balance1 = bal;
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
-    ui->balanceLabel->setText(balance1);
+    ui->balanceLabel->move(400,200);
+    ui->balanceLabel->setText("Balance :" + balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
     ui->balanceLabel->show();
@@ -521,7 +526,7 @@ void mainMenu::hideShown()
 
     ui->btnClose->show();
 
-
+    ui->wKeyboard->hide();
     ui->btnprevious5->hide();
     ui->btnnext5->hide();
 /*    ui->btnBalance->show();

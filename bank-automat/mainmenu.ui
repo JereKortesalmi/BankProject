@@ -112,6 +112,12 @@
      <height>61</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="text">
     <string>TextLabel</string>
    </property>
