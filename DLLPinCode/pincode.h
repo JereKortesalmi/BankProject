@@ -19,9 +19,11 @@ public:
 
 signals:
     void sendPinCodeToMainWindow(QString);
+    void pinLogout();
 public slots:
     void resetHandler();
 private slots:
+    void onBtnCancel();
     void clickHandler();
     void enterHandler();
     void revertHandler();
