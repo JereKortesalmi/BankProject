@@ -163,9 +163,6 @@ void MainWindow::checkMousePosition()
             qDebug() << "Hiiri oli paikallaan 10 sekunttia!";
             logOutSlot();
             p_mainMenu->onBtnlogoutClicked();
-            QMessageBox msgBox;
-            msgBox.setText("Kirjauduttu ulos,olit toimeettomana liian kauan");
-            msgBox.exec();
         }
     } else {
         mouseTime = 0;
