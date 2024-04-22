@@ -5,6 +5,9 @@ mainMenu::mainMenu(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::mainMenu)
 {
+    QSize size = qApp->screens()[0]->size();
+    screenSize.setScreenwidth(size.width());
+    screenSize.setScreenheight(size.height());
 
     ui->setupUi(this);
     // connect transaction buttons and signals so they are timed after one another.
@@ -26,14 +29,18 @@ mainMenu::mainMenu(QWidget *parent) :
     //Trics to show stuff
     ui->tableViewTransactions->hide();
     ui->balanceLabel->hide();
-    //ui->btn_transactions->move(800,200);
+    ui->btn_transactions->move((screenSize.getScreenwidth()/2) - 400, 200);
+    ui->btnBalance->move((screenSize.getScreenwidth()/2) - 400, screenSize.getScreenheight()-200);
+    ui->btn_withdraw->move((screenSize.getScreenwidth()/2) + 400, screenSize.getScreenheight()-200);
+    ui->btnlogout->move((screenSize.getScreenwidth()/2) + 400, 200);
+    ui->btnClose->move((screenSize.getScreenwidth()/2) + 520, 200);
+    ui->balanceLabel->move((screenSize.getScreenwidth()/2), screenSize.getScreenheight()/2);
 
     // withdraw button connection
     connect(ui->btn_withdraw, SIGNAL(clicked(bool)), this, SLOT(withdrawClicked()));
 
-
     ui->label_withdraw->hide();
-    ui->label_withdraw->move(80,200);
+    ui->label_withdraw->move(screenSize.getScreenwidth()/2-80,screenSize.getScreenheight()-200);
 
 
 
@@ -104,21 +111,21 @@ void mainMenu::withdrawClicked()
 
     // 20 € - 100 € napit ja labelit yhdistettynä widgettinä.
     ui->eur20->show();
-    ui->eur20->move(300,300);
+    ui->eur20->move(screenSize.getScreenwidth()/2 - 300,screenSize.getScreenheight()/2 + 300);
     ui->eur40->show();
-    ui->eur40->move(300,340);
+    ui->eur40->move(screenSize.getScreenwidth()/2  - 300,screenSize.getScreenheight()/2 + 340);
     ui->eur60->show();
-    ui->eur60->move(300,380);
+    ui->eur60->move(screenSize.getScreenwidth()/2 - 300,screenSize.getScreenheight()/2 + 380);
     ui->eur100->show();
-    ui->eur100->move(480,300);
+    ui->eur100->move(screenSize.getScreenwidth()/2 - 120,screenSize.getScreenheight()/2 + 300);
 
     // btn_other ja text_other yhdessä widgettinä.
     ui->eurOther->show();
-    ui->eurOther->move(480,380);
+    ui->eurOther->move(screenSize.getScreenwidth()/2 - 120,screenSize.getScreenheight()/2 + 380);
 
     ui->label_withdraw->show();
     ui->label_withdraw->setText("Valitse haluamasi määrä");
-    ui->label_withdraw->move(400,100);
+    ui->label_withdraw->move(screenSize.getScreenwidth()/2 - 400,screenSize.getScreenheight()/2 + 100);
 
 }
 
@@ -129,8 +136,8 @@ void mainMenu::otherClicked()
     ui->balanceLabel->hide();
     ui->withdrawOther->show();
     ui->wKeyboard->show();
-    ui->withdrawOther->move(300,200);
-    ui->wKeyboard->move(350,300);
+    ui->withdrawOther->move((screenSize.getScreenwidth() / 2) + 150,(screenSize.getScreenheight() / 2) + 50);
+    ui->wKeyboard->move((screenSize.getScreenwidth() / 2 ) + 200,(screenSize.getScreenheight() / 2 ) + 100);
     ui->eurOther->hide();
     ui->eur20->hide();
     ui->eur40->hide();
@@ -330,6 +337,7 @@ void mainMenu::reduceBalance(double amount)
 
 void mainMenu::resetView()
 {
+
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
     ui->tableViewTransactions->hide();
@@ -455,8 +463,10 @@ void mainMenu::displayData()
     // 3840*2160    4k
     ui->tableViewTransactions->resizeColumnsToContents();
     ui->tableViewTransactions->setGeometry(350,0,420,200);
-    ui->tableViewTransactions->move(280,200);
+    ui->tableViewTransactions->move((screenSize.getScreenwidth()/2) - 280,(screenSize.getScreenheight()/2) - 100);
     ui->tableViewTransactions->show();
+    ui->btnnext5->move((screenSize.getScreenwidth()/2) + 250, (screenSize.getScreenheight()/2) - 150);
+    ui->btnprevious5->move((screenSize.getScreenwidth()/2)+ 250, (screenSize.getScreenheight()/2) - 100);
     ui->btnnext5->show();
     ui->btnprevious5->show();
 
@@ -497,7 +507,7 @@ void mainMenu::showBalance(QString bal)
     balance1 = bal;
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
-    ui->balanceLabel->move(400,200);
+    ui->balanceLabel->move((screenSize.getScreenwidth()/2) + 100,(screenSize.getScreenheight()/2) - 200);
     ui->balanceLabel->setText("Balance :" + balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();

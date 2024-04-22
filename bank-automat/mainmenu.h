@@ -13,6 +13,7 @@
 #include <QString>
 #include <QStandarditemModel>
 #include <QStandardItem>
+#include <QScreen>
 
 namespace Ui {
 class mainMenu;
@@ -32,7 +33,7 @@ public:
     Transactions *test = nullptr;           //transactions
     //balance
     balance *bal = nullptr;
-
+    screensize screenSize;
     //restapi
     DLLRestAPI *restApi = nullptr;
 
