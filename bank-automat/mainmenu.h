@@ -45,6 +45,9 @@ public:
     int offsetInteger;
     int transactionCount;
 
+    int sHeight;
+    int sWidth;
+
 
 private:
     Ui::mainMenu *ui;

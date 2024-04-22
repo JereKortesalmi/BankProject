@@ -55,6 +55,7 @@ mainMenu::mainMenu(QWidget *parent) :
     ui->btnClose->hide();
     // logout
     connect(ui->btnlogout, SIGNAL(clicked(bool)), this, SLOT(onBtnlogoutClicked()));
+
 }
 
 mainMenu::~mainMenu()
