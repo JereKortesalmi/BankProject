@@ -63,6 +63,17 @@ mainMenu::mainMenu(QWidget *parent) :
     // logout
     connect(ui->btnlogout, SIGNAL(clicked(bool)), this, SLOT(onBtnlogoutClicked()));
 
+    connect(ui->b0, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b1, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b2, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b3, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b4, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b5, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b6, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+
 }
 
 mainMenu::~mainMenu()
@@ -103,6 +114,7 @@ void mainMenu::withdrawClicked()
     //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
     //int atmId = 1;
     //requestRec->wit.getAtmInfo(token, atmId);
+
     p_withdrawCall = new withdrawCall();
     p_withdrawCall->getAtmInfo(token,1);
     connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
@@ -133,6 +145,9 @@ void mainMenu::otherClicked()
 {
     //ui->text_other->show();
     //ui->text_other->move(200,200);
+    w_other_num="";
+    //ui->label_other->setText("");
+    ui->text_other->setText("");
     ui->balanceLabel->hide();
     ui->withdrawOther->show();
     ui->wKeyboard->show();
@@ -145,16 +160,7 @@ void mainMenu::otherClicked()
     ui->eur100->hide();
     ui->label_withdraw->setText("Give amount");
 
-    connect(ui->b0, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b1, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b2, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b3, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b4, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b5, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b6, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-    connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+
 }
 
 void mainMenu::clickHandler()
@@ -176,17 +182,25 @@ void mainMenu::withdrawOtherPressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(ui->text_other->text().toInt());
 
-    if(checkBalance(ui->text_other->text().toDouble())&& billsready) {
-        p_withdrawCall->sendTransaction(token,accountId,ui->text_other->text().toDouble());
-        p_withdrawCall->updateBills(token,1, ui->text_other->text().toDouble());
-        hideShown();
-        ui->label_withdraw->setText("Withdraw succesful");
-        ui->label_withdraw->show();
-        reduceBalance(ui->text_other->text().toDouble());
+    if(ui->text_other->text().toDouble() > 19) {
+
+        if(checkBalance(ui->text_other->text().toDouble())&& billsready) {
+            p_withdrawCall->sendTransaction(token,accountId,ui->text_other->text().toDouble());
+            p_withdrawCall->updateBills(token,1, ui->text_other->text().toDouble());
+            hideShown();
+            ui->label_withdraw->setText("Withdraw succesful");
+            ui->label_withdraw->show();
+            reduceBalance(ui->text_other->text().toDouble());
+        }
+        else {
+            hideShown();
+            ui->label_withdraw->setText("Withdraw failed");
+            ui->label_withdraw->show();
+        }
     }
     else {
         hideShown();
-        ui->label_withdraw->setText("Withdraw failed");
+        ui->label_withdraw->setText("withdraw failed");
         ui->label_withdraw->show();
     }
 }
