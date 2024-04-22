@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     //yhdistetään pinCode
     pin = new PinCode(this);
     connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
+    connect(pin,SIGNAL(pinLogout()),this,SLOT(logOutSlot()));
 
     //yhditetään login
     log = new login;
