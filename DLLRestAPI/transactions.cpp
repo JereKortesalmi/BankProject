@@ -1,4 +1,5 @@
 #include "transactions.h"
+#include "ui_transactions.h"
 //#include "ui_transactions.h"
 #include <QDebug>
 /*
@@ -87,7 +88,14 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
     if (json_doc.isArray() && json_doc.array().isEmpty())
     {
         qDebug() << "Received empty JSON array";
-        //handleEmptyJsonArray();
+        qDebug() << "Ei vanhempia tilitapahtumia";
+        ui->btnprevious5->setEnabled(false);
+        ui->btnprevious5->setText("No older transactions");
+        QStandardItemModel *model = new QStandardItemModel();
+        model->clear();
+        ui->tableViewTransactions->setModel(model);
+        ui->tableViewTransactions->show();
+        return;
         return;
     }
     QJsonArray json_array = json_doc.array();
