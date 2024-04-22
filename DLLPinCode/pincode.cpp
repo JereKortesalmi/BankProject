@@ -58,6 +58,7 @@ void PinCode::resetHandler()
     ui->pinLine->clear();
     number=ui->pinLine->text();
     ui->messageLabel->clear();
+    close();
 }
 
 

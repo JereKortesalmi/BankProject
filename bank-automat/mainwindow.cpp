@@ -53,9 +53,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
     connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
     //luodaan admin
-    adm = new admin;
 
     ui->tableViewTransactions->hide();
+    ui->btn_transactions->hide();
 
 }
 
@@ -89,7 +89,7 @@ void MainWindow::cardNumberHand()
     cardNumber=ui->cardEdit->text();
     qDebug()<<"Käsin korttinumero: "<<cardNumber;
     log->cardNumberLog(cardNumber);
-    pin->show();
+    pin->showFullScreen();
 }
 
 
@@ -121,20 +121,22 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     //p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
-    p_mainMenu->show();
+    p_mainMenu->showFullScreen();
 
 }
 
 void MainWindow::creditdebitchoose(QJsonArray array)
 {
     QJsonArray jsonArray = array;
-    creditDebit->show();
+    creditDebit->showFullScreen();
     creditDebit->selectAccountHandler(jsonArray);
 }
 
 void MainWindow::adminState()
 {
-    adm->show();
+    adm = new admin;
+    connect(adm,SIGNAL(logOutAdmin()),this,SLOT(logOutSlot()));
+    adm->showFullScreen();
     adm->token = token;
     adm->fetchBalance(1, token);
 }
@@ -151,7 +153,11 @@ void MainWindow::logOutSlot()
     //delete p_mainMenu;
     //p_mainMenu = nullptr;
     creditDebit->close();
-    adm->close();
+    if(adm != nullptr){
+        adm->close();
+        delete adm;
+        adm = nullptr;
+    }
 }
 
 void MainWindow::checkMousePosition()
