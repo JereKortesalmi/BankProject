@@ -1,0 +1,49 @@
+MainWindow {
+    background-image: url(":/black.jpg");
+}
+PinCode {
+    background-image: url(":/backpattern.jpg");
+}
+mainMenu {
+    background-image: url(":/cardbackground.jpg");
+}
+admin {
+    background-image: url(":/blackbluesky.jpg");
+}
+QLabel {
+border-style: outset;
+min-height: 10px;
+min-width: 50px;
+font-size:20px;
+font: bold;
+color: lightgreen;
+}
+
+QLineEdit {
+background-color: lightgreen;
+min-height: 10px;
+min-width: 50px;
+font-size:16px;
+}
+
+QPushButton {
+background-color: lightgreen;
+border-style: outset;
+border-width: 2px;
+border-color: black;
+min-height: 5px;
+min-width: 5px;
+border-radius: 6px;
+font-size:16px;
+}
+
+QPushButton:checked {
+background-color: lightblue;
+border-style: outset;
+border-width: 2px;
+border-color: black;
+min-height: 5px;
+min-width: 5px;
+border-radius: 6px;
+font-size:16px;
+}

@@ -27,6 +27,8 @@ admin::admin(QWidget *parent)
     connect(ui->btn100,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
     connect(ui->btn200,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
     connect(ui->btn500,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
+
+    connect(ui->btnLogout, SIGNAL(clicked(bool)), this, SLOT(onBtnlogoutAdminClicked()));
     qDebug()<<"Admin luotu";
 }
 
@@ -238,4 +240,28 @@ void admin::selectedLineEdit()
         ui->billSelected->setText("no bills Selected");
         ui->amountEdit->clear();
     }
+}
+
+void admin::onBtnlogoutAdminClicked()
+{
+    state = 0;
+    twenty = 0;
+    ui->twentyEdit->setText(QString::number(twenty));
+    fifty = 0;
+    ui->fiftyEdit->setText(QString::number(fifty));
+    hundred = 0;
+    ui->hundredEdit->setText(QString::number(hundred));
+    twoHundred = 0;
+    ui->twoHundredEdit->setText(QString::number(twoHundred));
+    fiveHundred = 0;
+    ui->fiveHundredEdit->setText(QString::number(fiveHundred));
+    ui->amountEdit->clear();
+    ui->btn20->setChecked(false);
+    ui->btn50->setChecked(false);
+    ui->btn100->setChecked(false);
+    ui->btn200->setChecked(false);
+    ui->btn500->setChecked(false);
+
+    emit logOutAdmin();
+
 }
