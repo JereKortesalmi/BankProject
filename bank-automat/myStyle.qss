@@ -2,13 +2,16 @@ MainWindow {
     background-image: url(":/black.jpg");
 }
 PinCode {
-    background-image: url(":/backpattern.jpg");
+    background-image: url(":/black.jpg");
 }
 mainMenu {
-    background-image: url(":/cardbackground.jpg");
+    background-image: url(":/black.jpg");
 }
 admin {
-    background-image: url(":/blackbluesky.jpg");
+    background-image: url(":/black.jpg");
+}
+creditdebitq {
+    background-image: url(":/black.jpg");
 }
 QLabel {
 border-style: outset;
