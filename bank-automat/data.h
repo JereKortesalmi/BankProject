@@ -48,6 +48,22 @@ private:
     QString forKey;
 };
 
+class screensize
+{
+public:
+    screensize();
+    ~screensize();
+    int screenwidth;
+    int screenheight;
+
+
+
+    int getScreenwidth() const;
+    void setScreenwidth(int newScreenwidth);
+    int getScreenheight() const;
+    void setScreenheight(int newScreenheight);
+};
+
 class transfer
 {
 public:

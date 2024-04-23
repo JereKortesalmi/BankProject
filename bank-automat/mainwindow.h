@@ -47,6 +47,7 @@ private:
     Ui::MainWindow *ui;
 
     mainMenu *p_mainMenu = nullptr;
+    screensize screenSize;
 
     QTimer *timer;
     QPoint lastPos;
