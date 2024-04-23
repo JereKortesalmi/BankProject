@@ -33,6 +33,8 @@ admin::admin(QWidget *parent)
     connect(ui->btn500,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
 
     connect(ui->btnLogout, SIGNAL(clicked(bool)), this, SLOT(onBtnlogoutAdminClicked()));
+    connect(ui->btnClear, SIGNAL(clicked(bool)), this, SLOT(clearHandler()));
+    connect(ui->btnClearAll, SIGNAL(clicked(bool)), this, SLOT(clearAll()));
 
     ui->allbillframe->move((screenSize.getScreenwidth()/2) - 145,(screenSize.getScreenheight()/2) - 200);
     ui->keyboard_2->move((screenSize.getScreenwidth()/2) - 120,(screenSize.getScreenheight()/2) + 150);
@@ -40,7 +42,9 @@ admin::admin(QWidget *parent)
     ui->btnLogout->move((screenSize.getScreenwidth()/2) + 500,(screenSize.getScreenheight()/2) + 400);
     ui->billSelected->move((screenSize.getScreenwidth()/2) - 100,(screenSize.getScreenheight()/2));
     ui->label_5->move((screenSize.getScreenwidth()/2) - 60,(screenSize.getScreenheight()/2) - 350);
-    ui->btnSaveBills->move((screenSize.getScreenwidth()/2) + 160,(screenSize.getScreenheight()/2) + 170);
+    ui->btnSaveBills->move((screenSize.getScreenwidth()/2) + 400,(screenSize.getScreenheight()/2) - 200);
+    ui->clear->move((screenSize.getScreenwidth()/2) + 160, (screenSize.getScreenheight()/2) + 160);
+    ui->savedLabel->move((screenSize.getScreenwidth()/2) + 160, (screenSize.getScreenheight()/2) + 50);
 
 
     //ui->amount->move((screenSize.getScreenwidth()/2) - 400, screenSize.getScreenheight()+200);
@@ -155,6 +159,12 @@ void admin::saveBillsToAtm()
 void admin::atmManagerFinished(QNetworkReply *reply)
 {
     QByteArray response = reply->readAll();
+    if(response == "1"){
+        clearAll();
+        ui->savedLabel->setText("Saving succesful");
+    }else{
+        ui->savedLabel->setText("Error saving bills");
+    }
     qDebug()<<response;
 }
 void admin::fetchBalance(int atmId, QByteArray token)
@@ -258,26 +268,61 @@ void admin::selectedLineEdit()
     }
 }
 
+void admin::clearHandler()
+{
+    if(state == 1){
+        twenty = 0;
+        num = 0;
+        ui->amountEdit->clear();
+        ui->twentyEdit->clear();
+    }else if(state == 2){
+        num = 0;
+        fifty = 0;
+        ui->amountEdit->clear();
+        ui->fiftyEdit->clear();
+    }else if(state == 3){
+        num = 0;
+        hundred = 0;
+        ui->amountEdit->clear();
+        ui->hundredEdit->clear();
+    }else if(state == 4){
+        num = 0;
+        twoHundred = 0;
+        ui->amountEdit->clear();
+        ui->twoHundredEdit->clear();
+    }else if(state == 5){
+        num = 0;
+        fiveHundred = 0;
+        ui->amountEdit->clear();
+        ui->fiveHundredEdit->clear();
+    }
+}
+
 void admin::onBtnlogoutAdminClicked()
+{
+    clearAll();
+    emit logOutAdmin();
+
+}
+
+void admin::clearAll()
 {
     state = 0;
     twenty = 0;
-    ui->twentyEdit->setText(QString::number(twenty));
+    ui->twentyEdit->clear();
     fifty = 0;
-    ui->fiftyEdit->setText(QString::number(fifty));
+    ui->fiftyEdit->clear();
     hundred = 0;
-    ui->hundredEdit->setText(QString::number(hundred));
+    ui->hundredEdit->clear();
     twoHundred = 0;
-    ui->twoHundredEdit->setText(QString::number(twoHundred));
+    ui->twoHundredEdit->clear();
     fiveHundred = 0;
-    ui->fiveHundredEdit->setText(QString::number(fiveHundred));
+    ui->fiveHundredEdit->clear();
     ui->amountEdit->clear();
+    ui->billSelected->clear();
     ui->btn20->setChecked(false);
     ui->btn50->setChecked(false);
     ui->btn100->setChecked(false);
     ui->btn200->setChecked(false);
     ui->btn500->setChecked(false);
-
-    emit logOutAdmin();
-
 }

@@ -3,6 +3,8 @@
 #include "DLLPinCode_global.h"
 #include <QDialog>
 #include <QScreen>
+#include <QWidget>
+#include <QObject>
 
 
 namespace Ui {

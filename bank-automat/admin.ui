@@ -325,15 +325,55 @@
     </item>
    </layout>
   </widget>
+  <widget class="QLabel" name="savedLabel">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>170</y>
+     <width>191</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QWidget" name="clear" native="true">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>400</y>
+     <width>101</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="btnClear">
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btnClearAll">
+      <property name="text">
+       <string>Clear All</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <zorder>amount</zorder>
   <zorder>allbillframe</zorder>
   <zorder>label_5</zorder>
   <zorder>keyboard_2</zorder>
-  <zorder>amountEdit</zorder>
-  <zorder>btnPlus</zorder>
-  <zorder>btnMinus</zorder>
   <zorder>billSelected</zorder>
   <zorder>btnLogout</zorder>
   <zorder>btnSaveBills</zorder>
+  <zorder>savedLabel</zorder>
+  <zorder>btnClear</zorder>
+  <zorder>btnClearAll</zorder>
  </widget>
  <resources/>
  <connections/>

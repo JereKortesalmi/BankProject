@@ -10,9 +10,9 @@ PinCode::PinCode(QWidget *parent)
     //screenSize.setScreenheight(size.height());
     screenWidth = size.width();
     screenHeight = size.height();
-    ui->SignIn->move((screenWidth/2) - 145,(screenHeight/2) - 200);
 
     ui->setupUi(this);
+    ui->signIn->move((screenWidth/2) - 250,(screenHeight/2) - 220);
     connect(ui->N0,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N1,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N2,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));

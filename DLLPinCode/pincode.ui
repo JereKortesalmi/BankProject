@@ -13,10 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="SignIn" native="true">
+  <widget class="QGroupBox" name="signIn">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>200</x>
      <y>90</y>
      <width>541</width>
      <height>411</height>
@@ -28,13 +28,16 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="title">
+    <string>SignIn</string>
+   </property>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>40</y>
-      <width>91</width>
-      <height>31</height>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -50,7 +53,7 @@
    <widget class="QLineEdit" name="pinLine">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>180</x>
       <y>50</y>
       <width>191</width>
       <height>21</height>
@@ -66,41 +69,28 @@
      <enum>QLineEdit::Password</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="gridFrame">
+   <widget class="QWidget" name="gridWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>90</x>
       <y>210</y>
-      <width>371</width>
-      <height>120</height>
+      <width>301</width>
+      <height>181</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="1">
-      <widget class="QPushButton" name="N2">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+     <item row="1" column="1">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-       <property name="text">
-        <string>2</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="N8">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>8</string>
-       </property>
-      </widget>
+      </spacer>
      </item>
      <item row="0" column="2">
       <widget class="QPushButton" name="N3">
@@ -118,7 +108,33 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="3" column="1">
+      <widget class="QPushButton" name="N5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>5</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <spacer name="verticalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="2">
       <widget class="QPushButton" name="N9">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -131,7 +147,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="3" column="2">
       <widget class="QPushButton" name="N6">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -144,8 +160,47 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="N5">
+     <item row="4" column="2">
+      <spacer name="verticalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="4" column="0">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="4" column="1">
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="1">
+      <widget class="QPushButton" name="N8">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -153,7 +208,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>5</string>
+        <string>8</string>
        </property>
       </widget>
      </item>
@@ -170,7 +225,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QPushButton" name="N4">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -183,7 +238,20 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="N2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>2</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
       <widget class="QPushButton" name="N7">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -196,12 +264,38 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="7" column="1">
       <widget class="QPushButton" name="N0">
        <property name="text">
         <string>0</string>
        </property>
       </widget>
+     </item>
+     <item row="1" column="2">
+      <spacer name="verticalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>

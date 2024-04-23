@@ -39,6 +39,8 @@ private slots:
     void getBalance(QNetworkReply *reply);
     void clickHandler();
     void selectedLineEdit();
+    void clearHandler();
+    void clearAll();
 
 private:
     Ui::admin *ui;
