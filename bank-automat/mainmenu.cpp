@@ -79,6 +79,8 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->bClear, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+    connect(ui->bBackSpace, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
 }
 
 mainMenu::~mainMenu()
@@ -176,17 +178,37 @@ void mainMenu::clickHandler()
     QString btn = button->objectName();
     qDebug() <<"Button: "<<btn;
     if(kbstate == 0) {
+        if(btn == "bClear") {
+            w_other_num="";
+            ui->text_other->setText(w_other_num);
+        }
+        else if(btn == "bBackSpace") {
+            w_other_num.removeLast();
+            ui->text_other->setText(w_other_num);
+        }
+        else {
+            QString a = btn.last(1);
+            w_other_num = w_other_num+a;
 
-        QString a = btn.last(1);
-        w_other_num = w_other_num+a;
-
-        ui->text_other->setText(w_other_num);
+            ui->text_other->setText(w_other_num);
+        }
     }
     else if(kbstate == 1) {
-        QString a = btn.last(1);
-        t_num = t_num+a;
+        if(btn == "bClear") {
+            t_num = "";
+            ui->txt_transferAmount->setText(t_num);
+        }
+        else if(btn == "bBackSpace") {
+            t_num.removeLast();
+            ui->txt_transferAmount->setText(t_num);
+        }
+        else {
+            QString a = btn.last(1);
+            t_num = t_num+a;
 
-        ui->txt_transferAmount->setText(t_num);
+            ui->txt_transferAmount->setText(t_num);
+        }
+
     }
 }
 
