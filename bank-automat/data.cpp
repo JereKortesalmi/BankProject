@@ -79,3 +79,34 @@ transfer::~transfer()
 {
     qDebug()<<"transfer Class Destructor";
 }
+
+screensize::screensize()
+{
+
+}
+
+screensize::~screensize()
+{
+
+}
+
+int screensize::getScreenheight() const
+{
+    return screenheight;
+}
+
+void screensize::setScreenheight(int newScreenheight)
+{
+    screenheight = newScreenheight;
+}
+
+int screensize::getScreenwidth() const
+{
+    return screenwidth;
+}
+
+void screensize::setScreenwidth(int newScreenwidth)
+{
+    screenwidth = newScreenwidth;
+}
+

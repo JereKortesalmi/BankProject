@@ -3,6 +3,7 @@
 #include <DLLSerialport_global.h>
 #include <QCursor>
 #include <QApplication>
+#include <QScreen>
 
 //Korttien numerot
 //  -0600062211
@@ -13,6 +14,14 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    QSize size = qApp->screens()[0]->size();
+
+    qDebug()<<"Screensize" << size;
+    screenSize.setScreenwidth(size.width());
+    screenSize.setScreenheight(size.height());
+    qDebug() << "width" << screenSize.getScreenwidth();
+    qDebug() << "height" << screenSize.getScreenheight();
     ui->setupUi(this);
     connectSerial();
     timer = new QTimer(this);
@@ -32,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     //yhdistetään pinCode
     pin = new PinCode(this);
     connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
+    connect(pin,SIGNAL(pinLogout()),this,SLOT(logOutSlot()));
 
     //yhditetään login
     log = new login;
@@ -57,6 +67,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewTransactions->hide();
     ui->btn_transactions->hide();
 
+    ui->label_2->move(screenSize.getScreenwidth()/2, screenSize.getScreenheight()/2-200);
+    ui->label->move(screenSize.getScreenwidth()/2 - 40, screenSize.getScreenheight()/2 - 100);
+    ui->cardEdit->move(screenSize.getScreenwidth()/2 - 120, screenSize.getScreenheight()/2);
+    ui->btnCardEdit->move(screenSize.getScreenwidth()/2 + 80, screenSize.getScreenheight()/2);
 }
 
 MainWindow::~MainWindow()
@@ -114,14 +128,16 @@ void MainWindow::loginMessageToPinCode(QString message)
 void MainWindow::accountIdSender(int accountId, QString balance, QString type)
 {
     int id = accountId;
-    QString bal = balance;
-    QString accountType = type;
+    //QString bal = balance;
+    //QString accountType = type;
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->accountId = id;
     //p_mainMenu->showBalance(bal);
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->showFullScreen();
+    p_mainMenu->sHeight = screenSize.getScreenheight();
+    p_mainMenu->sWidth = screenSize.getScreenwidth();
 
 }
 

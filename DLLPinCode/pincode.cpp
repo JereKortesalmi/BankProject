@@ -17,7 +17,7 @@ PinCode::PinCode(QWidget *parent)
     connect(ui->N9,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
 
     connect(ui->Enter,SIGNAL(clicked(bool)),this,SLOT(enterHandler()));
-    connect(ui->Reset,SIGNAL(clicked(bool)),this,SLOT(resetHandler()));
+    connect(ui->Reset,SIGNAL(clicked(bool)),this,SLOT(onBtnCancel()));
     connect(ui->btnRevert,SIGNAL(clicked(bool)),this,SLOT(revertHandler()));
 }
 
@@ -67,6 +67,11 @@ void PinCode::revertHandler()
     number.removeLast();
     ui->pinLine->setText(number);
     ui->messageLabel->clear();
+}
+
+void PinCode::onBtnCancel()
+{
+    emit pinLogout();
 }
 
 
