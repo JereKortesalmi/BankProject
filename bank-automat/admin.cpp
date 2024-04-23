@@ -5,9 +5,9 @@ admin::admin(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::admin)
 {
-    /*QSize size = qApp->screens()[0]->size();
+    QSize size = qApp->screens()[0]->size();
     screenSize.setScreenwidth(size.width());
-    screenSize.setScreenheight(size.height());*/
+    screenSize.setScreenheight(size.height());
 
     ui->setupUi(this);
     connect(ui->btnSaveBills,SIGNAL(clicked(bool)),this,SLOT(saveBillsToAtm()));
@@ -33,6 +33,18 @@ admin::admin(QWidget *parent)
     connect(ui->btn500,SIGNAL(clicked(bool)),this,SLOT(selectedLineEdit()));
 
     connect(ui->btnLogout, SIGNAL(clicked(bool)), this, SLOT(onBtnlogoutAdminClicked()));
+
+    ui->allbillframe->move((screenSize.getScreenwidth()/2) - 145,(screenSize.getScreenheight()/2) - 200);
+    ui->keyboard_2->move((screenSize.getScreenwidth()/2) - 120,(screenSize.getScreenheight()/2) + 150);
+    ui->amount->move((screenSize.getScreenwidth()/2) - 90,(screenSize.getScreenheight()/2) + 70);
+    ui->btnLogout->move((screenSize.getScreenwidth()/2) + 500,(screenSize.getScreenheight()/2) + 400);
+    ui->billSelected->move((screenSize.getScreenwidth()/2) - 100,(screenSize.getScreenheight()/2));
+    ui->label_5->move((screenSize.getScreenwidth()/2) - 60,(screenSize.getScreenheight()/2) - 350);
+    ui->btnSaveBills->move((screenSize.getScreenwidth()/2) + 160,(screenSize.getScreenheight()/2) + 170);
+
+
+    //ui->amount->move((screenSize.getScreenwidth()/2) - 400, screenSize.getScreenheight()+200);
+    //ui->gridWidget->move((screenSize.getScreenwidth()/2) - 400, screenSize.getScreenheight()+300);
     qDebug()<<"Admin luotu";
 }
 

@@ -5,6 +5,13 @@ PinCode::PinCode(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::PinCode)
 {
+    QSize size = qApp->screens()[0]->size();
+    //screenSize.setScreenwidth(size.width());
+    //screenSize.setScreenheight(size.height());
+    screenWidth = size.width();
+    screenHeight = size.height();
+    //ui->->move((screenWidth/2) - 145,(screenHeight/2) - 200);
+
     ui->setupUi(this);
     connect(ui->N1,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N2,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));

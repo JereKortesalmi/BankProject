@@ -122,21 +122,21 @@ void mainMenu::withdrawClicked()
 
     // 20 € - 100 € napit ja labelit yhdistettynä widgettinä.
     ui->eur20->show();
-    ui->eur20->move(screenSize.getScreenwidth()/2 - 300,screenSize.getScreenheight()/2 + 300);
+    ui->eur20->move((screenSize.getScreenwidth()/2) - 300,(screenSize.getScreenheight()/2) + 300);
     ui->eur40->show();
-    ui->eur40->move(screenSize.getScreenwidth()/2  - 300,screenSize.getScreenheight()/2 + 340);
+    ui->eur40->move((screenSize.getScreenwidth()/2)  - 300,(screenSize.getScreenheight()/2) + 340);
     ui->eur60->show();
-    ui->eur60->move(screenSize.getScreenwidth()/2 - 300,screenSize.getScreenheight()/2 + 380);
+    ui->eur60->move((screenSize.getScreenwidth()/2) - 300,(screenSize.getScreenheight()/2) + 380);
     ui->eur100->show();
-    ui->eur100->move(screenSize.getScreenwidth()/2 - 120,screenSize.getScreenheight()/2 + 300);
+    ui->eur100->move((screenSize.getScreenwidth()/2) - 120,(screenSize.getScreenheight()/2) + 300);
 
     // btn_other ja text_other yhdessä widgettinä.
     ui->eurOther->show();
-    ui->eurOther->move(screenSize.getScreenwidth()/2 - 120,screenSize.getScreenheight()/2 + 380);
+    ui->eurOther->move((screenSize.getScreenwidth()/2) - 120,(screenSize.getScreenheight()/2) + 380);
 
     ui->label_withdraw->show();
     ui->label_withdraw->setText("Valitse haluamasi määrä");
-    ui->label_withdraw->move(screenSize.getScreenwidth()/2 - 400,screenSize.getScreenheight()/2 + 100);
+    ui->label_withdraw->move((screenSize.getScreenwidth()/2) - 400,(screenSize.getScreenheight()/2) + 100);
 
 }
 

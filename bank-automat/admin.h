@@ -22,7 +22,9 @@ public:
     explicit admin(QWidget *parent = nullptr);
     ~admin();
 
-    //screensize screenSize;
+    screensize screenSize;
+    int sHeight;
+    int sWidth;
 
     QByteArray token;
 public slots:
