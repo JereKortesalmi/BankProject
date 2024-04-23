@@ -137,8 +137,8 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->showFullScreen();
-    p_mainMenu->sHeight = screenSize.getScreenheight();
-    p_mainMenu->sWidth = screenSize.getScreenwidth();
+    //p_mainMenu->sHeight = screenSize.getScreenheight();
+    //p_mainMenu->sWidth = screenSize.getScreenwidth();
 
 }
 
