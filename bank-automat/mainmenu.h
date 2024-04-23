@@ -46,9 +46,6 @@ public:
     int offsetInteger;
     int transactionCount;
 
-    int sHeight;
-    int sWidth;
-
 
 private:
     Ui::mainMenu *ui;
@@ -63,10 +60,13 @@ private:
     QList<transfer> tableTransfer;          //transactions
     bool checkBalance(double amount);
     void reduceBalance(double amount);
+
+    short kbstate = 0;
     QString balance1;
     bool billsready;
 
     QString w_other_num = "";
+    QString t_num = "";
 
 public slots:
     //withdrawCall
@@ -99,6 +99,8 @@ public slots:
     void hideShown();
     void resetView();
     void noOlderTransactions();
+
+    void showTransfer(); // transfer
 
 
 public slots:
