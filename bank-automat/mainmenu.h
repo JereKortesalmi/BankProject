@@ -94,6 +94,7 @@ public slots:
     //hide
     void hideShown();
     void resetView();
+    void noOlderTransactions();
 
 
 public slots:

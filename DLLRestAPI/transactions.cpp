@@ -89,13 +89,8 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
     {
         qDebug() << "Received empty JSON array";
         qDebug() << "Ei vanhempia tilitapahtumia";
-        ui->btnprevious5->setEnabled(false);
-        ui->btnprevious5->setText("No older transactions");
-        QStandardItemModel *model = new QStandardItemModel();
-        model->clear();
-        ui->tableViewTransactions->setModel(model);
-        ui->tableViewTransactions->show();
-        return;
+        emit noMoreTransactions();
+
         return;
     }
     QJsonArray json_array = json_doc.array();
