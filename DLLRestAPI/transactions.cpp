@@ -1,4 +1,5 @@
 #include "transactions.h"
+#include "ui_transactions.h"
 //#include "ui_transactions.h"
 #include <QDebug>
 /*
@@ -87,7 +88,9 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
     if (json_doc.isArray() && json_doc.array().isEmpty())
     {
         qDebug() << "Received empty JSON array";
-        //handleEmptyJsonArray();
+        qDebug() << "Ei vanhempia tilitapahtumia";
+        emit noMoreTransactions();
+
         return;
     }
     QJsonArray json_array = json_doc.array();
