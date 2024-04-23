@@ -5,6 +5,10 @@ admin::admin(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::admin)
 {
+    /*QSize size = qApp->screens()[0]->size();
+    screenSize.setScreenwidth(size.width());
+    screenSize.setScreenheight(size.height());*/
+
     ui->setupUi(this);
     connect(ui->btnSaveBills,SIGNAL(clicked(bool)),this,SLOT(saveBillsToAtm()));
 

@@ -7,6 +7,9 @@
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include "data.h"
+#include <QScreen>
+
 namespace Ui {
 class admin;
 }
@@ -18,6 +21,8 @@ class admin : public QDialog
 public:
     explicit admin(QWidget *parent = nullptr);
     ~admin();
+
+    //screensize screenSize;
 
     QByteArray token;
 public slots:
