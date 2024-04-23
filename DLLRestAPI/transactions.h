@@ -42,6 +42,7 @@ private:
 signals:
     void ResponseToMain(QJsonArray reply);
     void handleEmptyResponse();
+    void noMoreTransactions();
 };
 
 #endif // TRANSACTIONS_H

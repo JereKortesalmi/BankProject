@@ -73,7 +73,6 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-
 }
 
 mainMenu::~mainMenu()
@@ -382,6 +381,18 @@ void mainMenu::resetView()
     ui->wKeyboard->hide();
 }
 
+void mainMenu::noOlderTransactions()
+{
+    qDebug() << "Ei vanhempia tilitapahtumia";
+    ui->btnprevious5->setEnabled(false);
+    ui->btnprevious5->setText("No older transactions");
+    QStandardItemModel *model = new QStandardItemModel();
+    model->clear();
+    ui->tableViewTransactions->setModel(model);
+    ui->tableViewTransactions->show();
+    return;
+}
+
 void mainMenu::next5Transactions()
 {
     if(!tableTransactions.isEmpty()) {
@@ -410,6 +421,7 @@ void mainMenu::previous5Transactions()
     ui->btnnext5->setEnabled(true);
     test->requestTrasactions(token,accountId,this->offsetInteger);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
+    connect(test,SIGNAL(noMoreTransactions()), this, SLOT(noOlderTransactions()));
     //test->show();
 }
 
