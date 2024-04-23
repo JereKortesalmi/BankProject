@@ -25,11 +25,15 @@ void balance::balanceUpdateFinished(QNetworkReply *reply)
     qDebug()<<response;
 }
 
-void balance::fetchAccountDetails(QString cardn)
+void balance::fetchAccountDetails(QByteArray token,QString cardn)
 {
     QString cardNumber = cardn;
     QString url="http://localhost:3000/accounts/getaccountid/" + cardNumber;
     QNetworkRequest request(url);
+    //WEBTOKEN ALKU
+    myToken="Bearer "+token;
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
     accountManager = new QNetworkAccessManager(this);
         connect(accountManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(saveAccountDetails(QNetworkReply*)));
         reply = accountManager->get(request);
@@ -61,11 +65,15 @@ void balance::saveAccountDetails(QNetworkReply *reply)
     }
 }
 
-void balance::fetchBalance(int accountId)
+void balance::fetchBalance(QByteArray token,int accountId)
 {
     int id = accountId;
     QString url="http://localhost:3000/accounts/" + QString::number(id);
     QNetworkRequest request(url);
+    //WEBTOKEN ALKU
+    myToken="Bearer "+token;
+    request.setRawHeader(QByteArray("Authorization"),(myToken));
+    //WEBTOKEN LOPPU
     balanceManager = new QNetworkAccessManager(this);
     connect(balanceManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(getBalance(QNetworkReply*)));
     reply = balanceManager->get(request);

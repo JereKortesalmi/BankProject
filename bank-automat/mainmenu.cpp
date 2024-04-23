@@ -437,6 +437,9 @@ void mainMenu::sendTransactionRequest()
     }
     test = new Transactions();
     this->offsetInteger = 0;
+    ui->btnnext5->setEnabled(false);
+    ui->btnprevious5->setEnabled(true);
+    ui->btnprevious5->setText("Previous 5 transactions");
     test->requestTrasactions(token,accountId,this->offsetInteger);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
@@ -502,8 +505,8 @@ void mainMenu::readTransactionValues()
 {
     qDebug()<<"Setting up Model: ";
     table_model = new QStandardItemModel(tableTransactions.size(),5);
-    table_model->setHeaderData(0, Qt::Horizontal, QObject::tr("atm_id"));
-    table_model->setHeaderData(1, Qt::Horizontal, QObject::tr("account_id"));
+    table_model->setHeaderData(0, Qt::Horizontal, QObject::tr("event id"));
+    table_model->setHeaderData(1, Qt::Horizontal, QObject::tr("account id"));
     table_model->setHeaderData(2, Qt::Horizontal, QObject::tr("time"));
     table_model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
     table_model->setHeaderData(4, Qt::Horizontal, QObject::tr("amount"));
@@ -542,7 +545,7 @@ void mainMenu::showBalance(QString bal)
 
 void mainMenu::fetchBalance()
 {
-    bal->fetchBalance(accountId);
+    bal->fetchBalance(token,accountId);
 }
 
 void mainMenu::hideShown()
