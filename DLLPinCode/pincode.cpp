@@ -80,6 +80,10 @@ void PinCode::revertHandler()
 void PinCode::onBtnCancel()
 {
     emit pinLogout();
+    ui->pinLine->clear();
+    number=ui->pinLine->text();
+    ui->messageLabel->clear();
+    close();
 }
 
 
