@@ -63,9 +63,6 @@ mainMenu::mainMenu(QWidget *parent) :
     // logout
     connect(ui->btnlogout, SIGNAL(clicked(bool)), this, SLOT(onBtnlogoutClicked()));
 
-<<<<<<< HEAD
-    //when no older transactions
-=======
     connect(ui->b0, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b1, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b2, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
@@ -76,8 +73,6 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(ui->b7, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b8, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
-
->>>>>>> origin
 }
 
 mainMenu::~mainMenu()
