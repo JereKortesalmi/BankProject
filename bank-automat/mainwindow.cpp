@@ -24,9 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << "height" << screenSize.getScreenheight();
     ui->setupUi(this);
     connectSerial();
-    timer = new QTimer(this);
-    connect(timer,SIGNAL(timeout()), this, SLOT(checkMousePosition()));
-    timer->start(1000);
 
     //readTransactionValues();
     connect(ui->btn_transactions,SIGNAL(clicked(bool)),
@@ -116,7 +113,11 @@ void MainWindow::loginInfo(QString res)
     //creditDebit->show();
     //p_mainMenu->show();
     qDebug()<<cardNumber;
-    bal->fetchAccountDetails(cardNumber);
+    bal->fetchAccountDetails(token,cardNumber);
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this, SLOT(checkMousePosition()));
+    mouseTime = 0;
+    timer->start(1000);
 }
 
 void MainWindow::loginMessageToPinCode(QString message)
@@ -174,6 +175,7 @@ void MainWindow::logOutSlot()
         delete adm;
         adm = nullptr;
     }
+    timer->stop();
 }
 
 void MainWindow::checkMousePosition()
@@ -185,9 +187,6 @@ void MainWindow::checkMousePosition()
             qDebug() << "Hiiri oli paikallaan 10 sekunttia!";
             logOutSlot();
             p_mainMenu->onBtnlogoutClicked();
-            QMessageBox msgBox;
-            msgBox.setText("Kirjauduttu ulos,olit toimeettomana liian kauan");
-            msgBox.exec();
         }
     } else {
         mouseTime = 0;
