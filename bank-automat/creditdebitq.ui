@@ -75,7 +75,7 @@
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>Valitse haluamasi tili:</string>
+    <string>Choose account</string>
    </property>
   </widget>
  </widget>
