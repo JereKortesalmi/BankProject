@@ -505,8 +505,8 @@ void mainMenu::readTransactionValues()
 {
     qDebug()<<"Setting up Model: ";
     table_model = new QStandardItemModel(tableTransactions.size(),5);
-    table_model->setHeaderData(0, Qt::Horizontal, QObject::tr("atm_id"));
-    table_model->setHeaderData(1, Qt::Horizontal, QObject::tr("account_id"));
+    table_model->setHeaderData(0, Qt::Horizontal, QObject::tr("event id"));
+    table_model->setHeaderData(1, Qt::Horizontal, QObject::tr("account id"));
     table_model->setHeaderData(2, Qt::Horizontal, QObject::tr("time"));
     table_model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
     table_model->setHeaderData(4, Qt::Horizontal, QObject::tr("amount"));
