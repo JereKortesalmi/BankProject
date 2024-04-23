@@ -36,6 +36,12 @@ mainMenu::mainMenu(QWidget *parent) :
     ui->btnClose->move((screenSize.getScreenwidth()/2) + 520, 200);
     ui->balanceLabel->move((screenSize.getScreenwidth()/2), screenSize.getScreenheight()/2);
 
+    //transfer move
+    ui->btn_transfer->move((screenSize.getScreenwidth())/2 - 400, 400);
+
+    // transfer connect
+    connect(ui->btn_transfer, SIGNAL(clicked(bool)), this, SLOT(showTransfer()));
+
     // withdraw button connection
     connect(ui->btn_withdraw, SIGNAL(clicked(bool)), this, SLOT(withdrawClicked()));
 
@@ -108,6 +114,7 @@ void mainMenu::withdrawClicked()
     ui->btnBalance->hide();
     ui->btn_withdraw->hide();
     ui->btn_transactions->hide();
+    ui->btn_transfer->hide();
     hideShown();
     ui->balanceLabel->hide();
     //QByteArray token = "2386028485693820asdjfklöaueiwolsdfjklasdfjkasödjfkl(/";
@@ -145,6 +152,7 @@ void mainMenu::otherClicked()
     //ui->text_other->show();
     //ui->text_other->move(200,200);
     w_other_num="";
+    kbstate=0;
     //ui->label_other->setText("");
     ui->text_other->setText("");
     ui->balanceLabel->hide();
@@ -167,10 +175,19 @@ void mainMenu::clickHandler()
     QPushButton * button = qobject_cast<QPushButton*>(sender());
     QString btn = button->objectName();
     qDebug() <<"Button: "<<btn;
-    QString a = btn.last(1);
-    w_other_num = w_other_num+a;
+    if(kbstate == 0) {
 
-    ui->text_other->setText(w_other_num);
+        QString a = btn.last(1);
+        w_other_num = w_other_num+a;
+
+        ui->text_other->setText(w_other_num);
+    }
+    else if(kbstate == 1) {
+        QString a = btn.last(1);
+        t_num = t_num+a;
+
+        ui->txt_transferAmount->setText(t_num);
+    }
 }
 
 
@@ -178,6 +195,7 @@ void mainMenu::withdrawOtherPressed()
 {
     qDebug()<<"withdraw other pressed.";
     qDebug()<< ui->text_other->text().toInt() << "€";
+    kbstate = 0;
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(ui->text_other->text().toInt());
 
@@ -299,6 +317,7 @@ void mainMenu::withdrawReady()
     ui->btn_withdraw->hide();
     ui->btnBalance->hide();
     ui->btn_transactions->hide();
+    ui->btn_transfer->hide();
     ui->label_withdraw->setText("Withdraw complete. Logging out.");
     ui->label_withdraw->show();
 
@@ -348,12 +367,34 @@ void mainMenu::reduceBalance(double amount)
     QTimer::singleShot(3000, this, SLOT(onBtnlogoutClicked()));
 }
 
+void mainMenu::showTransfer()
+{
+    qDebug() << "transfer Clicked";
+    hideShown();
+    t_num = "";
+    ui->btnBalance->hide();
+    ui->btn_withdraw->hide();
+    ui->btn_transactions->hide();
+    ui->btn_transfer->hide();
+    kbstate=1;
+    ui->wKeyboard->show();
+    ui->wKeyboard->move((screenSize.getScreenwidth()/ 2) + 20 , (screenSize.getScreenheight() / 2 ) + 80);
+
+    ui->transferGroup->show();
+    ui->transferGroup->move((screenSize.getScreenwidth()/ 2) + 20 , (screenSize.getScreenheight() / 2 ) + 40);
+    //ui->btnClose->show();
+}
+
 void mainMenu::resetView()
 {
 
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
     ui->tableViewTransactions->hide();
+
+    //hide transferGroup
+    ui->transferGroup->hide();
+
 
     ui->eur20->hide();
     ui->eur40->hide();
@@ -371,6 +412,8 @@ void mainMenu::resetView()
 
     ui->btnBalance->show();
     ui->btn_transactions->show();
+    ui->btn_transfer->show();
+
     //ui->btnClose->show();
     ui->btn_withdraw->show();
     if(p_withdrawCall != nullptr) {
@@ -431,6 +474,7 @@ void mainMenu::sendTransactionRequest()
     ui->btnBalance->hide();
     ui->btn_transactions->hide();
     ui->btn_withdraw->hide();
+    ui->btn_transfer->hide();
 
     if(!tableTransactions.isEmpty()) {
         tableTransactions.clear();
@@ -533,6 +577,7 @@ void mainMenu::showBalance(QString bal)
     ui->btn_withdraw->hide();
     ui->btnBalance->hide();
     ui->btn_transactions->hide();
+    ui->btn_transfer->hide();
     balance1 = bal;
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
@@ -569,6 +614,8 @@ void mainMenu::hideShown()
     ui->wKeyboard->hide();
     ui->btnprevious5->hide();
     ui->btnnext5->hide();
+
+    ui->transferGroup->hide();
 /*    ui->btnBalance->show();
     ui->btn_transactions->show();
 
