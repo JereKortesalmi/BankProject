@@ -15,7 +15,7 @@ admin::admin(QWidget *parent)
     connect(ui->btnPlus,SIGNAL(clicked(bool)),this,SLOT(btnHandler()));
     connect(ui->btnMinus,SIGNAL(clicked(bool)),this,SLOT(btnHandler()));
 
-
+    connect(ui->N0,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N1,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N2,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
     connect(ui->N3,SIGNAL(clicked(bool)),this,SLOT(clickHandler()));
