@@ -505,7 +505,7 @@ void mainMenu::showBalance(QString bal)
 
 void mainMenu::fetchBalance()
 {
-    bal->fetchBalance(accountId);
+    bal->fetchBalance(token,accountId);
 }
 
 void mainMenu::hideShown()
