@@ -13,20 +13,36 @@ admin {
 creditdebitq {
     background-image: url(":/black.jpg");
 }
+QVBoxLayout {
+    spacing: 20%;
+}
+QGroupBox {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding: 20%;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-weight: bold;
+}
 QLabel {
 border-style: outset;
 min-height: 10px;
 min-width: 50px;
-font-size:20px;
+font-size:25px;
 font: bold;
 color: lightgreen;
 }
 
 QLineEdit {
 background-color: lightgreen;
-min-height: 10px;
+min-height: 20px;
 min-width: 50px;
-font-size:16px;
+font-size:20px;
 }
 
 QPushButton {
@@ -34,10 +50,10 @@ background-color: lightgreen;
 border-style: outset;
 border-width: 2px;
 border-color: black;
-min-height: 5px;
-min-width: 5px;
+min-height: 25px;
+min-width: 50px;
 border-radius: 6px;
-font-size:16px;
+font-size:20px;
 }
 
 QPushButton:checked {
@@ -45,8 +61,8 @@ background-color: lightblue;
 border-style: outset;
 border-width: 2px;
 border-color: black;
-min-height: 5px;
-min-width: 5px;
+min-height: 25px;
+min-width: 50px;
 border-radius: 6px;
-font-size:16px;
+font-size:20px;
 }

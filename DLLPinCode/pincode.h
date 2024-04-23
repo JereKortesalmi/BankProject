@@ -2,6 +2,10 @@
 #define PINCODE_H
 #include "DLLPinCode_global.h"
 #include <QDialog>
+#include <QScreen>
+#include <QWidget>
+#include <QObject>
+
 
 namespace Ui {
 class PinCode;
@@ -33,6 +37,8 @@ private slots:
 private:
     Ui::PinCode *ui;
     QString number;
+    int screenWidth;
+    int screenHeight;
 };
 
 #endif // PINCODE_H

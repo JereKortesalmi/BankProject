@@ -9,6 +9,8 @@
 #include <QObject>
 #include <QDebug>
 #include <mainmenu.h>
+#include <QScreen>
+#include "data.h"
 
 namespace Ui {
 class creditdebitq;
@@ -21,6 +23,10 @@ class creditdebitq : public QDialog
 public:
     explicit creditdebitq(QWidget *parent = nullptr);
     ~creditdebitq();
+
+    screensize screenSize;
+    int sHeight;
+    int sWidth;
 
     void selectAccountHandler(const QJsonArray jsonArray);
 signals:

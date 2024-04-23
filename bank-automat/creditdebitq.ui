@@ -16,10 +16,10 @@
   <widget class="QPushButton" name="btnCredit">
    <property name="geometry">
     <rect>
-     <x>200</x>
+     <x>169</x>
      <y>170</y>
-     <width>80</width>
-     <height>24</height>
+     <width>100</width>
+     <height>40</height>
     </rect>
    </property>
    <property name="text">
@@ -31,8 +31,8 @@
     <rect>
      <x>330</x>
      <y>170</y>
-     <width>80</width>
-     <height>24</height>
+     <width>100</width>
+     <height>40</height>
     </rect>
    </property>
    <property name="text">
