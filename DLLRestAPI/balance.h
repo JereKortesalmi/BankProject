@@ -20,8 +20,8 @@ class DLLRESTAPI_EXPORT balance : public QDialog
 public:
     explicit balance(QWidget *parent = nullptr);
     ~balance();
-    void fetchAccountDetails(QString);
-    void fetchBalance(int);
+    void fetchAccountDetails(QByteArray,QString);
+    void fetchBalance(QByteArray,int);
 public slots:
     void saveAccountDetails(QNetworkReply *reply);
     void getBalance(QNetworkReply *reply);

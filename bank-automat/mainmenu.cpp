@@ -437,6 +437,9 @@ void mainMenu::sendTransactionRequest()
     }
     test = new Transactions();
     this->offsetInteger = 0;
+    ui->btnnext5->setEnabled(false);
+    ui->btnprevious5->setEnabled(true);
+    ui->btnprevious5->setText("Previous 5 transactions");
     test->requestTrasactions(token,accountId,this->offsetInteger);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
@@ -542,7 +545,7 @@ void mainMenu::showBalance(QString bal)
 
 void mainMenu::fetchBalance()
 {
-    bal->fetchBalance(accountId);
+    bal->fetchBalance(token,accountId);
 }
 
 void mainMenu::hideShown()
