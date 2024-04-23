@@ -99,6 +99,7 @@ private slots:
     void adminState();
     void logOutSlot();
     void checkMousePosition();
+    void pinLogSlot();
 
 public slots:
     void readTransactionValues();

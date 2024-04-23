@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     //yhdistetään pinCode
     pin = new PinCode(this);
     connect(pin,SIGNAL(sendPinCodeToMainWindow(QString)),this,SLOT(receivePinNumber(QString)));
-    connect(pin,SIGNAL(pinLogout()),this,SLOT(logOutSlot()));
+    connect(pin,SIGNAL(pinLogout()),this,SLOT(pinLogSlot()));
 
     //yhditetään login
     log = new login;
@@ -192,6 +192,11 @@ void MainWindow::checkMousePosition()
         mouseTime = 0;
         lastPos = currentPos;
     }
+}
+
+void MainWindow::pinLogSlot()
+{
+    ui->cardEdit->clear();
 }
 
 void MainWindow::readTransactionValues()
