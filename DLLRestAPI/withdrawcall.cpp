@@ -12,7 +12,7 @@ withdrawCall::withdrawCall()
     qDebug() << "withdrawCall was constructed.";
 }
 
-void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
+void withdrawCall::sendTransaction(QByteArray token, int id,int atm_id, double sum)
 {
 
 
@@ -23,7 +23,7 @@ void withdrawCall::sendTransaction(QByteArray token, int id, double sum)
     qDebug() << formattedTime;
     QJsonObject jsonObj;
     jsonObj.insert("transaction_account_id", id);
-    jsonObj.insert("transaction_atm_id","1");           // read from file will be added somewhere else, so will need to add variable here
+    jsonObj.insert("transaction_atm_id",atm_id);           // read from file will be added somewhere else, so will need to add variable here
     jsonObj.insert("transaction_time", formattedTime);
     jsonObj.insert("transaction_type","WITHDRAW");
     jsonObj.insert("transaction_amount", sum);

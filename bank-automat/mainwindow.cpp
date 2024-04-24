@@ -4,6 +4,7 @@
 #include <QCursor>
 #include <QApplication>
 #include <QScreen>
+#include <QFile>
 
 //Korttien numerot
 //  -0600062211
@@ -68,6 +69,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label->move(screenSize.getScreenwidth()/2 - 40, screenSize.getScreenheight()/2 - 100);
     ui->cardEdit->move(screenSize.getScreenwidth()/2 - 120, screenSize.getScreenheight()/2);
     ui->btnCardEdit->move(screenSize.getScreenwidth()/2 + 80, screenSize.getScreenheight()/2);
+
+
+    QFile file("../automatid.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "unable to open file";
+        return;
+    }
+    else {
+        while (!file.atEnd()) {
+            QByteArray line = file.readAll();
+            qDebug() << line;
+            automatID = line.toInt();
+            qDebug() << "automatID: " << automatID;
+        }
+    }
+
+    if(automatID != 0) {
+        qDebug() << "automatID was not set, please add automatid.txt file and enter numerical id.";
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -137,6 +158,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->showFullScreen();
+    p_mainMenu->automatID = automatID;
     //p_mainMenu->sHeight = screenSize.getScreenheight();
     //p_mainMenu->sWidth = screenSize.getScreenwidth();
 
