@@ -378,8 +378,9 @@ bool withdrawCall::checkBillsAvailable()
             if((withdrawAmount) >= 20) {
                 if(((withdrawAmount) % 20 ) == 10) {
 
-                    set_20_bills = false;
-                    return false;
+                    //set_20_bills;
+                    //return false;
+                    usable_20=false;
                     break;
                 }
                 else {
@@ -390,7 +391,7 @@ bool withdrawCall::checkBillsAvailable()
                     }
                     else {
                         usable_20=false;
-                        return false;
+                        usable_20 = false;
                     }
                 }
             }
