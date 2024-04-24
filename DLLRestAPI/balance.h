@@ -27,7 +27,7 @@ public slots:
     void getBalance(QNetworkReply *reply);
     void updateBalance(QByteArray, int, QString);
 signals:
-    void sendAccountIdBalance(int,QString, QString);
+    void sendAccountIdBalance(int,QString, QString, QString, bool);
     void opencreditdebitq(QJsonArray);
     void openAdmin();
     void balanceToMainmenu(QString);

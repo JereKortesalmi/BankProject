@@ -111,8 +111,8 @@
   <widget class="QFrame" name="allbillframe">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>90</y>
+     <x>290</x>
+     <y>70</y>
      <width>361</width>
      <height>200</height>
     </rect>
@@ -364,6 +364,96 @@
     </item>
    </layout>
   </widget>
+  <widget class="QWidget" name="currentbills" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>170</width>
+     <height>224</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Current bills</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>20</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="currentTwentyEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>50</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="currentFiftyEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>100</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="currentHundredEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>200</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="currentTwoHundredEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>500</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="currentFiveHundredEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <zorder>clear</zorder>
   <zorder>amount</zorder>
   <zorder>allbillframe</zorder>
   <zorder>label_5</zorder>
@@ -372,8 +462,17 @@
   <zorder>btnLogout</zorder>
   <zorder>btnSaveBills</zorder>
   <zorder>savedLabel</zorder>
-  <zorder>btnClear</zorder>
-  <zorder>btnClearAll</zorder>
+  <zorder>currentTwentyEdit</zorder>
+  <zorder>currentFiftyEdit</zorder>
+  <zorder>currentHundredEdit</zorder>
+  <zorder>currentTwoHundredEdit</zorder>
+  <zorder>currentFiveHundredEdit</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_6</zorder>
+  <zorder>label_7</zorder>
  </widget>
  <resources/>
  <connections/>

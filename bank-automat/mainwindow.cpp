@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
-    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
+    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString,QString,bool)),this,SLOT(accountIdSender(int,QString,QString,QString,bool)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //luodaan balance
     bal = new balance;
-    connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
+    connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString,QString,bool)),this,SLOT(accountIdSender(int,QString,QString,QString,bool)));
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
     connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
     //luodaan admin
@@ -147,7 +147,7 @@ void MainWindow::loginMessageToPinCode(QString message)
     pin->pinMessage(mes);
 }
 
-void MainWindow::accountIdSender(int accountId, QString balance, QString type)
+void MainWindow::accountIdSender(int accountId, QString balance, QString type, QString bothId, bool showTransferButton)
 {
     int id = accountId;
     //QString bal = balance;
@@ -155,6 +155,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->accountId = id;
     //p_mainMenu->showBalance(bal);
+    p_mainMenu->showTransferButton = showTransferButton;
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->showFullScreen();

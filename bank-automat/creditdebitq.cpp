@@ -42,6 +42,7 @@ void creditdebitq::selectAccount()
         if(value.isObject()){
             QJsonObject jsonObject = value.toObject();
             QString type = jsonObject["account_type"].toString();
+            bothId = bothId + "," + jsonObject["account_id"].toString();
             qDebug()<<"type:"<<type<<" accountType:"<<accountType;
             if(type == accountType){
                 accountId = jsonObject["account_id"].toInt();
@@ -49,7 +50,7 @@ void creditdebitq::selectAccount()
                 qDebug()<<"account_id:"<<accountId;
                 hide();
 
-                emit sendAccountId(accountId, balance, type);
+                emit sendAccountId(accountId, balance, type, bothId, true);
 
                 return;
             }
