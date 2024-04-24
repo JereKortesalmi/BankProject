@@ -196,6 +196,11 @@ void admin::getBalance(QNetworkReply *reply){
     dataTwoHundred = jsonObject["atm_200eur"].toInt();
     dataFiveHundred = jsonObject["atm_500eur"].toInt();
     qDebug()<<"atm balance: "<<balance;
+    ui->currentTwentyEdit->setText(QString::number(dataTwenty));
+    ui->currentFiftyEdit->setText(QString::number(dataFifty));
+    ui->currentHundredEdit->setText(QString::number(dataHundred));
+    ui->currentTwoHundredEdit->setText(QString::number(dataTwoHundred));
+    ui->currentFiveHundredEdit->setText(QString::number(dataFiveHundred));
 }
 
 void admin::clickHandler()
