@@ -45,6 +45,7 @@ public:
     QString accountType;
     int offsetInteger;
     int transactionCount;
+    int automatID;
 
 
 private:

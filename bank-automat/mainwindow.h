@@ -43,6 +43,8 @@ public:
 
     QStandardItemModel *table_model;
 
+    int automatID = 0;
+
 private:
     Ui::MainWindow *ui;
 

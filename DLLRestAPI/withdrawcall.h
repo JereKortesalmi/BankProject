@@ -14,7 +14,7 @@ public:
     //explicit withdrawCall(QObject *parent = nullptr);
     withdrawCall();
     ~withdrawCall();
-    void sendTransaction(QByteArray token, int id, double sum);
+    void sendTransaction(QByteArray token, int id, int atm_id, double sum);
     void getAtmInfo(QByteArray token,int id);
 
     // print in qdebug();
