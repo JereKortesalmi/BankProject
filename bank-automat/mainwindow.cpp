@@ -156,6 +156,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type, Q
     p_mainMenu->accountId = id;
     //p_mainMenu->showBalance(bal);
     p_mainMenu->showTransferButton = showTransferButton;
+    p_mainMenu->bothId = bothId;
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
     p_mainMenu->showFullScreen();

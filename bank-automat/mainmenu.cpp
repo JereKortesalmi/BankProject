@@ -617,6 +617,9 @@ void mainMenu::fetchBalance()
 
 void mainMenu::hideShown()
 {
+    qDebug() << "BothID: " << bothId;
+
+    qDebug() << "transferbutton: " << showTransferButton;
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
     ui->tableViewTransactions->hide();
