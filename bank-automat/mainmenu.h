@@ -111,7 +111,8 @@ public slots:
 
     void showTransfer(); // transfer
     void transferAmountClicked(); //transfer
-    void transferResponse(QString);
+    void transferResponse(QString); // transfer
+    void deleteTransfer();
 
 
 public slots:
@@ -122,6 +123,7 @@ signals:
     void transactionsComplete();        //transactions
     void transactionsTableReady();      //transactions
     void logOutSignal();
+    void transferDone();
 private slots:
 };
 

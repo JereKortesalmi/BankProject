@@ -46,6 +46,8 @@ void transfercall::onManagerFinished(QNetworkReply *reply)
     QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
     qDebug()<<json_doc;
     emit TransferFinished(QString::fromStdString(response_data.toStdString()));
+    t_manager->deleteLater();
+    t_reply->deleteLater();
 }
 
 void transfercall::onError(QNetworkReply::NetworkError code)

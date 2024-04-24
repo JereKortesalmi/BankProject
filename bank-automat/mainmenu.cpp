@@ -414,9 +414,25 @@ void mainMenu::showTransfer()
 void mainMenu::transferAmountClicked()
 {
     qDebug() << "transferAmount clicked.";
+    QStringList temp = bothId.split(",");
+    qDebug() << "first: " << temp[1] << "second: " << temp[2];
+    qDebug() << "AccountID: " << accountId;
+    int first = 0;
+    int second = 0;
+    if(accountId == temp[1].toInt()) {
+        qDebug() << "first is same, use as sender?";
+        first = temp[1].toInt();
+        second=temp[2].toInt();
+    }
+    else {
+        qDebug() << "second is same, use as sender?";
+        first = temp[2].toInt();
+        second = temp[1].toInt();
+    }
     tra = new transfercall();
-    tra->sendTransferRequest(token, 1,2,20);
+    tra->sendTransferRequest(token, first,second,ui->txt_transferAmount->text().toInt());
     connect(tra, SIGNAL(TransferFinished(QString)), this, SLOT(transferResponse(QString)));
+    connect(this,SIGNAL(transferDone()), this, SLOT(deleteTransfer()));
     qDebug() << ui->txt_transferAmount->text();
     qDebug() << "";
 
@@ -425,6 +441,16 @@ void mainMenu::transferAmountClicked()
 void mainMenu::transferResponse(QString message)
 {
     qDebug() << message;
+    //qDebug() << message[8];
+
+}
+
+void mainMenu::deleteTransfer()
+{
+    ui->label_transfer->setText("Transfer done.");
+    ui->label_transfer->show();
+    qDebug()<<"Transfer done.";
+    QTimer::singleShot(1000, this, SLOT());
 }
 
 void mainMenu::resetView()
@@ -474,6 +500,10 @@ void mainMenu::resetView()
     }
 
     ui->wKeyboard->hide();
+    if(tra != nullptr) {
+        delete tra;
+        tra = nullptr;
+    }
 }
 
 void mainMenu::noOlderTransactions()
