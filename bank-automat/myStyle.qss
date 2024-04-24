@@ -35,7 +35,7 @@ min-height: 10px;
 min-width: 50px;
 font-size:25px;
 font: bold;
-color: lightgreen;
+color: rgba(144, 238, 144, 255);
 }
 
 QLineEdit {

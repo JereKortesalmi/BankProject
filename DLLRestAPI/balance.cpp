@@ -57,7 +57,7 @@ void balance::saveAccountDetails(QNetworkReply *reply)
         if(accountType == "ADMIN"){
             emit openAdmin();
         }else{
-            emit sendAccountIdBalance(accountId, balance, accountType);
+            emit sendAccountIdBalance(accountId, balance, accountType, "", false);
         }
     } else if(jsonArray.size() == 2){
         QJsonArray jsonArray = jsonResponse_data.array();
@@ -99,6 +99,12 @@ void balance::updateBalance(QByteArray token, int accountId, QString balance)
     qDebug()<<"id ja balance updateBalance:"<<id<<bal;
     QJsonObject jsonObject;
     jsonObject.insert("account_balance", bal);
+    if(accountType == "CREDIT"){
+    //    creditCurrent = creditMax - bal;
+    //    jsonObject.insert("account_credit_current", creditCurrent);
+    }else{
+        qDebug()<<"ei ollut creditti tili";
+    }
     //QByteArray accountBalance = QJsonDocument(jsonObject).toJson();
 
     QUrl url("http://localhost:3000/accounts/updateBalance/" + QString::number(id));

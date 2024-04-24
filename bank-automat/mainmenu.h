@@ -46,6 +46,7 @@ public:
     int offsetInteger;
     int transactionCount;
     int automatID;
+    bool showTransferButton;
 
 
 private:
