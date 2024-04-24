@@ -8,3 +8,4 @@ DLLPinCode/build
 DLLRestAPI/*.user
 DLLRestAPI/build
 backend/.env
+bank-automat/automatid.txt
