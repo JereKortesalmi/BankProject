@@ -124,7 +124,7 @@ void mainMenu::withdrawClicked()
     //requestRec->wit.getAtmInfo(token, atmId);
 
     p_withdrawCall = new withdrawCall();
-    p_withdrawCall->getAtmInfo(token,1);
+    p_withdrawCall->getAtmInfo(token,automatID);
     connect(p_withdrawCall, SIGNAL(atmInfoSent()), this, SLOT(atmSignalReceived()));
     connect(p_withdrawCall, SIGNAL(billsdataWritten()), this, SLOT(withdrawReady()));
     connect(p_withdrawCall, SIGNAL(billsOK(bool)), this, SLOT(billsOk(bool)));
@@ -224,8 +224,8 @@ void mainMenu::withdrawOtherPressed()
     if(ui->text_other->text().toDouble() > 19) {
 
         if(checkBalance(ui->text_other->text().toDouble())&& billsready) {
-            p_withdrawCall->sendTransaction(token,accountId,ui->text_other->text().toDouble());
-            p_withdrawCall->updateBills(token,1, ui->text_other->text().toDouble());
+            p_withdrawCall->sendTransaction(token,accountId,automatID,ui->text_other->text().toDouble());
+            p_withdrawCall->updateBills(token,automatID, ui->text_other->text().toDouble());
             hideShown();
             ui->label_withdraw->setText("Withdraw succesful");
             ui->label_withdraw->show();
@@ -251,8 +251,8 @@ void mainMenu::eur20Pressed()
     p_withdrawCall->checkBills(20);
     if(checkBalance(20)&& billsready) {
         //p_withdrawCall->printAtmBills();
-        p_withdrawCall->sendTransaction(token,accountId,20.00);
-        p_withdrawCall->updateBills(token,1,20);
+        p_withdrawCall->sendTransaction(token,accountId,automatID,20.00);
+        p_withdrawCall->updateBills(token,automatID,20);
         hideShown();
         ui->label_withdraw->setText("Withdraw succesful");
         ui->label_withdraw->show();
@@ -271,8 +271,8 @@ void mainMenu::eur40Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(40);
     if(checkBalance(40)&& billsready) {
-        p_withdrawCall->sendTransaction(token,accountId,40.00);
-        p_withdrawCall->updateBills(token,1,40);
+        p_withdrawCall->sendTransaction(token,accountId,automatID,40.00);
+        p_withdrawCall->updateBills(token,automatID,40);
         hideShown();
         ui->label_withdraw->setText("Withdraw succesful");
         ui->label_withdraw->show();
@@ -291,8 +291,8 @@ void mainMenu::eur60Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(60);
     if(checkBalance(40) && billsready) {
-        p_withdrawCall->sendTransaction(token,accountId,60.00);
-        p_withdrawCall->updateBills(token,1,60);
+        p_withdrawCall->sendTransaction(token,accountId,automatID,60.00);
+        p_withdrawCall->updateBills(token,automatID,60);
         connect(p_withdrawCall, SIGNAL(billsdataWritten()), this, SLOT(withdrawReady()));
         hideShown();
         ui->label_withdraw->setText("Withdraw succesful");
@@ -314,8 +314,8 @@ void mainMenu::eur100Pressed()
     p_withdrawCall->clearBills();
     p_withdrawCall->checkBills(100);
     if(checkBalance(100) && billsready) {
-        p_withdrawCall->sendTransaction(token,accountId,100.00);
-        p_withdrawCall->updateBills(token,1,100);
+        p_withdrawCall->sendTransaction(token,accountId,automatID,100.00);
+        p_withdrawCall->updateBills(token,automatID,100);
         connect(p_withdrawCall, SIGNAL(billsdataWritten()), this, SLOT(withdrawReady()));
         hideShown();
         ui->label_withdraw->setText("Withdraw succesful");
