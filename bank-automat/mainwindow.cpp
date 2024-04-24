@@ -159,6 +159,7 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type, Q
     p_mainMenu->bothId = bothId;
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
+    p_mainMenu->resetView();
     p_mainMenu->showFullScreen();
     p_mainMenu->automatID = automatID;
     //p_mainMenu->sHeight = screenSize.getScreenheight();
@@ -191,6 +192,7 @@ void MainWindow::logOutSlot()
     pin->close();
     p_mainMenu->close();
     p_mainMenu->resetView();
+    p_mainMenu->bothId = "";
     //delete p_mainMenu;
     //p_mainMenu = nullptr;
     creditDebit->close();

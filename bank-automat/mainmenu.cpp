@@ -81,6 +81,7 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->bClear, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->bBackSpace, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+
 }
 
 mainMenu::~mainMenu()
@@ -409,6 +410,16 @@ void mainMenu::showTransfer()
 
 void mainMenu::resetView()
 {
+    qDebug() << "BothID: " << bothId;
+
+    qDebug() << "transferbutton: " << showTransferButton;
+
+    if(showTransferButton == true) {
+        ui->btn_transfer->show();
+    }
+    else {
+        ui->btn_transfer->hide();
+    }
 
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
@@ -434,7 +445,7 @@ void mainMenu::resetView()
 
     ui->btnBalance->show();
     ui->btn_transactions->show();
-    ui->btn_transfer->show();
+    //ui->btn_transfer->show();
 
     //ui->btnClose->show();
     ui->btn_withdraw->show();
@@ -620,6 +631,14 @@ void mainMenu::hideShown()
     qDebug() << "BothID: " << bothId;
 
     qDebug() << "transferbutton: " << showTransferButton;
+
+    if(showTransferButton == true) {
+        ui->btn_transfer->show();
+    }
+    else {
+        ui->btn_transfer->hide();
+    }
+
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
     ui->tableViewTransactions->hide();
