@@ -96,7 +96,7 @@ private slots:
     void cardNumberHand();
     void loginInfo(QString);
     void loginMessageToPinCode(QString);
-    void accountIdSender(int, QString, QString);
+    void accountIdSender(int, QString, QString, QString, bool);
     void creditdebitchoose(QJsonArray);
     void adminState();
     void logOutSlot();
