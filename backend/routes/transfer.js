@@ -8,7 +8,7 @@ router.post('/',function(request, response){
             response.send(err);
         }
         else {
-            response.send(result);
+            response.send(result[0]);
         }
     });
 });
