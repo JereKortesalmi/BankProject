@@ -42,6 +42,9 @@ mainMenu::mainMenu(QWidget *parent) :
     // transfer connect
     connect(ui->btn_transfer, SIGNAL(clicked(bool)), this, SLOT(showTransfer()));
 
+    // transfer button
+    connect(ui->btn_transferAmount, SIGNAL(clicked(bool)), this, SLOT(transferAmountClicked()));
+
     // withdraw button connection
     connect(ui->btn_withdraw, SIGNAL(clicked(bool)), this, SLOT(withdrawClicked()));
 
@@ -406,6 +409,22 @@ void mainMenu::showTransfer()
     ui->transferGroup->show();
     ui->transferGroup->move((screenSize.getScreenwidth()/ 2) + 20 , (screenSize.getScreenheight() / 2 ) + 40);
     //ui->btnClose->show();
+}
+
+void mainMenu::transferAmountClicked()
+{
+    qDebug() << "transferAmount clicked.";
+    tra = new transfercall();
+    tra->sendTransferRequest(token, 1,2,20);
+    connect(tra, SIGNAL(TransferFinished(QString)), this, SLOT(transferResponse(QString)));
+    qDebug() << ui->txt_transferAmount->text();
+    qDebug() << "";
+
+}
+
+void mainMenu::transferResponse(QString message)
+{
+    qDebug() << message;
 }
 
 void mainMenu::resetView()
