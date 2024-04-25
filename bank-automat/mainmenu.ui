@@ -330,7 +330,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Next 5 transactions</string>
+    <string>Forward</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnprevious5">
@@ -338,12 +338,12 @@
     <rect>
      <x>780</x>
      <y>300</y>
-     <width>151</width>
+     <width>121</width>
      <height>24</height>
     </rect>
    </property>
    <property name="text">
-    <string>Previous 5 transactions</string>
+    <string>Backward</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnlogout">
@@ -471,22 +471,31 @@
   <widget class="QWidget" name="transferGroup" native="true">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>500</y>
-     <width>421</width>
-     <height>60</height>
+     <x>540</x>
+     <y>510</y>
+     <width>261</width>
+     <height>61</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QLabel" name="label_transfer">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
     <item>
      <widget class="QLineEdit" name="txt_transferAmount"/>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
     <item>
      <widget class="QPushButton" name="btn_transferAmount">
@@ -496,6 +505,19 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_transfer">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>440</y>
+     <width>300</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
   </widget>
  </widget>
  <resources/>
