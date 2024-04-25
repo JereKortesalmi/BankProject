@@ -4,6 +4,7 @@
 #include "requestreceiver.h"
 #include "transactions.h"
 #include "withdrawcall.h"
+#include "transfercall.h"
 #include <QDialog>
 #include "balance.h"
 
@@ -37,6 +38,9 @@ public:
     //restapi
     DLLRestAPI *restApi = nullptr;
 
+    //transfer
+    transfercall *tra = nullptr;
+
     //requestReceiver
     requestReceiver *requestRec = nullptr;
 
@@ -46,6 +50,8 @@ public:
     int offsetInteger;
     int transactionCount;
     int automatID;
+    bool showTransferButton = false;
+    QString bothId;
 
 
 private:
@@ -61,6 +67,8 @@ private:
     QList<transfer> tableTransfer;          //transactions
     bool checkBalance(double amount);
     void reduceBalance(double amount);
+
+
 
     short kbstate = 0;
     QString balance1;
@@ -102,6 +110,9 @@ public slots:
     void noOlderTransactions();
 
     void showTransfer(); // transfer
+    void transferAmountClicked(); //transfer
+    void transferResponse(QString); // transfer
+    void deleteTransfer();
 
 
 public slots:
@@ -112,6 +123,7 @@ signals:
     void transactionsComplete();        //transactions
     void transactionsTableReady();      //transactions
     void logOutSignal();
+    void transferDone();
 private slots:
 };
 

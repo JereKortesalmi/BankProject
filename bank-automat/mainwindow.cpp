@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //luodaan creditdebitq
     creditDebit= new creditdebitq(this);
-    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
+    connect(creditDebit,SIGNAL(sendAccountId(int,QString,QString,QString,bool)),this,SLOT(accountIdSender(int,QString,QString,QString,bool)));
 
     // luodaan mainmenu (ei vielä näytetä)
     p_mainMenu = new mainMenu(this);
@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //luodaan balance
     bal = new balance;
-    connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString)),this,SLOT(accountIdSender(int,QString,QString)));
+    connect(bal,SIGNAL(sendAccountIdBalance(int,QString,QString,QString,bool)),this,SLOT(accountIdSender(int,QString,QString,QString,bool)));
     connect(bal,SIGNAL(opencreditdebitq(QJsonArray)),this,SLOT(creditdebitchoose(QJsonArray)));
     connect(bal,SIGNAL(openAdmin()),this,SLOT(adminState()));
     //luodaan admin
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnCardEdit->move(screenSize.getScreenwidth()/2 + 80, screenSize.getScreenheight()/2);
 
 
-    QFile file("../automatid.txt");
+    QFile file("automatid.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "unable to open file";
         return;
@@ -147,7 +147,7 @@ void MainWindow::loginMessageToPinCode(QString message)
     pin->pinMessage(mes);
 }
 
-void MainWindow::accountIdSender(int accountId, QString balance, QString type)
+void MainWindow::accountIdSender(int accountId, QString balance, QString type, QString bothId, bool showTransferButton)
 {
     int id = accountId;
     //QString bal = balance;
@@ -155,8 +155,11 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type)
     qDebug()<<"accountIdSender id:"<<id;
     p_mainMenu->accountId = id;
     //p_mainMenu->showBalance(bal);
+    p_mainMenu->showTransferButton = showTransferButton;
+    p_mainMenu->bothId = bothId;
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
+    p_mainMenu->resetView();
     p_mainMenu->showFullScreen();
     p_mainMenu->automatID = automatID;
     //p_mainMenu->sHeight = screenSize.getScreenheight();
@@ -189,6 +192,7 @@ void MainWindow::logOutSlot()
     pin->close();
     p_mainMenu->close();
     p_mainMenu->resetView();
+    p_mainMenu->bothId = "";
     //delete p_mainMenu;
     //p_mainMenu = nullptr;
     creditDebit->close();

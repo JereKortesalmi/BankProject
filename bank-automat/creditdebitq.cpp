@@ -38,23 +38,27 @@ void creditdebitq::onDebitButtonClicked()
 
 void creditdebitq::selectAccount()
 {
+    QString balance;
+    QString type;
     for(const auto& value : jsonArray){
         if(value.isObject()){
             QJsonObject jsonObject = value.toObject();
-            QString type = jsonObject["account_type"].toString();
+            // bothId + "," +
+            type = jsonObject["account_type"].toString();
+            bothId = bothId + "," + QString::number(jsonObject["account_id"].toInt());
             qDebug()<<"type:"<<type<<" accountType:"<<accountType;
             if(type == accountType){
                 accountId = jsonObject["account_id"].toInt();
-                QString balance = jsonObject["account_balance"].toString();
+                balance = jsonObject["account_balance"].toString();
                 qDebug()<<"account_id:"<<accountId;
                 hide();
 
-                emit sendAccountId(accountId, balance, type);
 
-                return;
             }
         }
     }
+    emit sendAccountId(accountId, balance, type, bothId, true);
+
 }
 
 void creditdebitq::selectAccountHandler(const QJsonArray jsonArray)

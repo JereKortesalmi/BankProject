@@ -31,7 +31,7 @@ public:
     void selectAccountHandler(const QJsonArray jsonArray);
 signals:
 
-    void sendAccountId(int, QString, QString);
+    void sendAccountId(int, QString, QString, QString, bool);
 
 
 private slots:
@@ -45,6 +45,8 @@ private:
     QJsonArray jsonArray;
     mainMenu *mainmenu;
     QString accountType;
+    QString bothId;
+
 };
 
 #endif // CREDITDEBITQ_H

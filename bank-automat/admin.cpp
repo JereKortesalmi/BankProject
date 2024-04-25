@@ -45,7 +45,7 @@ admin::admin(QWidget *parent)
     ui->btnSaveBills->move((screenSize.getScreenwidth()/2) + 400,(screenSize.getScreenheight()/2) - 200);
     ui->clear->move((screenSize.getScreenwidth()/2) + 160, (screenSize.getScreenheight()/2) + 160);
     ui->savedLabel->move((screenSize.getScreenwidth()/2) + 160, (screenSize.getScreenheight()/2) + 50);
-
+    ui->currentbills->move((screenSize.getScreenwidth()/2) - 450, (screenSize.getScreenheight()/2) - 215);
 
     //ui->amount->move((screenSize.getScreenwidth()/2) - 400, screenSize.getScreenheight()+200);
     //ui->gridWidget->move((screenSize.getScreenwidth()/2) - 400, screenSize.getScreenheight()+300);
@@ -166,6 +166,7 @@ void admin::atmManagerFinished(QNetworkReply *reply)
         ui->savedLabel->setText("Error saving bills");
     }
     qDebug()<<response;
+    fetchBalance(atmId, token);
 }
 void admin::fetchBalance(int atmId, QByteArray token)
 {
@@ -196,6 +197,11 @@ void admin::getBalance(QNetworkReply *reply){
     dataTwoHundred = jsonObject["atm_200eur"].toInt();
     dataFiveHundred = jsonObject["atm_500eur"].toInt();
     qDebug()<<"atm balance: "<<balance;
+    ui->currentTwentyEdit->setText(QString::number(dataTwenty));
+    ui->currentFiftyEdit->setText(QString::number(dataFifty));
+    ui->currentHundredEdit->setText(QString::number(dataHundred));
+    ui->currentTwoHundredEdit->setText(QString::number(dataTwoHundred));
+    ui->currentFiveHundredEdit->setText(QString::number(dataFiveHundred));
 }
 
 void admin::clickHandler()

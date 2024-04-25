@@ -96,7 +96,8 @@ void Transactions::onManagerFinished(QNetworkReply *reply)
     QJsonArray json_array = json_doc.array();
     QString transactions;
     transactions = "Account | ATM | Time                                     | Type        | Amount \n";
-    foreach (const QJsonValue &value, json_array)
+    //foreach (const QJsonValue &value, json_array)
+    for ( const auto &value : json_array)
     {
         QJsonObject json_obj = value.toObject();
         transactions += QString::number(json_obj["transaction_account_id"].toInt())+"              | ";

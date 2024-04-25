@@ -85,6 +85,9 @@
     <property name="text">
      <string>Insert card</string>
     </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLineEdit" name="cardEdit">
     <property name="geometry">
@@ -103,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

@@ -15,6 +15,7 @@ SOURCES += \
     login.cpp \
     requestreceiver.cpp \
     transactions.cpp \
+    transfercall.cpp \
     withdrawcall.cpp
 
 HEADERS += \
@@ -24,6 +25,7 @@ HEADERS += \
     login.h \
     requestreceiver.h \
     transactions.h \
+    transfercall.h \
     withdrawcall.h
 
 # Default rules for deployment.
