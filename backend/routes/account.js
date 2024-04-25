@@ -71,7 +71,9 @@ router.get('/getaccountid/:cardNumber',function(request,response){
                         account_id: row.account_id,
                         account_customer_id: row.account_customer_id,
                         account_type: row.account_type,
-                        account_balance: row.account_balance                  
+                        account_balance: row.account_balance,
+                        account_credit_max: row.account_credit_max,
+                        account_credit_current: row.account_credit_current                  
                 };
                     accounts.push(accountDetails);
                 });
