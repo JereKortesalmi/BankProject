@@ -1,0 +1,93 @@
+MainWindow {
+    background-image: url(":/black.jpg");
+}
+PinCode {
+    background-image: url(":/black.jpg");
+}
+mainMenu {
+    background-image: url(":/black.jpg");
+}
+admin {
+    background-image: url(":/black.jpg");
+}
+creditdebitq {
+    background-image: url(":/black.jpg");
+}
+QVBoxLayout {
+    spacing: 20%;
+}
+QGroupBox {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding: 20%;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    left: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-weight: bold;
+}
+QLabel {
+border-style: outset;
+min-height: 10px;
+min-width: 50px;
+font-size:25px;
+font: bold;
+
+color: lightgreen;
+}
+
+QLineEdit {
+background-color: lightgreen;
+min-height: 20px;
+min-width: 50px;
+font-size:20px;
+color : black;
+}
+
+QPushButton {
+background-color: lightgreen;
+border-style: outset;
+border-width: 2px;
+border-color: black;
+min-height: 25px;
+min-width: 50px;
+border-radius: 6px;
+font-size:20px;
+color: black;
+}
+
+QPushButton:checked {
+background-color: lightblue;
+border-style: outset;
+border-width: 2px;
+border-color: black;
+min-height: 25px;
+min-width: 50px;
+border-radius: 6px;
+font-size:20px;
+color: black;
+}
+
+QTableView {
+
+    gridline-color: black;
+    background-color: lightgreen;
+    color: black;
+    border-radius:6px;
+}
+
+QTableView::item
+{
+    border-bottom: 1px solid lightgreen;
+    color:black;
+}
+QHeaderView::section
+{
+    gridline-color:lightgreen;
+    border-bottom: 1px solid black;
+    background-color:lightgreen;
+    color:black;
+}

@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnCardEdit->move(screenSize.getScreenwidth()/2 + 80, screenSize.getScreenheight()/2);
 
 
-    QFile file("../automatid.txt");
+    QFile file("automatid.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "unable to open file";
         return;

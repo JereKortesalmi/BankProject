@@ -5,10 +5,10 @@ const transfer=require('../models/transfer_model');
 router.post('/',function(request, response){
     transfer.makeTransfer(request.body, function(err, result){
         if(err){
-            response.send(err);
+            response.json(err.sqlMessage);
         }
         else {
-            response.send(result[0]);
+            response.json(result[0]);
         }
     });
 });
