@@ -384,7 +384,7 @@ void mainMenu::reduceBalance(double amount)
     newBalance = newBalance-amount;
     ui->btnClose->hide();
 
-    bal->updateBalance(token, accountId, QString::number(newBalance));
+    bal->updateBalance(token, accountId, QString::number(newBalance), accountType);
     QTimer::singleShot(1000, this, SLOT(closeWithdrawCall()));
     QTimer::singleShot(3000, this, SLOT(onBtnlogoutClicked()));
 }

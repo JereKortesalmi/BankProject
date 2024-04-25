@@ -25,7 +25,7 @@ public:
 public slots:
     void saveAccountDetails(QNetworkReply *reply);
     void getBalance(QNetworkReply *reply);
-    void updateBalance(QByteArray, int, QString);
+    void updateBalance(QByteArray, int, QString, QString);
 signals:
     void sendAccountIdBalance(int,QString, QString, QString, bool);
     void opencreditdebitq(QJsonArray);
@@ -45,6 +45,8 @@ private:
     QByteArray myToken;
     QString bal;
     int accountId;
+    int creditMax;
+    int creditCurrent;
     //QString balance;
     QString accountType;
 };
