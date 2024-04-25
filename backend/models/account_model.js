@@ -37,7 +37,7 @@ const account={
         return db.query("DELETE FROM account WHERE account_id=?", [id], callback);
     },
     getAccountId(cardNumber,callback){
-        return db.query("SELECT account_id, account_customer_id, account_type, account_balance, account_credit_max, account_credit_current FROM account inner join accounts_to_cards on account_id=reference_account_id inner join card on reference_card_id=card_customer_id WHERE card_number=?",[cardNumber],callback);
+        return db.query("SELECT account_id, account_customer_id, account_type, account_balance, account_credit_max, account_credit_current FROM account inner join accounts_to_cards on account_id=reference_account_id inner join card on reference_card_id=card_id WHERE card_number=?",[cardNumber],callback);
     }
 }
 
