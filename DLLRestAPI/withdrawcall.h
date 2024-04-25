@@ -4,6 +4,7 @@
 #include<dllrestapi.h>
 
 #include <QObject>
+#include <QString>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
