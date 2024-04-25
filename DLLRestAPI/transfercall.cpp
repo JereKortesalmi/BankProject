@@ -43,8 +43,10 @@ void transfercall::sendTransferRequest(QByteArray token, int senderId, int recei
 void transfercall::onManagerFinished(QNetworkReply *reply)
 {
     response_data = reply->readAll();
-    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-    qDebug()<<json_doc;
+    //QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    qDebug()<<QString::fromStdString(response_data.toStdString());
+    //qDebug() << response_data << " " << "Transaction succesful";
+    //emit TransferFinished(QString::fromStdString(response_data.toStdString()));
     emit TransferFinished(QString::fromStdString(response_data.toStdString()));
     t_manager->deleteLater();
     t_reply->deleteLater();
