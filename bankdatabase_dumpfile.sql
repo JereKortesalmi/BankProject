@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `bankdatabase` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `bankdatabase`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: bankdatabase
 -- ------------------------------------------------------
@@ -44,7 +42,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,1,'DEBIT',600.00,NULL,NULL),(2,1,'DEBIT',100.00,1000.00,1000.00),(3,1,'CREDIT',500.00,1000.00,800.00),(4,2,'DEBIT',1.00,NULL,NULL),(5,3,'ADMIN',60.00,NULL,NULL);
+INSERT INTO `account` VALUES (1,1,'DEBIT',0.00,NULL,NULL),(2,1,'DEBIT',110.00,1000.00,980.00),(3,1,'CREDIT',430.00,1000.00,870.00),(4,2,'DEBIT',1.00,NULL,NULL),(5,3,'ADMIN',60.00,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +102,7 @@ CREATE TABLE `atm` (
 
 LOCK TABLES `atm` WRITE;
 /*!40000 ALTER TABLE `atm` DISABLE KEYS */;
-INSERT INTO `atm` VALUES (1,3480,54,4,4,4,2),(2,1500,50,10,0,0,0),(3,2000,50,20,0,0,0);
+INSERT INTO `atm` VALUES (1,6320,36,10,8,4,7),(2,1500,50,10,0,0,0),(3,2000,50,20,0,0,0);
 /*!40000 ALTER TABLE `atm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +185,7 @@ CREATE TABLE `transaction` (
   KEY `transaction_atm_id_idx` (`transaction_atm_id`),
   CONSTRAINT `transaction_account_id` FOREIGN KEY (`transaction_account_id`) REFERENCES `account` (`account_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `transaction_atm_id` FOREIGN KEY (`transaction_atm_id`) REFERENCES `atm` (`atm_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +194,7 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
-INSERT INTO `transaction` VALUES (1,1,1,'2024-11-11 11:22:33','DEPOSIT',100.00),(2,2,1,'2024-11-11 22:22:22','WITHDRAWAL',-100.00),(3,3,2,'2024-03-14 15:27:00','DEPOSIT',1.00),(4,1,2,'2024-03-26 05:02:05','DEPOSIT',1000.00),(5,4,2,'2024-03-26 05:02:05','DEPOSIT',1.00),(6,5,1,'2024-03-26 05:02:05','ADD MONEY',500.00);
+INSERT INTO `transaction` VALUES (1,1,1,'2024-11-11 11:22:33','DEPOSIT',100.00),(2,2,1,'2024-11-11 22:22:22','WITHDRAWAL',-100.00),(3,3,2,'2024-03-14 15:27:00','DEPOSIT',1.00),(4,1,2,'2024-03-26 05:02:05','DEPOSIT',1000.00),(5,4,2,'2024-03-26 05:02:05','DEPOSIT',1.00),(6,5,1,'2024-03-26 05:02:05','ADD MONEY',500.00),(8,2,1,'2024-04-20 23:34:01','WITHDRAW',20.00),(9,1,1,'2024-04-21 00:08:35','WITHDRAW',20.00),(10,1,1,'2024-04-21 00:08:49','WITHDRAW',40.00),(11,1,1,'2024-04-21 00:09:41','WITHDRAW',50.00),(12,1,1,'2024-04-21 00:13:12','WITHDRAW',50.00),(13,1,1,'2024-04-21 00:13:42','WITHDRAW',20.00),(14,1,1,'2024-04-21 00:13:53','WITHDRAW',20.00),(15,1,1,'2024-04-21 00:14:17','WITHDRAW',20.00),(16,1,1,'2024-04-21 10:52:43','WITHDRAW',20.00),(17,1,1,'2024-04-21 10:53:52','WITHDRAW',50.00),(18,1,1,'2024-04-21 10:55:39','WITHDRAW',20.00),(19,1,1,'2024-04-21 10:55:56','WITHDRAW',120.00),(20,1,1,'2024-04-21 11:01:19','WITHDRAW',20.00),(21,1,1,'2024-04-21 11:01:33','WITHDRAW',60.00),(22,2,1,'2024-04-22 11:19:26','WITHDRAW',20.00),(23,2,1,'2024-04-23 10:40:57','WITHDRAW',20.00),(24,1,1,'2024-04-23 16:34:41','WITHDRAW',50.00),(25,1,1,'2024-04-23 20:25:46','WITHDRAW',20.00),(26,1,1,'2024-04-24 10:16:44','WITHDRAW',20.00);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,24 +205,26 @@ UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb3 */ ;
-/*!50003 SET character_set_results = utf8mb3 */ ;
-/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `transfer_procedure`(
 	IN sender_id INT,
     IN recipient_id INT,
-    IN amount DECIMAL(10, 2),
-    IN transfer_type VARCHAR(10)
+    IN amount DECIMAL(10, 2)
     )
 BEGIN
 	DECLARE sender_balance DECIMAL(10, 2);
 	DECLARE recipient_balance DECIMAL(10, 2);
     DECLARE sender_type VARCHAR(45);
+    DECLARE recipient_type VARCHAR(45);
     DECLARE sender_credit_max DECIMAL(10, 2);
+    DECLARE recipient_credit_max DECIMAL(10, 2);
     DECLARE sender_credit_current DECIMAL(10, 2);
+    DECLARE recipient_credit_current DECIMAL(10, 2);
     DECLARE available_credit DECIMAL(10, 2);
     DECLARE success INT DEFAULT 0;
     
@@ -232,35 +232,37 @@ BEGIN
 	
     SELECT account_balance, account_type, account_credit_max, account_credit_current 
 		INTO sender_balance, sender_type, sender_credit_max, sender_credit_current FROM account WHERE account_id = sender_id FOR UPDATE;
-	SELECT account_balance 
-		INTO recipient_balance FROM account WHERE account_id = recipient_id FOR UPDATE;
+	SELECT account_balance, account_type, account_credit_max, account_credit_current
+		INTO recipient_balance, recipient_type, recipient_credit_max, recipient_credit_current FROM account WHERE account_id = recipient_id FOR UPDATE;
     
 	IF sender_balance IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Sender account does not exist';
     ELSEIF recipient_balance IS NULL THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Recipient account does not exist';
-    ELSEIF sender_type = 'DEBIT' AND transfer_type = 'CREDIT' THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid transfer type for debit account';
-	ELSEIF sender_balance < amount AND transfer_type = 'DEBIT' THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient balance for debit transfer';
+	ELSEIF sender_balance < amount THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient balance for transfer';
 	ELSEIF amount <= 0 THEN
 		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid transfer amount';
-	ELSEIF transfer_type = 'CREDIT' THEN
-		SET available_credit = sender_credit_max - sender_credit_current;
-        
-        IF available_credit >= amount THEN
-			UPDATE account SET account_credit_current = account_credit_current + amount WHERE account_id = sender_id;
-            UPDATE account SET account_balance = account_balance + amount WHERE account_id = recipient_id;
-            SET success = 1;
-		ELSE
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient remaining credit for credit transfer';
-		END IF;
-	ELSE
+	ELSEIF recipient_type = 'CREDIT' AND amount > recipient_credit_current THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Transfer amount too big for credit account';
+	ELSEIF sender_type = 'ADMIN' OR recipient_type = 'ADMIN' THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot send or receive using admin accounts';
+	
+    ELSEIF sender_type = 'CREDIT' THEN
+		UPDATE account SET account_balance = account_balance - amount WHERE account_id = sender_id;
+		UPDATE account SET account_credit_current = account_credit_current + amount WHERE account_id = sender_id;
+		UPDATE account SET account_balance = account_balance + amount WHERE account_id = recipient_id;
+            
+		SET success = 1;
+	
+    ELSEIF sender_type = 'DEBIT' THEN
 		UPDATE account SET account_balance = account_balance - amount WHERE account_id = sender_id;
         UPDATE account SET account_balance = account_balance + amount WHERE account_id = recipient_id;
+        UPDATE account SET account_credit_current = account_credit_current - amount WHERE account_id = recipient_id;
         
         SET success = 1;
-	END IF;
+	
+    END IF;
 		
     IF success = 1 THEN
 		COMMIT;
@@ -284,4 +286,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-19 12:32:17
+-- Dump completed on 2024-04-24 18:53:28

@@ -71,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnCardEdit->move(screenSize.getScreenwidth()/2 + 80, screenSize.getScreenheight()/2);
 
 
-    QFile file("../automatid.txt");
+    QFile file("automatid.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "unable to open file";
         return;
@@ -156,8 +156,10 @@ void MainWindow::accountIdSender(int accountId, QString balance, QString type, Q
     p_mainMenu->accountId = id;
     //p_mainMenu->showBalance(bal);
     p_mainMenu->showTransferButton = showTransferButton;
+    p_mainMenu->bothId = bothId;
     p_mainMenu->token = token;
     p_mainMenu->accountType = type;
+    p_mainMenu->resetView();
     p_mainMenu->showFullScreen();
     p_mainMenu->automatID = automatID;
     //p_mainMenu->sHeight = screenSize.getScreenheight();
@@ -190,6 +192,7 @@ void MainWindow::logOutSlot()
     pin->close();
     p_mainMenu->close();
     p_mainMenu->resetView();
+    p_mainMenu->bothId = "";
     //delete p_mainMenu;
     //p_mainMenu = nullptr;
     creditDebit->close();

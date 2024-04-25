@@ -42,6 +42,9 @@ mainMenu::mainMenu(QWidget *parent) :
     // transfer connect
     connect(ui->btn_transfer, SIGNAL(clicked(bool)), this, SLOT(showTransfer()));
 
+    // transfer button
+    connect(ui->btn_transferAmount, SIGNAL(clicked(bool)), this, SLOT(transferAmountClicked()));
+
     // withdraw button connection
     connect(ui->btn_withdraw, SIGNAL(clicked(bool)), this, SLOT(withdrawClicked()));
 
@@ -81,6 +84,7 @@ mainMenu::mainMenu(QWidget *parent) :
     connect(ui->b9, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->bClear, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
     connect(ui->bBackSpace, SIGNAL(clicked(bool)), this, SLOT(clickHandler()));
+
 }
 
 mainMenu::~mainMenu()
@@ -407,8 +411,60 @@ void mainMenu::showTransfer()
     //ui->btnClose->show();
 }
 
+void mainMenu::transferAmountClicked()
+{
+    qDebug() << "transferAmount clicked.";
+    QStringList temp = bothId.split(",");
+    qDebug() << "first: " << temp[1] << "second: " << temp[2];
+    qDebug() << "AccountID: " << accountId;
+    int first = 0;
+    int second = 0;
+    if(accountId == temp[1].toInt()) {
+        qDebug() << "first is same, use as sender?";
+        first = temp[1].toInt();
+        second=temp[2].toInt();
+    }
+    else {
+        qDebug() << "second is same, use as sender?";
+        first = temp[2].toInt();
+        second = temp[1].toInt();
+    }
+    tra = new transfercall();
+    tra->sendTransferRequest(token, first,second,ui->txt_transferAmount->text().toInt());
+    connect(tra, SIGNAL(TransferFinished(QString)), this, SLOT(transferResponse(QString)));
+    connect(this,SIGNAL(transferDone()), this, SLOT(deleteTransfer()));
+    qDebug() << ui->txt_transferAmount->text();
+    qDebug() << "";
+
+}
+
+void mainMenu::transferResponse(QString message)
+{
+    qDebug() << message;
+    //qDebug() << message[8];
+
+}
+
+void mainMenu::deleteTransfer()
+{
+    ui->label_transfer->setText("Transfer done.");
+    ui->label_transfer->show();
+    qDebug()<<"Transfer done.";
+    QTimer::singleShot(1000, this, SLOT());
+}
+
 void mainMenu::resetView()
 {
+    qDebug() << "BothID: " << bothId;
+
+    qDebug() << "transferbutton: " << showTransferButton;
+
+    if(showTransferButton == true) {
+        ui->btn_transfer->show();
+    }
+    else {
+        ui->btn_transfer->hide();
+    }
 
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
@@ -434,7 +490,7 @@ void mainMenu::resetView()
 
     ui->btnBalance->show();
     ui->btn_transactions->show();
-    ui->btn_transfer->show();
+    //ui->btn_transfer->show();
 
     //ui->btnClose->show();
     ui->btn_withdraw->show();
@@ -444,6 +500,10 @@ void mainMenu::resetView()
     }
 
     ui->wKeyboard->hide();
+    if(tra != nullptr) {
+        delete tra;
+        tra = nullptr;
+    }
 }
 
 void mainMenu::noOlderTransactions()
@@ -617,6 +677,17 @@ void mainMenu::fetchBalance()
 
 void mainMenu::hideShown()
 {
+    qDebug() << "BothID: " << bothId;
+
+    qDebug() << "transferbutton: " << showTransferButton;
+
+    if(showTransferButton == true) {
+        ui->btn_transfer->show();
+    }
+    else {
+        ui->btn_transfer->hide();
+    }
+
     ui->balanceLabel->hide();
     ui->label_withdraw->hide();
     ui->tableViewTransactions->hide();
