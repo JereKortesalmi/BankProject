@@ -51,6 +51,8 @@ void balance::saveAccountDetails(QNetworkReply *reply)
         accountId = jsonObject["account_id"].toInt();
         QString balance = jsonObject["account_balance"].toString();
         accountType = jsonObject["account_type"].toString();
+        creditMax = jsonObject["account_credit_max"].toInt();
+        creditCurrent = jsonObject["account_credit_current"].toInt();
         qDebug()<<"account id saveACcountDetailsissä: "<<accountId;
         qDebug()<<"account balance: "<<balance;
         qDebug()<<"accountType: "<<accountType;
@@ -60,7 +62,18 @@ void balance::saveAccountDetails(QNetworkReply *reply)
             emit sendAccountIdBalance(accountId, balance, accountType, "", false);
         }
     } else if(jsonArray.size() == 2){
-        QJsonArray jsonArray = jsonResponse_data.array();
+        for(const auto& value : jsonArray){
+            if(value.isObject()){
+                QJsonObject jsonObject = value.toObject();
+                QString type = jsonObject["account_type"].toString();
+                if(type == "CREDIT"){
+                    accountId = jsonObject["account_id"].toInt();
+                    creditMax = jsonObject["account_credit_max"].toInt();
+                    creditCurrent = jsonObject["account_credit_current"].toInt();
+                    qDebug()<<"account_id:"<<accountId;
+                }
+            }
+        }
         emit opencreditdebitq(jsonArray);
     }
 }
@@ -92,7 +105,7 @@ void balance::getBalance(QNetworkReply *reply){
             emit balanceToMainmenu(balance);
 }
 
-void balance::updateBalance(QByteArray token, int accountId, QString balance)
+void balance::updateBalance(QByteArray token, int accountId, QString balance, QString accountType)
 {
     int id = accountId;
     QString bal = balance;
@@ -100,10 +113,10 @@ void balance::updateBalance(QByteArray token, int accountId, QString balance)
     QJsonObject jsonObject;
     jsonObject.insert("account_balance", bal);
     if(accountType == "CREDIT"){
-    //    creditCurrent = creditMax - bal;
-    //    jsonObject.insert("account_credit_current", creditCurrent);
+        creditCurrent = creditMax - bal.toInt();
+        jsonObject.insert("account_credit_current", creditCurrent);
     }else{
-        qDebug()<<"ei ollut creditti tili";
+        qDebug()<<"updating credit current failed or it was a debit transfer";
     }
     //QByteArray accountBalance = QJsonDocument(jsonObject).toJson();
 
