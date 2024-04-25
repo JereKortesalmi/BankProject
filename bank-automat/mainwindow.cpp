@@ -288,7 +288,7 @@ void MainWindow::receiveCardNumber(QString val)
     cardNumber=val;
     qDebug()<<"korttinumero main: "<<cardNumber;
     log->cardNumberLog(cardNumber);
-    pin->show();
+    pin->showFullScreen();
 
 }
 
