@@ -8,7 +8,7 @@ router.post('/',function(request, response){
             response.json(err.sqlMessage);
         }
         else {
-            response.json(result[0]);
+            response.json(result);
         }
     });
 });
