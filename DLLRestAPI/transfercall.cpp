@@ -43,10 +43,13 @@ void transfercall::sendTransferRequest(QByteArray token, int senderId, int recei
 void transfercall::onManagerFinished(QNetworkReply *reply)
 {
     response_data = reply->readAll();
-    QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
-    qDebug()<<json_doc["status"];
+    //qDebug() << response_data;
+   /* QJsonDocument json_doc = QJsonDocument::fromJson(response_data);
+    qDebug()<<json_doc;
     QJsonObject json_obj = json_doc.object();
-    qDebug() << json_obj["status"];
+    qDebug() << json_obj;
+
+    */
     /*
     for (const QJsonValue &value: json_doc){
         QJsonObject json_obj = json_doc.object();
@@ -55,8 +58,8 @@ void transfercall::onManagerFinished(QNetworkReply *reply)
     */
     //qDebug()<<json_obj;
 
-
-    emit TransferFinished(QString::fromStdString(response_data.toStdString()));
+    QString test = QString::fromStdString(response_data.toStdString());
+    emit TransferFinished(test);
     t_manager->deleteLater();
     t_reply->deleteLater();
 }
