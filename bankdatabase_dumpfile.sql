@@ -74,7 +74,7 @@ CREATE TABLE `accounts_to_cards` (
 
 LOCK TABLES `accounts_to_cards` WRITE;
 /*!40000 ALTER TABLE `accounts_to_cards` DISABLE KEYS */;
-INSERT INTO `accounts_to_cards` VALUES (1,1,1),(2,2,2),(3,3,2),(7,5,3);
+INSERT INTO `accounts_to_cards` VALUES (1,1,7),(2,2,8),(3,3,8),(7,5,11);
 /*!40000 ALTER TABLE `accounts_to_cards` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,10 +201,6 @@ INSERT INTO `transaction` VALUES (1,1,1,'2024-11-11 11:22:33','DEPOSIT',100.00),
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'bankdatabase'
---
-
---
 -- Dumping routines for database 'bankdatabase'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `transfer_procedure` */;
@@ -324,4 +320,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-25 15:06:02
+-- Dump completed on 2024-04-26  9:29:42
