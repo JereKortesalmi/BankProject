@@ -14,4 +14,4 @@ Lopullinen muoto muuttuu sen mukaan, mihin lopulta aika riittää.<br/>
 [Marko Oravisjärvi](https://github.com/moravis)<br/>
 [Jere Kortesalmi](https://github.com/JereKortesalmi)<br/>
 [Timo Pesola](https://github.com/timopesola)<br/>
-[Arto Peurasaari](https://github.com/artopeu)<br/>
+[Arto Peurasaari](https://github.com/artopeur)<br/>
