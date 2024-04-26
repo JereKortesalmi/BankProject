@@ -125,12 +125,12 @@ void admin::saveBillsToAtm()
     QString hund = ui->hundredEdit->text();
     QString twoHund = ui->twoHundredEdit->text();
     QString fiveHund = ui->fiveHundredEdit->text();
-    int newBalance = bal.toInt() + (twent.toInt() * 20) + (fift.toInt() * 50) + (hund.toInt() * 100) + (twoHund.toInt() * 200) + (fiveHund.toInt() * 500);
     int newTwenty = twent.toInt() + dataTwenty;
     int newFifty = fift.toInt() + dataFifty;
     int newHund = hund.toInt() + dataHundred;
     int newTwoHund = twoHund.toInt() + dataTwoHundred;
     int newFiveHund = fiveHund.toInt() + dataFiveHundred;
+    int newBalance = (newTwenty * 20) + (newFifty * 50) + (newHund * 100) + (newTwoHund * 200) + (newFiveHund * 500);
     qDebug()<<"new atm balance: "<<newBalance;
     int id = 1;
     QJsonObject jsonObj;

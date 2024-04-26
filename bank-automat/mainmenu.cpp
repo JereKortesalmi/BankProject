@@ -164,8 +164,8 @@ void mainMenu::otherClicked()
     ui->balanceLabel->hide();
     ui->withdrawOther->show();
     ui->wKeyboard->show();
-    ui->withdrawOther->move((screenSize.getScreenwidth() / 2) + 150,(screenSize.getScreenheight() / 2) + 50);
-    ui->wKeyboard->move((screenSize.getScreenwidth() / 2 ) + 200,(screenSize.getScreenheight() / 2 ) + 100);
+    ui->withdrawOther->move((screenSize.getScreenwidth() / 2) - 150,(screenSize.getScreenheight() / 2) + 50);
+    ui->wKeyboard->move((screenSize.getScreenwidth() / 2 ) - 120,(screenSize.getScreenheight() / 2 ) + 80);
     ui->eurOther->hide();
     ui->eur20->hide();
     ui->eur40->hide();
