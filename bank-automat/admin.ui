@@ -106,6 +106,20 @@
       </property>
      </widget>
     </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="btnClearAll">
+      <property name="text">
+       <string>C</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="btnClear">
+      <property name="text">
+       <string>&lt;=</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QFrame" name="allbillframe">
@@ -347,22 +361,7 @@
      <height>101</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="btnClear">
-      <property name="text">
-       <string>Clear</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btnClearAll">
-      <property name="text">
-       <string>Clear All</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
   <widget class="QWidget" name="currentbills" native="true">
    <property name="geometry">
@@ -453,6 +452,7 @@
     </item>
    </layout>
   </widget>
+  <zorder>currentbills</zorder>
   <zorder>clear</zorder>
   <zorder>amount</zorder>
   <zorder>allbillframe</zorder>
@@ -462,17 +462,6 @@
   <zorder>btnLogout</zorder>
   <zorder>btnSaveBills</zorder>
   <zorder>savedLabel</zorder>
-  <zorder>currentTwentyEdit</zorder>
-  <zorder>currentFiftyEdit</zorder>
-  <zorder>currentHundredEdit</zorder>
-  <zorder>currentTwoHundredEdit</zorder>
-  <zorder>currentFiveHundredEdit</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>label_3</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_6</zorder>
-  <zorder>label_7</zorder>
  </widget>
  <resources/>
  <connections/>

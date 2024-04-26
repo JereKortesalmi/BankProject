@@ -135,21 +135,21 @@ void mainMenu::withdrawClicked()
 
     // 20 € - 100 € napit ja labelit yhdistettynä widgettinä.
     ui->eur20->show();
-    ui->eur20->move((screenSize.getScreenwidth()/2) - 300,(screenSize.getScreenheight()/2) + 300);
+    ui->eur20->move((screenSize.getScreenwidth()/2) - 150,(screenSize.getScreenheight()/2) + 200);
     ui->eur40->show();
-    ui->eur40->move((screenSize.getScreenwidth()/2)  - 300,(screenSize.getScreenheight()/2) + 340);
+    ui->eur40->move((screenSize.getScreenwidth()/2)  - 150,(screenSize.getScreenheight()/2) + 240);
     ui->eur60->show();
-    ui->eur60->move((screenSize.getScreenwidth()/2) - 300,(screenSize.getScreenheight()/2) + 380);
+    ui->eur60->move((screenSize.getScreenwidth()/2) - 150,(screenSize.getScreenheight()/2) + 280);
     ui->eur100->show();
-    ui->eur100->move((screenSize.getScreenwidth()/2) - 120,(screenSize.getScreenheight()/2) + 300);
+    ui->eur100->move((screenSize.getScreenwidth()/2) + 30,(screenSize.getScreenheight()/2) + 200);
 
     // btn_other ja text_other yhdessä widgettinä.
     ui->eurOther->show();
-    ui->eurOther->move((screenSize.getScreenwidth()/2) - 120,(screenSize.getScreenheight()/2) + 380);
+    ui->eurOther->move((screenSize.getScreenwidth()/2) + 30,(screenSize.getScreenheight()/2) + 280);
 
     ui->label_withdraw->show();
-    ui->label_withdraw->setText("Valitse haluamasi määrä");
-    ui->label_withdraw->move((screenSize.getScreenwidth()/2) - 400,(screenSize.getScreenheight()/2) + 100);
+    ui->label_withdraw->setText("Withdraw amount");
+    ui->label_withdraw->move((screenSize.getScreenwidth()/2) - 150,(screenSize.getScreenheight()/2));
 
 }
 
@@ -404,10 +404,13 @@ void mainMenu::showTransfer()
     ui->btn_transfer->hide();
     kbstate=1;
     ui->wKeyboard->show();
-    ui->wKeyboard->move((screenSize.getScreenwidth()/ 2) + 20 , (screenSize.getScreenheight() / 2 ) + 80);
+    ui->wKeyboard->move((screenSize.getScreenwidth()/ 2) - 120 , (screenSize.getScreenheight() / 2 ) + 80);
 
     ui->transferGroup->show();
-    ui->transferGroup->move((screenSize.getScreenwidth()/ 2) + 20 , (screenSize.getScreenheight() / 2 ) + 40);
+    ui->transferGroup->move((screenSize.getScreenwidth()/ 2) - 120 , (screenSize.getScreenheight() / 2 ) + 40);
+    ui->btn_transferAmount->adjustSize();
+    ui->label_transfer->show();
+    ui->label_transfer->move((screenSize.getScreenwidth()/ 2) - 120 , (screenSize.getScreenheight() / 2 ) + 10);
     //ui->btnClose->show();
 }
 
@@ -441,6 +444,11 @@ void mainMenu::transferAmountClicked()
 void mainMenu::transferResponse(QString message)
 {
     qDebug() << message;
+    ui->label_transfer->setText(message);
+    ui->label_transfer->adjustSize();
+    if(message == "Transaction successful"){
+        ui->txt_transferAmount->clear();
+    }
     //qDebug() << message[8];
 
 }
@@ -472,6 +480,9 @@ void mainMenu::resetView()
 
     //hide transferGroup
     ui->transferGroup->hide();
+    ui->label_transfer->hide();
+    ui->label_transfer->clear();
+    ui->txt_transferAmount->clear();
 
 
     ui->eur20->hide();
@@ -510,7 +521,7 @@ void mainMenu::noOlderTransactions()
 {
     qDebug() << "Ei vanhempia tilitapahtumia";
     ui->btnprevious5->setEnabled(false);
-    ui->btnprevious5->setText("No older transactions");
+    //ui->btnprevious5->setText("No older transactions");
     QStandardItemModel *model = new QStandardItemModel();
     model->clear();
     ui->tableViewTransactions->setModel(model);
@@ -530,7 +541,7 @@ void mainMenu::next5Transactions()
         ui->btnnext5->setEnabled(false);
     }
     ui->btnprevious5->setEnabled(true);
-    ui->btnprevious5->setText("Previous 5 transactions");
+    //ui->btnprevious5->setText("Previous 5 transactions");
     test->requestTrasactions(token,accountId,this->offsetInteger);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
@@ -565,7 +576,7 @@ void mainMenu::sendTransactionRequest()
     this->offsetInteger = 0;
     ui->btnnext5->setEnabled(false);
     ui->btnprevious5->setEnabled(true);
-    ui->btnprevious5->setText("Previous 5 transactions");
+    //ui->btnprevious5->setText("Previous 5 transactions");
     test->requestTrasactions(token,accountId,this->offsetInteger);
     connect(test,SIGNAL(ResponseToMain(QJsonArray)), this, SLOT(receiveTransactionData(QJsonArray)));
     //test->show();
@@ -578,7 +589,7 @@ void mainMenu::receiveTransactionData(QJsonArray reply)
     {
         qDebug() << "Ei vanhempia tilitapahtumia";
         ui->btnprevious5->setEnabled(false);
-        ui->btnprevious5->setText("No older transactions");
+        //ui->btnprevious5->setText("No older transactions");
         QStandardItemModel *model = new QStandardItemModel();
         model->clear();
         ui->tableViewTransactions->setModel(model);
@@ -620,8 +631,8 @@ void mainMenu::displayData()
     ui->tableViewTransactions->setGeometry(350,0,420,200);
     ui->tableViewTransactions->move((screenSize.getScreenwidth()/2) - 280,(screenSize.getScreenheight()/2) - 100);
     ui->tableViewTransactions->show();
-    ui->btnnext5->move((screenSize.getScreenwidth()/2) + 250, (screenSize.getScreenheight()/2) - 150);
-    ui->btnprevious5->move((screenSize.getScreenwidth()/2)+ 250, (screenSize.getScreenheight()/2) - 100);
+    ui->btnnext5->move((screenSize.getScreenwidth()/2) + 250, (screenSize.getScreenheight()/2) - 80);
+    ui->btnprevious5->move((screenSize.getScreenwidth()/2)+ 250, (screenSize.getScreenheight()/2) - 30);
     ui->btnnext5->show();
     ui->btnprevious5->show();
 
@@ -663,7 +674,7 @@ void mainMenu::showBalance(QString bal)
     balance1 = bal;
     //QString text = QString::number(balance1);
     qDebug()<<"mainmenu balance1: "<<balance1;
-    ui->balanceLabel->move((screenSize.getScreenwidth()/2) + 100,(screenSize.getScreenheight()/2) - 200);
+    ui->balanceLabel->move((screenSize.getScreenwidth()/2) - 100,(screenSize.getScreenheight()/2) - 100);
     ui->balanceLabel->setText("Balance :" + balance1);
     ui->balanceLabel->adjustSize();
     ui->balanceLabel->repaint();
@@ -682,7 +693,7 @@ void mainMenu::hideShown()
     qDebug() << "transferbutton: " << showTransferButton;
 
     if(showTransferButton == true) {
-        ui->btn_transfer->show();
+        ui->btn_transfer->hide();
     }
     else {
         ui->btn_transfer->hide();
@@ -709,6 +720,7 @@ void mainMenu::hideShown()
     ui->btnnext5->hide();
 
     ui->transferGroup->hide();
+    ui->label_transfer->hide();
 /*    ui->btnBalance->show();
     ui->btn_transactions->show();
 
