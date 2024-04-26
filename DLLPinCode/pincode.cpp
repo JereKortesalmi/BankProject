@@ -72,6 +72,7 @@ void PinCode::resetHandler()
 
 void PinCode::revertHandler()
 {
+    number=ui->pinLine->text();
     number.removeLast();
     ui->pinLine->setText(number);
     ui->messageLabel->clear();
