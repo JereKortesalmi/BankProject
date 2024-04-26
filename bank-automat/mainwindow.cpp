@@ -180,7 +180,7 @@ void MainWindow::adminState()
     connect(adm,SIGNAL(logOutAdmin()),this,SLOT(logOutSlot()));
     adm->showFullScreen();
     adm->token = token;
-    adm->fetchBalance(1, token);
+    adm->fetchBalance(automatID, token);
 }
 
 void MainWindow::logOutSlot()
