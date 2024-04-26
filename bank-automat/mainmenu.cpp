@@ -148,7 +148,7 @@ void mainMenu::withdrawClicked()
     ui->eurOther->move((screenSize.getScreenwidth()/2) + 30,(screenSize.getScreenheight()/2) + 280);
 
     ui->label_withdraw->show();
-    ui->label_withdraw->setText("Valitse haluamasi määrä");
+    ui->label_withdraw->setText("Withdraw amount");
     ui->label_withdraw->move((screenSize.getScreenwidth()/2) - 150,(screenSize.getScreenheight()/2));
 
 }
@@ -482,6 +482,7 @@ void mainMenu::resetView()
     ui->transferGroup->hide();
     ui->label_transfer->hide();
     ui->label_transfer->clear();
+    ui->txt_transferAmount->clear();
 
 
     ui->eur20->hide();
@@ -692,7 +693,7 @@ void mainMenu::hideShown()
     qDebug() << "transferbutton: " << showTransferButton;
 
     if(showTransferButton == true) {
-        ui->btn_transfer->show();
+        ui->btn_transfer->hide();
     }
     else {
         ui->btn_transfer->hide();
