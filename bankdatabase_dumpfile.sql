@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `bankdatabase` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `bankdatabase`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: bankdatabase
 -- ------------------------------------------------------
@@ -44,7 +44,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,1,'DEBIT',580.00,NULL,NULL),(2,1,'DEBIT',60.00,1000.00,1000.00),(3,1,'CREDIT',380.00,1000.00,800.00),(4,2,'DEBIT',1.00,NULL,NULL),(5,3,'ADMIN',60.00,NULL,NULL);
+INSERT INTO `account` VALUES (1,1,'DEBIT',580.00,NULL,NULL),(2,1,'DEBIT',140.00,1000.00,1000.00),(3,1,'CREDIT',200.00,1000.00,800.00),(4,2,'DEBIT',201.00,NULL,NULL),(5,3,'ADMIN',60.00,NULL,NULL);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `accounts_to_cards` (
 
 LOCK TABLES `accounts_to_cards` WRITE;
 /*!40000 ALTER TABLE `accounts_to_cards` DISABLE KEYS */;
-INSERT INTO `accounts_to_cards` VALUES (1,1,7),(2,2,8),(3,3,8),(7,5,11);
+INSERT INTO `accounts_to_cards` VALUES (1,1,1),(2,2,2),(3,3,2),(7,5,3);
 /*!40000 ALTER TABLE `accounts_to_cards` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `atm` (
 
 LOCK TABLES `atm` WRITE;
 /*!40000 ALTER TABLE `atm` DISABLE KEYS */;
-INSERT INTO `atm` VALUES (1,3300,50,4,3,4,2),(2,1500,50,10,0,0,0),(3,2000,50,20,0,0,0);
+INSERT INTO `atm` VALUES (1,3320,51,4,3,4,2),(2,1500,50,10,0,0,0),(3,2000,50,20,0,0,0);
 /*!40000 ALTER TABLE `atm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +187,7 @@ CREATE TABLE `transaction` (
   KEY `transaction_atm_id_idx` (`transaction_atm_id`),
   CONSTRAINT `transaction_account_id` FOREIGN KEY (`transaction_account_id`) REFERENCES `account` (`account_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `transaction_atm_id` FOREIGN KEY (`transaction_atm_id`) REFERENCES `atm` (`atm_id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,9 +196,13 @@ CREATE TABLE `transaction` (
 
 LOCK TABLES `transaction` WRITE;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
-INSERT INTO `transaction` VALUES (1,1,1,'2024-11-11 11:22:33','DEPOSIT',100.00),(2,2,1,'2024-11-11 22:22:22','WITHDRAWAL',-100.00),(3,3,2,'2024-03-14 15:27:00','DEPOSIT',1.00),(4,1,2,'2024-03-26 05:02:05','DEPOSIT',1000.00),(5,4,2,'2024-03-26 05:02:05','DEPOSIT',1.00),(6,5,1,'2024-03-26 05:02:05','ADD MONEY',500.00),(8,2,1,'2024-04-25 04:09:05','WITHDRAW',20.00),(9,3,1,'2024-04-25 11:22:10','WITHDRAW',100.00),(10,1,1,'2024-04-25 11:23:06','WITHDRAW',20.00),(11,2,1,'2024-04-25 11:23:29','WITHDRAW',20.00),(12,3,1,'2024-04-25 12:20:23','WITHDRAW',20.00);
+INSERT INTO `transaction` VALUES (1,1,1,'2024-11-11 11:22:33','DEPOSIT',100.00),(2,2,1,'2024-11-11 22:22:22','WITHDRAWAL',-100.00),(3,3,2,'2024-03-14 15:27:00','DEPOSIT',1.00),(4,1,2,'2024-03-26 05:02:05','DEPOSIT',1000.00),(5,4,2,'2024-03-26 05:02:05','DEPOSIT',1.00),(6,5,1,'2024-03-26 05:02:05','ADD MONEY',500.00),(8,2,1,'2024-04-25 04:09:05','WITHDRAW',20.00),(9,3,1,'2024-04-25 11:22:10','WITHDRAW',100.00),(10,1,1,'2024-04-25 11:23:06','WITHDRAW',20.00),(11,2,1,'2024-04-25 11:23:29','WITHDRAW',20.00),(12,1,1,'2024-04-25 14:13:27','DEPOSIT',18.00),(13,3,1,'2024-04-25 14:54:18','WITHDRAW',100.00),(14,4,1,'2024-04-25 14:54:18','DEPOSIT',100.00),(15,3,1,'2024-04-25 15:01:59','WITHDRAW',100.00),(16,4,1,'2024-04-25 15:01:59','DEPOSIT',100.00);
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'bankdatabase'
+--
 
 --
 -- Dumping routines for database 'bankdatabase'
@@ -264,13 +268,19 @@ BEGIN
 		UPDATE account SET account_balance = account_balance - amount WHERE account_id = sender_id;
 		UPDATE account SET account_credit_current = account_credit_current + amount WHERE account_id = sender_id;
 		UPDATE account SET account_balance = account_balance + amount WHERE account_id = recipient_id;
-            
+        
+        insert into transaction (transaction_account_id, transaction_atm_id, transaction_time, transaction_type, transaction_amount) VALUES (sender_id, 1, current_timestamp(), "WITHDRAW", amount);
+        insert into transaction (transaction_account_id, transaction_atm_id, transaction_time, transaction_type, transaction_amount) VALUES (recipient_id, 1, current_timestamp(), "DEPOSIT", amount);
+        
 		SET success = 1;
 	
     ELSEIF sender_type = 'DEBIT' AND error_status = 0 THEN
 		UPDATE account SET account_balance = account_balance - amount WHERE account_id = sender_id;
         UPDATE account SET account_balance = account_balance + amount WHERE account_id = recipient_id;
         UPDATE account SET account_credit_current = account_credit_current - amount WHERE account_id = recipient_id;
+        
+        insert into transaction (transaction_account_id, transaction_atm_id, transaction_time, transaction_type, transaction_amount) VALUES (sender_id, 1, current_timestamp(), "WITHDRAW", amount);
+        insert into transaction (transaction_account_id, transaction_atm_id, transaction_time, transaction_type, transaction_amount) VALUES (recipient_id, 1, current_timestamp(), "DEPOSIT", amount);
         
         SET success = 1;
 	
@@ -314,4 +324,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-25 13:51:58
+-- Dump completed on 2024-04-25 15:06:02
